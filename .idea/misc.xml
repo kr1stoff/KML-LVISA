@@ -3,5 +3,5 @@
   <component name="Black">
     <option name="sdkName" value="Poetry (KML-LVISA)" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Poetry (KML-LVISA)" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="python3.10" project-jdk-type="Python SDK" />
 </project>
