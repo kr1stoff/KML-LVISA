@@ -23,7 +23,7 @@ def prepare_fastq_by_samptab(workdir, samptab: str) -> None:
     # 软链接或解压
     for row in df.iterrows():
         name, fastq1, fastq2 = row[1]
-        link_or_zcat_fastq(workdir, name, fastq1, fastq2)
+        copy_fastq(workdir, name, fastq1, fastq2)
 
 
 def get_sample_names_by_samptab(samptab: str) -> list:
@@ -57,27 +57,26 @@ def samptab2dataframe(samptab: str) -> pd.DataFrame:
     return df
 
 
-def link_or_zcat_fastq(workdir, name, fastq1, fastq2) -> None:
+def copy_fastq(workdir, name, fq1: str, fq2) -> None:
     """
-    软链接或解压fastq文件
-    :param workdir:
-    :param name:
-    :param fastq1:
-    :param fastq2:
-    :return:
+    复制或压缩 fastq 到 .rawdata 目, 按照指定格式明明
+    :param workdir:     分析解雇目录
+    :param name:        样本名
+    :param fq1:         fastq1
+    :param fq2:         fastq2
     """
-    if fastq1.endswith('.gz'):
+    if fq1.endswith('.gz'):
         cml = f"""
-        zcat {fastq1} > {workdir}/.rawdata/{name}.1.fastq
-        zcat {fastq2} > {workdir}/.rawdata/{name}.2.fastq
+        cp {fq1} {workdir}/.rawdata/{name}_1.fastq.gz
+        cp {fq2} {workdir}/.rawdata/{name}_2.fastq.gz
         """
     else:
         cml = f"""
-        ln -sf {fastq1} {workdir}/.rawdata/{name}.1.fastq
-        ln -sf {fastq2} {workdir}/.rawdata/{name}.2.fastq
+        gzip -c {fq1} > {workdir}/.rawdata/{name}_1.fastq.gz
+        gzip -c {fq2} > {workdir}/.rawdata/{name}_2.fastq.gz
         """
-
-    run(cml, shell=True, executable='/bin/bash', capture_output=True)  # 接收输出防止阻塞(NewBing)
+    logging.debug(cml)
+    run(cml, shell=True, executable='/bin/bash', capture_output=True)
 
 
 def check_samptab(df) -> None:

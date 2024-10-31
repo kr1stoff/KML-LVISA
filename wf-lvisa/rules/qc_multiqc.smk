@@ -11,6 +11,6 @@ rule multiqc:
         config['conda']['basic']
     shell:
         """
-        #生成交互式的可视化网页
+        # 生成交互式的可视化网页
         multiqc {input} --outdir {output} > {log} 2>&1
         """

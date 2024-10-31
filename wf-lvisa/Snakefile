@@ -1,5 +1,17 @@
 ######## Config ########
-workdir: config['workdir']
+workdir: config["workdir"]
 
-shell.executable('/bin/bash')
-shell.prefix('set +eu; ')
+
+shell.executable("/bin/bash")
+shell.prefix("set +eu; ")
+
+
+rule all:
+    input:
+        "qc/multiqc",
+        "qc/fastp/fastp.stats.tsv",
+
+
+include: "rules/qc_fastqc.smk"
+include: "rules/qc_fastp.smk"
+include: "rules/qc_multiqc.smk"

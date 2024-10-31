@@ -1,0 +1,19 @@
+conda:
+  basic: basic
+  graphlan: graphlan
+  lefse: LefSe
+  microplot: microplot
+  qiime2: qiime2-2023.2
+samples:
+- KTND240299
+- KTND240322
+- KTND240301
+- KTND240221
+- KTND240173
+- KTND240323
+- KTND240229
+- KTND240328
+threads:
+  high: 22
+  low: 5
+workdir: /data/mengxf/Project/KML240906_16S_pipeline/result/24090601

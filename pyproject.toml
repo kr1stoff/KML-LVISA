@@ -9,6 +9,7 @@ readme = "README.md"
 python = "^3.10"
 pytest = "^8.3.3"
 pandas = "^2.2.3"
+pyyaml = "^6.0.2"
 
 
 [[tool.poetry.source]]
@@ -27,4 +28,8 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
-testpaths = ["tests/test_fastq.py"]
+testpaths = [
+    "tests/test_fastq.py",
+    # "tests/test_config.py",
+    # "tests/test_snakemake.py",
+]

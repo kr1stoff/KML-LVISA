@@ -1,0 +1,2 @@
+# env: snakemake
+activate: /home/mengxf/miniforge3/bin/activate
