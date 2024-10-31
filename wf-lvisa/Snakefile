@@ -1,0 +1,5 @@
+######## Config ########
+workdir: config['workdir']
+
+shell.executable('/bin/bash')
+shell.prefix('set +eu; ')
