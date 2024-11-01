@@ -12,6 +12,6 @@ rule all:
         "qc/fastp/fastp.stats.tsv",
 
 
-include: "rules/qc_fastqc.smk"
-include: "rules/qc_fastp.smk"
-include: "rules/qc_multiqc.smk"
+include: "rules/fastqc.smk"
+include: "rules/fastp.smk"
+include: "rules/multiqc.smk"

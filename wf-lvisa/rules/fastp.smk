@@ -14,6 +14,7 @@ rule fastp_pe:
     conda:
         config["conda"]["basic"]
     params:
+    # FIXME -l 最小长度要根据对应试剂盒 3LTR 长度来调整，目前是 82
         "-q 15 -u 40 -l 82 --adapter_sequence_r2 AAATGGTCTGAGGGATCTCTAGT --cut_right "
         "--cut_window_size 4 --cut_mean_quality 20 --correction --umi --umi_loc=read2 --umi_len=10 ",
     threads: config["threads"]["low"]
