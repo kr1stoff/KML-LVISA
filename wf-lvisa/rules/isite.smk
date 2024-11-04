@@ -25,7 +25,8 @@ rule map_umi_cover:
 
 rule isite_cover:
     input:
-        rules.map_umi_cover.output,
+        umi_cov=rules.map_umi_cover.output.umi_cov,
+        all_cov=rules.map_umi_cover.output.all_cov,
     output:
         "is/{sample}.is.coverage",
     benchmark:
