@@ -19,7 +19,13 @@ rule fastp_pe:
         "--cut_window_size 4 --cut_mean_quality 20 --correction --umi --umi_loc=read2 --umi_len=10 ",
     threads: config["threads"]["low"]
     shell:
-        "fastp -w {threads} {params} -j {output.j} -h {output.h} -o {output.o} -O {output.O} -i {input[0]} -I {input[1]} &> {log}"
+        """
+        # UMI, R2测穿反向3LTR
+        fastp -w {threads} {params} \
+            -j {output.j} -h {output.h} \
+            -o {output.o} -O {output.O} \
+            -i {input[0]} -I {input[1]} &> {log}
+        """
 
 
 rule qc_stat:

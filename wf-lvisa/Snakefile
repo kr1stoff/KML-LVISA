@@ -10,11 +10,18 @@ rule all:
     input:
         "qc/multiqc",
         "qc/fastp/fastp.stats.tsv",
-        expand("3LTR/{sample}.1.3ltr.fq", sample=config["samples"]),
-        expand("3LTR/{sample}.2.3ltr.fq", sample=config["samples"]),
+        expand("map/{sample}.bam.stat", sample=config["samples"]),
+        expand("map/{sample}.filter.bam.stat", sample=config["samples"]),
+        expand("umi/{sample}.umi.json", sample=config["samples"]),
+        expand("umi/{sample}.umi.html", sample=config["samples"]),
+        expand("umi/{sample}.umi.bam.stat", sample=config["samples"]),
+        expand("is/{sample}.is.coverage", sample=config["samples"]),
 
 
 include: "rules/fastqc.smk"
 include: "rules/fastp.smk"
 include: "rules/multiqc.smk"
 include: "rules/3ltr.smk"
+include: "rules/map.smk"
+include: "rules/umi.smk"
+include: "rules/isite.smk"
