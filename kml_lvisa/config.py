@@ -26,6 +26,10 @@ def get_database_dict() -> dict:
     with open(yaml_database) as f:
         dict_database = yaml.safe_load(f)
 
+    # assets 一些小型数据库文件
+    ltr_fa = Path(__file__).resolve().parents[1].joinpath('assets/3LTR/3LTR.fa')
+    dict_database['3ltr'] = str(ltr_fa)
+
     return dict_database
 
 

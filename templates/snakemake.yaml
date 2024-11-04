@@ -1,19 +1,16 @@
 conda:
   basic: basic
-  graphlan: graphlan
-  lefse: LefSe
-  microplot: microplot
-  qiime2: qiime2-2023.2
+  python: python3.8
+database:
+  hg19: /data/mengxf/Database/genome/hg19/hg19.fa
+metadata: /data/mengxf/Project/KML240924_lvis_pipeline/result/241031/.temp/metadata.tsv
+my_scripts: /data/mengxf/GitHub/KML-LVISA/scripts
 samples:
-- KTND240299
-- KTND240322
-- KTND240301
-- KTND240221
-- KTND240173
-- KTND240323
-- KTND240229
-- KTND240328
+- SRR17348516
+- SRR17405832
+- SRR17405845
+- SRR17405847
 threads:
-  high: 22
-  low: 5
-workdir: /data/mengxf/Project/KML240906_16S_pipeline/result/24090601
+  high: 32
+  low: 8
+workdir: /data/mengxf/Project/KML240924_lvis_pipeline/result/241031
