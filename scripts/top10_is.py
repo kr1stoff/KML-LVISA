@@ -2,10 +2,11 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import sys
 
-combine_tsv = '/data/mengxf/Project/KML240924_lvis_pipeline/result/240929/anno/SRR17348516.is.combine.tsv'
-top10_tsv = '/data/mengxf/Project/KML240924_lvis_pipeline/result/240929/stats/SRR17348516.top10_is.tsv'
-top10_png = '/data/mengxf/Project/KML240924_lvis_pipeline/result/240929/stats/SRR17348516.top10_is.png'
+combine_tsv = sys.argv[1]   # 'anno/SRR17348516.is.combine.tsv'
+top10_tsv = sys.argv[2]  # 'stats/SRR17348516.top10_is.tsv'
+top10_png = sys.argv[3]  # 'stats/SRR17348516.top10_is.png'
 
 df = pd.read_csv(combine_tsv, sep='\t', usecols=['Chrom', 'Start', 'Depth', 'Gene'])
 

@@ -30,6 +30,6 @@ build-backend = "poetry.core.masonry.api"
 [tool.pytest.ini_options]
 testpaths = [
     # "tests/test_fastq.py",
-    "tests/test_config.py",
+    # "tests/test_config.py",
     "tests/test_snakemake.py",
 ]

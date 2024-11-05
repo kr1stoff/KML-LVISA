@@ -1,11 +1,12 @@
 import pandas as pd
 import seaborn as sns
 from matplotlib import pyplot as plt
+import sys
 
 
-hg19_comp = '/data/mengxf/Project/KML240924_lvis_pipeline/script/hg19.fa.comp'
-combine_tsv = '/data/mengxf/Project/KML240924_lvis_pipeline/result/240929/anno/SRR17348516.is.combine.tsv'
-out_png = '/data/mengxf/Project/KML240924_lvis_pipeline/result/240929/stats/SRR17348516.chrom_dist.png'
+hg19_comp = sys.argv[1]  # 'script/hg19.fa.comp'
+combine_tsv = sys.argv[2]   # 'anno/SRR17348516.is.combine.tsv'
+out_png = sys.argv[3]   # 'stats/SRR17348516.chrom_dist.png'
 
 # 染色体长度列表
 chrom_len_dict = {}

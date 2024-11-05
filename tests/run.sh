@@ -79,7 +79,7 @@ snpEff -dataDir /data/mengxf/Database/snpEff \
     anno/SRR17348516.is.effect
 # 注释 oncokb
 /home/mengxf/miniforge3/envs/python3.8/bin/python \
-    /data/mengxf/Project/KML240924_lvis_pipeline/script/annotate_effect.py \
+    /data/mengxf/Project/KML240924_lvis_pipeline/script/annotate_oncokb.py \
     anno/SRR17348516.is.bed.snpEff \
     anno/SRR17348516.is.effect
 # CpG 要去重, CpG(10kb) 之间有 overlap. 后面都做去重

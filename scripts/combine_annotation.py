@@ -2,13 +2,13 @@
 
 import sys
 
-is_cov_file = '/data/mengxf/Project/KML240924_lvis_pipeline/result/240929/is/SRR17348516.is.coverage'
-effect_file = '/data/mengxf/Project/KML240924_lvis_pipeline/result/240929/anno/SRR17348516.is.effect'
-oncokb_file = '/data/mengxf/Project/KML240924_lvis_pipeline/result/240929/anno/SRR17348516.is.oncokb'
-cpg_file = '/data/mengxf/Project/KML240924_lvis_pipeline/result/240929/anno/SRR17348516.is.cpg'
-tss_file = '/data/mengxf/Project/KML240924_lvis_pipeline/result/240929/anno/SRR17348516.is.tss'
-rmsk_file = '/data/mengxf/Project/KML240924_lvis_pipeline/result/240929/anno/SRR17348516.is.rmsk'
-combine_out = '/data/mengxf/Project/KML240924_lvis_pipeline/result/240929/anno/SRR17348516.is.combine.tsv'
+is_cov_file = sys.argv[1]   # 'is/SRR17348516.is.coverage'
+effect_file = sys.argv[2]   # 'anno/SRR17348516.is.effect'
+oncokb_file = sys.argv[3]   # 'anno/SRR17348516.is.oncokb'
+cpg_file = sys.argv[4]  # 'anno/SRR17348516.is.cpg'
+tss_file = sys.argv[5]  # 'anno/SRR17348516.is.tss'
+rmsk_file = sys.argv[6]  # 'anno/SRR17348516.is.rmsk'
+combine_out = sys.argv[7]   # 'anno/SRR17348516.is.combine.tsv'
 
 
 def get_pos_anno_dict(anno_file):

@@ -4,10 +4,10 @@ library(ineq)
 # I/O
 args <- commandArgs(trailingOnly = TRUE)
 combine_file <- args[1] # "anno/SRR17348516.is.combine.tsv"
-output_file <- args[2]   # "stats/SRR17348516.chromosome.svg"
+output_file <- args[2] # "stats/SRR17348516.chromosome.svg"
 
 # is_abun <- c(10, 5, 2, 8, 6)
-data <- read.table(combine_file, sep = '\t', header = T)
+data <- read.table(combine_file, sep = "\t", header = T)
 is_abun <- data$Depth
 
 shannon <- diversity(is_abun, index = "shannon")
@@ -18,18 +18,18 @@ gini_coef <- Gini(is_abun)
 gini_simpson <- diversity(is_abun, index = "simpson")
 
 stats_df <- data.frame(
-  shannon = shannon,
-  invsimpson = invsimpson,
-  chao1 = chao1,
-  gini_coef = gini_coef,
-  gini_simpson = gini_simpson
+    shannon = shannon,
+    invsimpson = invsimpson,
+    chao1 = chao1,
+    gini_coef = gini_coef,
+    gini_simpson = gini_simpson
 )
 
 write.table(
-  stats_df,
-  file = output_file,
-  sep = '\t',
-  row.names = F,
-  quote = F,
-  fileEncoding = "UTF-8"
+    stats_df,
+    file = output_file,
+    sep = "\t",
+    row.names = F,
+    quote = F,
+    fileEncoding = "UTF-8"
 )

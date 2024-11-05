@@ -2,7 +2,7 @@
 
 import sys
 
-oncokb_db = '/data/mengxf/Database/genome/hg19/OncoKBcancerGeneList.tsv'
+oncokb_db = sys.argv[3]  # '/data/mengxf/Database/genome/hg19/OncoKBcancerGeneList.tsv'
 snpeff_parse = sys.argv[1]
 oncokb_out = sys.argv[2]
 
