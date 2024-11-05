@@ -29,10 +29,10 @@ rule umi_filter:
         ".log/umi/{sample}.umi_filter.bm"
     log:
         ".log/umi/{sample}.umi_filter.log",
-    conda:
-        config["conda"]["python"]
     shell:
         """
+        conda list > {log}
+        which python >> {log}
         # 过滤小于3条 reads 的 UMI
-        python {config[my_scripts]}/filter_umi_bam.py {input} {output} 2> {log}
+        python {config[my_scripts]}/filter_umi_bam.py {input} {output} 2>> {log}
         """

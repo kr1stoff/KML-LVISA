@@ -46,6 +46,7 @@ def run_snakemake(workdir):
     cores = get_threads_dict()['high']
     snakefile = Path(__file__).resolve().parents[1].joinpath('wf-lvisa/Snakefile')
     configfile = f'{workdir}/.temp/snakemake.yaml'
+    logfile = f'{workdir}/.log/snakemake.log'
 
     cml = f"""
     source {activate} snakemake
@@ -53,4 +54,8 @@ def run_snakemake(workdir):
     snakemake -c {cores} --use-conda -s {snakefile} --configfile {configfile}
     """
 
-    run(cml, shell=True, executable='/bin/bash', capture_output=True)
+    proc = run(cml, shell=True, executable='/bin/bash', capture_output=True, encoding='utf-8')
+
+    # 输出出来这段日志
+    with open(logfile, 'w') as f:
+        f.write(f'[STDOUT]\n{proc.stdout}\n[STDERR]\n{proc.stderr}')

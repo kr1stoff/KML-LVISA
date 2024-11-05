@@ -37,7 +37,5 @@ rule qc_stat:
         ".log/fastp/qc_stat.bm"
     log:
         ".log/fastp/qc_stat.log",
-    conda:
-        config["conda"]["python"]
     shell:
         "python {config[my_scripts]}/fastp_all_samples_qc.py {output} {input} &> {log}"

@@ -31,8 +31,6 @@ rule anno_effect_oncokb:
         ".log/anno/{sample}.anno_effect_oncokb.bm"
     log:
         ".log/anno/{sample}.anno_effect_oncokb.log",
-    conda:
-        config["conda"]["python"]
     shell:
         """
         # 注释 position, gene, effect
@@ -81,8 +79,6 @@ rule comb_anno:
         ".log/anno/{sample}.comb_anno.bm"
     log:
         ".log/anno/{sample}.comb_anno.log",
-    conda:
-        config["conda"]["python"]
     shell:
         """
         # 合并注释结果

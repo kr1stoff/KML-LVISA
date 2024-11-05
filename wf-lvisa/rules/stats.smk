@@ -30,8 +30,6 @@ rule top_chrom_effect_repclass:
         ".log/stats/{sample}.top_chrom_effect_repclass.bm"
     log:
         ".log/stats/{sample}.top_chrom_effect_repclass.log",
-    conda:
-        config["conda"]["python"]
     shell:
         """
         # Top 10 IS 位点柱状图

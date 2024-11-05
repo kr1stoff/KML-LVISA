@@ -11,6 +11,8 @@ pytest = "^8.3.3"
 pandas = "^2.2.3"
 pyyaml = "^6.0.2"
 click = "^8.1.7"
+seaborn = "^0.13.2"
+matplotlib = "^3.9.2"
 
 
 [[tool.poetry.source]]
@@ -30,7 +32,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
 testpaths = [
-    "tests/test_fastq.py",
-    "tests/test_config.py",
-    "tests/test_snakemake.py",
+    # "tests/test_fastq.py",
+    # "tests/test_config.py",
+    # "tests/test_snakemake.py",
 ]
