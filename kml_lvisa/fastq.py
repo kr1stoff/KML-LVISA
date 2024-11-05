@@ -44,6 +44,7 @@ def samptab2dataframe(samptab: str) -> pd.DataFrame:
     :param samptab:
     :return df: sample table 转的 DataFrame
     """
+    logging.info('输入 sample table 转成 DataFrame 格式')
     if samptab.endswith('.xlsx'):
         df = pd.read_excel(samptab, header=None)
     elif samptab.endswith('.tsv'):
@@ -59,12 +60,13 @@ def samptab2dataframe(samptab: str) -> pd.DataFrame:
 
 def copy_fastq(workdir, name, fq1: str, fq2) -> None:
     """
-    复制或压缩 fastq 到 .rawdata 目, 按照指定格式明明
+    复制或压缩 fastq 到 .rawdata 目, 按照指定格式命名
     :param workdir:     分析解雇目录
     :param name:        样本名
     :param fq1:         fastq1
     :param fq2:         fastq2
     """
+    logging.info('复制或压缩 fastq 到 .rawdata 目, 按照指定格式命名')
     if fq1.endswith('.gz'):
         cml = f"""
         cp {fq1} {workdir}/.rawdata/{name}_1.fastq.gz
@@ -85,6 +87,7 @@ def check_samptab(df) -> None:
     :param df:
     :return:
     """
+    logging.info('检查 sample table 文件, 输入 sample table 转的 DataFrame')
     for row in df.iterrows():
         name, fastq1, fastq2 = row[1]
 
