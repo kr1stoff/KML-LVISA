@@ -3,11 +3,6 @@ import click
 from pathlib import Path
 from kml_lvisa import prepare_fastq_by_samptab
 from kml_lvisa import get_sample_names_by_samptab
-from kml_lvisa import get_threads_dict
-from kml_lvisa import get_conda_env_dict
-from kml_lvisa import get_database_dict
-from kml_lvisa import get_my_scripts_path
-from kml_lvisa import get_software_dict
 from kml_lvisa import create_snakemake_configfile
 from kml_lvisa import run_snakemake
 
