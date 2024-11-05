@@ -22,6 +22,7 @@ rule all:
         expand("stats/{sample}.chrom_dist.png", sample=config["samples"]),
         expand("stats/{sample}.effect_pie.png", sample=config["samples"]),
         expand("stats/{sample}.repclass_pie.png", sample=config["samples"]),
+        expand("stats/{sample}.chromosome_density.png", sample=config["samples"]),
 
 
 include: "rules/fastqc.smk"

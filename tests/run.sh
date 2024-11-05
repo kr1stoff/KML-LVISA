@@ -103,11 +103,7 @@ bedtools intersect -wb \
 
 # 统计
 # 染色体分布图
-cd stats
-/home/mengxf/miniforge3/envs/R4.3.1/bin/Rscript \
-    /data/mengxf/Project/KML240924_lvis_pipeline/script/chromosome_distribute.R \
-    ../anno/SRR17348516.is.combine.tsv chromosome.svg
-cd -
+
 # 多样性
 /home/mengxf/miniforge3/envs/R4.3.1/bin/Rscript \
     /data/mengxf/Project/KML240924_lvis_pipeline/script/is_diversity.R \

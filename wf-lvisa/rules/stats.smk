@@ -1,17 +1,19 @@
-rule diversity_index:
+rule diversity_density:
     input:
         rules.comb_anno.output,
     output:
-        "stats/{sample}.is.diversity.tsv",
+        diver="stats/{sample}.is.diversity.tsv",
+        dens="stats/{sample}.chromosome_density.png",
     benchmark:
-        ".log/stats/{sample}.diversity_index.bm"
+        ".log/stats/{sample}.diversity_density.bm"
     log:
-        ".log/stats/{sample}.diversity_index.log",
+        ".log/stats/{sample}.diversity_density.log",
     conda:
         config["conda"]["R"]
     shell:
         """
-        Rscript {config[my_scripts]}/is_diversity.R {input} {output} 2> {log}
+        Rscript {config[my_scripts]}/is_diversity.R {input} {output.diver} 2> {log}
+        Rscript {config[my_scripts]}/CMplot.R {input} {output.dens} 2>> {log}
         """
 
 
