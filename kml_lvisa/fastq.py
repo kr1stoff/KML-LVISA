@@ -5,7 +5,7 @@ import re
 import logging
 
 
-def prepare_fastq_by_samptab(workdir, samptab: str) -> None:
+def prepare_fastq_by_samptab(workdir, samptab: Path) -> None:
     """
     在项目目录下面准备 fastq 文件
     - 如果未压缩 link, 如果压缩 zcat
@@ -26,7 +26,7 @@ def prepare_fastq_by_samptab(workdir, samptab: str) -> None:
         copy_fastq(workdir, name, fastq1, fastq2)
 
 
-def get_sample_names_by_samptab(samptab: str) -> list:
+def get_sample_names_by_samptab(samptab: Path) -> list:
     """
     获取样本名列表
     :param samptab:
@@ -37,7 +37,7 @@ def get_sample_names_by_samptab(samptab: str) -> list:
     return df.iloc[:, 0].to_list()
 
 
-def samptab2dataframe(samptab: str) -> pd.DataFrame:
+def samptab2dataframe(samptab: Path) -> pd.DataFrame:
     """
     输入 sample table 转成 DataFrame 格式
 
@@ -45,6 +45,7 @@ def samptab2dataframe(samptab: str) -> pd.DataFrame:
     :return df: sample table 转的 DataFrame
     """
     logging.info('输入 sample table 转成 DataFrame 格式')
+    samptab = str(samptab)
     if samptab.endswith('.xlsx'):
         df = pd.read_excel(samptab, header=None)
     elif samptab.endswith('.tsv'):

@@ -25,15 +25,7 @@ def main(work_dir, sample_table):
     logging.info(f'开始分析!')
     sample_table = Path(sample_table).resolve()
     work_dir = Path(work_dir).resolve()
-    # work_dir = '/data/mengxf/Project/KML240924_lvis_pipeline/result/241031'
-    # sample_table = '/data/mengxf/GitHub/KML-LVISA/templates/input.tsv'
 
-    # config
-    threads_dict = get_threads_dict()
-    conda_env_dict = get_conda_env_dict()
-    database_dict = get_database_dict()
-    software_dict = get_software_dict()
-    my_scripts_path = get_my_scripts_path()
     # fastq
     sample_names = get_sample_names_by_samptab(sample_table)
     prepare_fastq_by_samptab(work_dir, sample_table)
@@ -43,3 +35,7 @@ def main(work_dir, sample_table):
     run_snakemake(work_dir)
 
     logging.info(f'分析完成!')
+
+
+if __name__ == '__main__':
+    main()
