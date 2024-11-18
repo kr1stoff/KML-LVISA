@@ -27,7 +27,6 @@ def create_snakemake_configfile(sample_names, workdir):
         'threads': get_threads_dict(),
         'conda': get_conda_env_dict(),
         'my_scripts': get_my_scripts_path(),
-        'metadata': f'{dir_temp}/metadata.tsv',
         'database': get_database_dict()
     }
 
@@ -37,7 +36,7 @@ def create_snakemake_configfile(sample_names, workdir):
 
 def run_snakemake(workdir):
     """
-    运行 snakemake 16S 工作流
+    运行 snakemake 工作流
     :param workdir:
     :return:
     """
