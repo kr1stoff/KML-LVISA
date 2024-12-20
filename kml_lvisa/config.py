@@ -45,12 +45,12 @@ def get_software_dict() -> dict:
 
 def get_threads_dict() -> dict:
     """
-    获取最大线程数, 高线程分配为 max cpu count, 低线程为 high / 4
+    获取最大线程数, 高线程分配为 max cpu count / 2, 低线程为 high / 4
     :return dict_thr:   high_threads, low_threads 高/低线程分配数
     """
     logging.info('获取线程数字典')
-    max_threads = os.cpu_count()
-    high_threads = max_threads
+    # * high: 当前总线程 / 2; low: high / 4
+    high_threads = math.floor(os.cpu_count() / 2)
     low_threads = math.floor(high_threads / 4)
     dict_thr = {'high': high_threads, 'low': low_threads}
 
