@@ -42,7 +42,7 @@ def run_snakemake(workdir):
     """
     logging.info('运行 snakemake')
     activate = get_software_dict()['activate']
-    cores = get_threads_dict()['high']
+    cores = get_threads_dict()['max']
     snakefile = Path(__file__).resolve().parents[1].joinpath('wf-lvisa/Snakefile')
     configfile = f'{workdir}/.temp/snakemake.yaml'
     logfile = f'{workdir}/.log/snakemake.log'
