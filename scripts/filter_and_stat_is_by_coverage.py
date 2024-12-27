@@ -1,8 +1,7 @@
 # 过滤插入位点
-#   1. 1个位点 < 2 UMI (羿圣试剂盒不适用)
+#   1. 1个位点 < 2 UMI (有限 UMI 数量不适用, 非随机 UMI
 #   2. support reads < 10
 import sys
-import pdb
 
 
 umi_cov = sys.argv[1]
@@ -35,7 +34,7 @@ with open(out_cov, 'w') as f:
         all_num = dict_stat[k]['all_num']
 
         # 过滤
-        # loci umi < 2 (羿圣试剂盒不适用)
+        # loci umi < 2 (有限 UMI 数量不适用)
         # support reads < 10
         # if any([int(umi_num) < 2, int(all_num) < 10]):
         if int(all_num) < 10:
