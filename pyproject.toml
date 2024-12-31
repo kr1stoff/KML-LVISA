@@ -14,6 +14,7 @@ click = "^8.1.7"
 seaborn = "^0.13.2"
 matplotlib = "^3.9.2"
 pysam = "^0.22.1"
+levenshtein = "^0.26.1"
 
 
 [[tool.poetry.source]]
@@ -35,5 +36,5 @@ build-backend = "poetry.core.masonry.api"
 testpaths = [
     # "tests/test_fastq.py",
     # "tests/test_config.py",
-    # "tests/test_snakemake.py",
+    "tests/test_snakemake.py",
 ]

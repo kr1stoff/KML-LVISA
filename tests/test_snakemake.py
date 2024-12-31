@@ -3,8 +3,8 @@ from kml_lvisa import get_sample_names_by_samptab
 from kml_lvisa import run_snakemake
 
 
-work_dir = '/data/mengxf/Project/KML240924_lvis_pipeline/result/241031'
-sample_table = '/data/mengxf/GitHub/KML-LVISA/templates/input.tsv'
+work_dir = '/data/mengxf/Project/KML241220_lvis_YuShiYan5/results/241231'
+sample_table = '/data/mengxf/Project/KML241220_lvis_YuShiYan5/FASTQ/input.tsv'
 
 
 def test_create():
@@ -12,5 +12,5 @@ def test_create():
     create_snakemake_configfile(sample_names, work_dir)
 
 
-def test_run():
-    run_snakemake(work_dir)
+# def test_run():
+#     run_snakemake(work_dir)

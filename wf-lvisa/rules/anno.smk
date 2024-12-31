@@ -2,8 +2,7 @@ rule snpeff:
     input:
         rules.isite_cover.output,
     output:
-        bed="anno/{sample}.is.bed",
-        out="anno/{sample}.is.bed.snpEff",
+        "anno/{sample}.is.bed.snpEff",
     benchmark:
         ".log/anno/{sample}.snpeff.bm"
     log:
@@ -12,18 +11,13 @@ rule snpeff:
         config["conda"]["basic"]
     shell:
         """
-        # IS 只要插入位置那 1bp 的碱基
-        awk -F '\\t' -v OFS='\\t' '{{print $1,$2,$2+1}}' {input} > {output.bed} 2> {log}
-
-        snpEff -dataDir {config[database][snpeff]} \
-            -i bed -chr chr -geneId -canon -noStats \
-            hg19 {output.bed} > {output.out} 2>> {log}
+        snpEff -dataDir {config[database][snpeff]} -i bed -chr chr -geneId -canon -noStats hg19 {input} > {output} 2>> {log}
         """
 
 
 rule anno_effect_oncokb:
     input:
-        rules.snpeff.output.out,
+        rules.snpeff.output,
     output:
         effect="anno/{sample}.is.effect",
         oncokb="anno/{sample}.is.oncokb",
@@ -42,7 +36,7 @@ rule anno_effect_oncokb:
 
 rule bedtools_anno_cpg_tss_repeat:
     input:
-        rules.snpeff.output.bed,
+        rules.isite_cover.output,
     output:
         cpg="anno/{sample}.is.cpg",
         tss="anno/{sample}.is.tss",
@@ -56,12 +50,12 @@ rule bedtools_anno_cpg_tss_repeat:
     shell:
         """
         # CpG 要去重, CpG(10kb) 之间有 overlap. 后面都做去重
-        bedtools intersect -wb -a {input} -b {config[database][cpg10kb]} | cut -f1,2,7 > {output.cpg} 2> {log}
+        bedtools intersect -wb -a {input} -b {config[database][cpg10kb]} | cut -f1,2,9 > {output.cpg} 2> {log}
         # TSS
-        bedtools intersect -wb -a {input} -b {config[database][switchDbTss10kb]} | cut -f1,2,7 > {output.tss} 2>> {log}
+        bedtools intersect -wb -a {input} -b {config[database][switchDbTss10kb]} | cut -f1,2,9 > {output.tss} 2>> {log}
         # Repeat
         # repName, repClass, repFamily
-        bedtools intersect -wb -a {input} -b {config[database][rmsk]} | cut -f1,2,7 > {output.repeat} 2>> {log}
+        bedtools intersect -wb -a {input} -b {config[database][rmsk]} | cut -f1,2,9 > {output.repeat} 2>> {log}
         """
 
 

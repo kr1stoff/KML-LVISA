@@ -2,7 +2,7 @@ rule fq2fa:
     input:
         "qc/fastp/{sample}.1.fastq.gz",
     output:
-        "3ltr/{sample}.fa",
+        temp("3ltr/{sample}.fa"),
     benchmark:
         ".log/3ltr/{sample}.fq2fa.bm"
     log:
@@ -17,7 +17,7 @@ rule blastn_ltr:
     input:
         rules.fq2fa.output,
     output:
-        "3ltr/{sample}.blast.out",
+        temp("3ltr/{sample}.blast.out"),
     benchmark:
         ".log/3ltr/{sample}.blastn_ltr.bm"
     log:
@@ -36,7 +36,7 @@ rule get_header_from_blast:
     input:
         rules.blastn_ltr.output,
     output:
-        "3ltr/{sample}.qseqid_read1.txt",
+        temp("3ltr/{sample}.qseqid_read1.txt"),
     benchmark:
         ".log/3ltr/{sample}.get_header_from_blast.bm"
     log:
@@ -51,8 +51,8 @@ rule grep_fq_by_header:
         "qc/fastp/{sample}.1.fastq.gz",
         "qc/fastp/{sample}.2.fastq.gz",
     output:
-        "3ltr/{sample}.1.3ltr.fq",
-        "3ltr/{sample}.2.3ltr.fq",
+        temp("3ltr/{sample}.1.3ltr.fq"),
+        temp("3ltr/{sample}.2.3ltr.fq"),
     benchmark:
         ".log/3ltr/{sample}.grep_fq_by_header.bm"
     log:
