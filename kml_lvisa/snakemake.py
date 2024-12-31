@@ -18,8 +18,8 @@ def create_snakemake_configfile(sample_names, workdir):
     """
     logging.info('创建 snakemake 配置文件')
     workdir = str(Path(workdir).resolve())
-    dir_temp = Path(workdir).joinpath('.temp')
-    dir_temp.mkdir(exist_ok=True, parents=True)
+    tempdir = Path(workdir).joinpath('.temp')
+    tempdir.mkdir(exist_ok=True, parents=True)
 
     dict_smk = {
         'workdir': workdir,
@@ -45,7 +45,9 @@ def run_snakemake(workdir):
     cores = get_threads_dict()['max']
     snakefile = Path(__file__).resolve().parents[1].joinpath('wf-lvisa/Snakefile')
     configfile = f'{workdir}/.temp/snakemake.yaml'
-    logfile = f'{workdir}/.log/snakemake.log'
+    logdir = Path(workdir).joinpath('.log')
+    logdir.mkdir(exist_ok=True, parents=True)
+    logfile = logdir.joinpath('snakemake.log')
 
     cml = f"""
     source {activate} snakemake

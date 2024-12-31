@@ -27,8 +27,10 @@ def get_database_dict() -> dict:
         dict_database = yaml.safe_load(f)
 
     # assets 一些小型数据库文件
-    ltr_fa = Path(__file__).resolve().parents[1].joinpath('assets/3LTR/3LTR.fa')
-    dict_database['3ltr'] = str(ltr_fa)
+    ltr = Path(__file__).resolve().parents[1].joinpath('assets/3LTR/3LTR.fa')
+    dict_database['3ltr'] = str(ltr)
+    umi = Path(__file__).resolve().parents[1].joinpath('assets/UMI/ajtk_umi.json')
+    dict_database['umi'] = str(umi)
 
     return dict_database
 

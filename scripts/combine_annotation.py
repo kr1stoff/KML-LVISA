@@ -46,7 +46,7 @@ sorted_is_cov = sorted(is_cov_dict.items(), key=lambda x: x[1][1], reverse=True)
 
 # 输出
 with open(combine_out, 'w') as g:
-    headers = ['Chrom', 'Start', 'Depth (UMI)', 'Depth', 'Effect', 'Gene', 'Oncogene/TSG',
+    headers = ['Chrom', 'Start', 'UMIs', 'Depth', 'Effect', 'Gene', 'Oncogene/TSG',
                'CpG Name', 'CpG Pos', 'TSS Name', 'TSS Pos', 'Rep Name', 'Rep Class', 'Rep Family']
     g.write('\t'.join(headers) + '\n')
 

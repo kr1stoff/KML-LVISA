@@ -2,3 +2,4 @@ basic: basic
 # poetry 的 python 解释器在环境中优先级最高, 所有第三方包安装在 poetry 的虚拟环境中
 # python: python3.8
 R: R4.3.1
+python: python3.10
