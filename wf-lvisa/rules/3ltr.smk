@@ -2,6 +2,7 @@ rule fq2fa:
     input:
         "qc/fastp/{sample}.1.fastq.gz",
     output:
+        # temp() 临时文件, 会在流程结束后删除
         temp("3ltr/{sample}.fa"),
     benchmark:
         ".log/3ltr/{sample}.fq2fa.bm"
