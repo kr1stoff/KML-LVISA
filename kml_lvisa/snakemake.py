@@ -45,9 +45,7 @@ def run_snakemake(workdir):
     cores = get_threads_dict()['max']
     snakefile = Path(__file__).resolve().parents[1].joinpath('wf-lvisa/Snakefile')
     configfile = f'{workdir}/.temp/snakemake.yaml'
-    logdir = Path(workdir).joinpath('.log')
-    logdir.mkdir(exist_ok=True, parents=True)
-    logfile = logdir.joinpath('snakemake.log')
+    logfile = f'{workdir}/.temp/snakemake.log'
 
     cml = f"""
     source {activate} snakemake

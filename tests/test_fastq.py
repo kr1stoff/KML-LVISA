@@ -1,8 +1,8 @@
 from kml_lvisa import prepare_fastq_by_samptab
 from kml_lvisa import get_sample_names_by_samptab
 
-work_dir = '/data/mengxf/Project/KML241220_lvis_YuShiYan5/results/241231'
-sample_table = '/data/mengxf/Project/KML241220_lvis_YuShiYan5/FASTQ/input_tsv/input.tsv'
+work_dir = '/data/mengxf/Project/KML241220_lvis_YuShiYan5/results/25011001'
+sample_table = '/data/mengxf/Project/KML241220_lvis_YuShiYan5/input/input.tsv'
 
 
 def test_prepare():

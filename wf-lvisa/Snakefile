@@ -15,6 +15,7 @@ rule all:
         expand("umi/{sample}.umi.json", sample=config["samples"]),
         expand("umi/{sample}.umi.html", sample=config["samples"]),
         expand("umi/{sample}.umi.bam.stat", sample=config["samples"]),
+        expand("umi/{sample}.umi.bed", sample=config["samples"]),
         expand("anno/{sample}.is.combine.tsv", sample=config["samples"]),
         expand("stats/{sample}.is.diversity.tsv", sample=config["samples"]),
         expand("stats/{sample}.top10_is.tsv", sample=config["samples"]),

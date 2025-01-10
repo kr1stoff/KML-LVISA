@@ -1,4 +1,3 @@
-# 过滤 1 个 UMI < 3 条 reads 支持
 import sys
 import json
 import Levenshtein
@@ -120,13 +119,13 @@ def output_bed_file(bed_dict):
             f.write('\t'.join(position + [strand, umi_num, umi]) + '\n')
 
 
-# global
+# main
+# * 需要 samtools sort 过的 SAM 文件
 in_sam = sys.argv[1]
 ajtk_umi = sys.argv[2]
 out_bed = sys.argv[3]
-# UMI字典, 经验证 UMI 间编辑距离最小为 3
+# * UMI字典, 经验证 UMI 间编辑距离最小为 3
 umi_dict = json.load(open(ajtk_umi, 'r'))
 
-# main
 bed_dict = sam_to_bed_dict()
 output_bed_file(bed_dict)

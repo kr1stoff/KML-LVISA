@@ -1,6 +1,6 @@
 rule map_all_cover:
     input:
-        bed=rules.umi_filter.output,
+        bed=rules.merge_umi_bed.output,
         bam=rules.filter_bam.output.bam,
     output:
         "isite/{sample}.all.coverage",
@@ -19,7 +19,7 @@ rule map_all_cover:
 
 rule isite_cover:
     input:
-        bed=rules.umi_filter.output,
+        bed=rules.merge_umi_bed.output,
         all_cov=rules.map_all_cover.output,
     output:
         "isite/{sample}.is.coverage",

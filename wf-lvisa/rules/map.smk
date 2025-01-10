@@ -36,11 +36,16 @@ rule filter_bam:
     conda:
         config["conda"]["basic"]
     params:
-        "-hbS -q 30 -m 55 -F 2828",
+        # 过滤
+        # 1.mapq < 30
+        # 2.map length < 55
+        # 3. flag 4 8 256 512 2048
+        # 4. TLEN > 1000
+        # 5. read_length (CIGAR M or S) > 50
+        "-hbS -q 30 -m 55 -F 2828 -e 'tlen < 1000 && qlen-sclen > 50'",
     threads: config["threads"]["high"]
     shell:
         """
-        # 过滤 1.mapq < 30;  2.map length < 55;  3. flag 4 8 256 512 2048
         samtools view -@ {threads} {params} {input} -o {output.bam} 2> {log}
         samtools stat {output.bam} | grep ^SN | cut -f 2- > {output.stat} 2>> {log}
         """
