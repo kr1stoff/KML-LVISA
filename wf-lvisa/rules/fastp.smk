@@ -5,9 +5,8 @@ rule fastp_pe:
     output:
         j="qc/fastp/{sample}.json",
         h="qc/fastp/{sample}.html",
-        # * 过滤后 fq 作为临时文件，流程结束后删除
-        o=temp("qc/fastp/{sample}.1.fastq.gz"),
-        O=temp("qc/fastp/{sample}.2.fastq.gz"),
+        o="qc/fastp/{sample}.1.fastq.gz",
+        O="qc/fastp/{sample}.2.fastq.gz",
     benchmark:
         ".log/fastp/{sample}.fastp_pe.bm"
     log:
