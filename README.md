@@ -21,6 +21,9 @@
 
 ## 更新
 
+- [250120] 0.2.2
+  - 添加 HGNC 基因全名. FRYL: FRY like transcription coactivator
+
 - [241226] 版本号 0.2.0
   - UMI 计算方法重写, 加入艾吉泰康 384 UMI 文件
   - 根据比对方向确定插入位点精确位置

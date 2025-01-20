@@ -10,28 +10,46 @@ rule snpeff:
     conda:
         config["conda"]["basic"]
     shell:
-        """
-        snpEff -dataDir {config[database][snpeff]} -i bed -chr chr -geneId -canon -noStats hg19 {input} > {output} 2>> {log}
-        """
+        "snpEff -dataDir {config[database][snpeff]} -i bed -chr chr -geneId -canon -noStats hg19 {input} > {output} 2>> {log}"
 
 
-rule anno_effect_oncokb:
+rule anno_effect:
     input:
         rules.snpeff.output,
     output:
-        effect="anno/{sample}.is.effect",
-        oncokb="anno/{sample}.is.oncokb",
+        "anno/{sample}.is.effect",
     benchmark:
-        ".log/anno/{sample}.anno_effect_oncokb.bm"
+        ".log/anno/{sample}.anno_effect.bm"
     log:
-        ".log/anno/{sample}.anno_effect_oncokb.log",
+        ".log/anno/{sample}.anno_effect.log",
     shell:
-        """
-        # 注释 position, gene, effect
-        python {config[my_scripts]}/annotate_effect.py {input} {output.effect} 2> {log}
-        # 注释 oncokb
-        python {config[my_scripts]}/annotate_oncokb.py {output.effect} {output.oncokb} {config[database][oncokb]} 2>> {log}
-        """
+        "python {config[my_scripts]}/annotate_effect.py {input} {output} 2> {log}"
+
+
+rule anno_oncokb:
+    input:
+        rules.anno_effect.output,
+    output:
+        "anno/{sample}.is.oncokb",
+    benchmark:
+        ".log/anno/{sample}.anno_oncokb.bm"
+    log:
+        ".log/anno/{sample}.anno_oncokb.log",
+    shell:
+        "python {config[my_scripts]}/annotate_oncokb.py {input} {output} {config[database][oncokb]} 2> {log}"
+
+
+rule anno_full_name:
+    input:
+        rules.anno_effect.output,
+    output:
+        "anno/{sample}.is.fullname",
+    benchmark:
+        ".log/anno/{sample}.anno_full_name.bm"
+    log:
+        ".log/anno/{sample}.anno_full_name.log",
+    shell:
+        "python {config[my_scripts]}/annotate_fullname.py {input} {output} {config[database][hgnc]} 2> {log}"
 
 
 rule bedtools_anno_cpg_tss_repeat:
@@ -62,11 +80,12 @@ rule bedtools_anno_cpg_tss_repeat:
 rule comb_anno:
     input:
         rules.isite_cover.output,
-        rules.anno_effect_oncokb.output.effect,
-        rules.anno_effect_oncokb.output.oncokb,
+        rules.anno_effect.output,
+        rules.anno_oncokb.output,
         rules.bedtools_anno_cpg_tss_repeat.output.cpg,
         rules.bedtools_anno_cpg_tss_repeat.output.tss,
         rules.bedtools_anno_cpg_tss_repeat.output.repeat,
+        rules.anno_full_name.output,
     output:
         "anno/{sample}.is.combine.tsv",
     benchmark:
@@ -74,7 +93,4 @@ rule comb_anno:
     log:
         ".log/anno/{sample}.comb_anno.log",
     shell:
-        """
-        # 合并注释结果
-        python {config[my_scripts]}/combine_annotation.py {input} {output} 2> {log}
-        """
+        "python {config[my_scripts]}/combine_annotation.py {input} {output} 2> {log}"

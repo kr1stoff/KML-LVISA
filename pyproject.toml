@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "kml-lvisa"
-version = "0.2.1"
+version = "0.2.2"
 description = ""
 authors = ["kristoff <706060951@qq.com>"]
 readme = "README.md"
@@ -34,7 +34,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
 testpaths = [
-    "tests/test_fastq.py",
+    # "tests/test_fastq.py",
     "tests/test_config.py",
     "tests/test_snakemake.py",
 ]

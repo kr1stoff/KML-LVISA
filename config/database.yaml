@@ -6,3 +6,4 @@ switchDbTss10kb: /data/mengxf/Database/genome/hg19/hg19.switchDbTss10kb.bed
 rmsk: /data/mengxf/Database/genome/hg19/hg19.rmsk.bed
 hg19comp: /data/mengxf/Database/genome/hg19/hg19.fa.comp
 cytoband: /data/mengxf/Database/genome/hg19/hg19.cytoBand.tsv
+hgnc: /data/mengxf/Database/genome/hg19/HGNC/non_alt_loci_set.txt

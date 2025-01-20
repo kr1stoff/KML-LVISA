@@ -8,7 +8,9 @@ oncokb_file = sys.argv[3]   # 'anno/SRR17348516.is.oncokb'
 cpg_file = sys.argv[4]  # 'anno/SRR17348516.is.cpg'
 tss_file = sys.argv[5]  # 'anno/SRR17348516.is.tss'
 rmsk_file = sys.argv[6]  # 'anno/SRR17348516.is.rmsk'
-combine_out = sys.argv[7]   # 'anno/SRR17348516.is.combine.tsv'
+fullname_file = sys.argv[7]  # 'anno/SRR17348516.is.fullname'
+
+combine_out = sys.argv[-1]  # 'anno/SRR17348516.is.combine.tsv'
 
 
 def get_pos_anno_dict(anno_file):
@@ -33,6 +35,7 @@ oncokb_dict = get_pos_anno_dict(oncokb_file)
 cpg_dict = get_pos_anno_dict(cpg_file)
 tss_dict = get_pos_anno_dict(tss_file)
 rmsk_dict = get_pos_anno_dict(rmsk_file)
+fullname_dict = get_pos_anno_dict(fullname_file)
 
 # 排序一下 Depth
 is_cov_dict = {}
@@ -46,7 +49,7 @@ sorted_is_cov = sorted(is_cov_dict.items(), key=lambda x: x[1][1], reverse=True)
 
 # 输出
 with open(combine_out, 'w') as g:
-    headers = ['Chrom', 'Start', 'UMIs', 'Depth', 'Effect', 'Gene', 'Oncogene/TSG',
+    headers = ['Chrom', 'Start', 'UMIs', 'Depth', 'Effect', 'Gene', 'FullName', 'Oncogene/TSG',
                'CpG Name', 'CpG Pos', 'TSS Name', 'TSS Pos', 'Rep Name', 'Rep Class', 'Rep Family']
     g.write('\t'.join(headers) + '\n')
 
@@ -61,6 +64,14 @@ with open(combine_out, 'w') as g:
             onco, _ = oncokb_dict[(chrom, start)].split('|')
         else:
             onco = '-'
+        # fullname
+        if (chrom, start) in fullname_dict:
+            try:
+                fullname, _ = fullname_dict[(chrom, start)].split('|')
+            except ValueError:
+                print(fullname_dict[(chrom, start)])
+        else:
+            fullname = '-'
         # cpg
         if (chrom, start) in cpg_dict:
             cpg_name, cpg_pos = cpg_dict[(chrom, start)].split('|')
@@ -78,5 +89,5 @@ with open(combine_out, 'w') as g:
         else:
             rep_name, rep_class, rep_family = '-', '-', '-'
 
-        g.write('\t'.join([chrom, start, str(umi_num), str(all_num), effect, gene, onco, cpg_name,
+        g.write('\t'.join([chrom, start, str(umi_num), str(all_num), effect, gene, fullname, onco, cpg_name,
                 cpg_pos, tss_name, tss_pos, rep_name, rep_class, rep_family]) + '\n')

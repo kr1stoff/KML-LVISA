@@ -36,7 +36,7 @@ rule filter_bam:
     conda:
         config["conda"]["basic"]
     params:
-        # 过滤
+        # ! 过滤
         # 1.mapq < 30
         # 2.map length < 55
         # 3. flag 4 8 256 512 2048
