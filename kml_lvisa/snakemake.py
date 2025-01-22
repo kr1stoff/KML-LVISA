@@ -47,10 +47,11 @@ def run_snakemake(workdir):
     configfile = f'{workdir}/.temp/snakemake.yaml'
     logfile = f'{workdir}/.temp/snakemake.log'
 
+# * --ignore-incomplete 如果有 NTC 样本可能终端
     cml = f"""
     source {activate} snakemake
     # use-conda
-    snakemake -c {cores} --use-conda -s {snakefile} --configfile {configfile}
+    snakemake -c {cores} --use-conda -s {snakefile} --configfile {configfile} --ignore-incomplete
     """
 
     proc = run(cml, shell=True, executable='/bin/bash', capture_output=True, encoding='utf-8')

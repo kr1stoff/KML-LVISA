@@ -35,5 +35,8 @@ with open(snpeff_out) as f, open(anno_out, 'w') as g:
 
         lns = line.strip().split('\t')
         chrom, start, _, anno = lns
+        # * 250121 有注释不出来的情况 "chrM	16571	16572	10"
+        if ';' not in anno:
+            continue
         eff, gene = parse_anno_info(anno)
         g.write(f'{chrom}\t{start}\t{eff}|{gene}\n')

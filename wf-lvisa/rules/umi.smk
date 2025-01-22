@@ -12,7 +12,9 @@ rule umi_bam:
         ".log/umi/{sample}.umi_bam.log",
     params:
         # ! [241231] 1.每个UMI最小支持reads数目为3；2.分类UMI最多允许1个碱基差异
-        "-s 3 -d 1",
+        # "-s 3 -d 1",
+        # FIXME 250122 提高敏感性，每个UMI最小支持reads数目为1
+        "-s 1 -d 1",
     threads: config["threads"]["low"]
     conda:
         config["conda"]["basic"]
