@@ -38,14 +38,13 @@ rule filter_bam:
     params:
         # ! 过滤
         # 1.mapq < 30
-        # 2.map length < 55
-        # 3. flag 4 8 256 512 2048
-        # 4. TLEN > 1000
-        # 5. read_length (CIGAR M or S) < 55
+        # 2.min length < 55
+        # 3.flag 4 8 256 512 2048
+        # 4.TLEN > 1000
+        # 5.alignment length < 55, (query length - softclip length)
         # "-hbS -q 30 -m 55 -F 2828 -e 'tlen < 1000 && qlen-sclen > 55'",
-
-        # FIXME 250122 提高敏感性修改阈值 "mapq < 20 和 flag 4 8"
-        "-hbS -q 20 -F 12"
+        # FIXME 250122 提高敏感性修改阈值
+        "-hbS -q 20 -m 55 -F 2828 -e 'tlen < 1000 && qlen-sclen > 55'",
     threads: config["threads"]["high"]
     shell:
         """

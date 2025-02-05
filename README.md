@@ -21,6 +21,9 @@
 
 ## 更新
 
+- [250123] 0.3.0
+  - 修复 NTC 无数据流程终端的 BUG
+
 - [250120] 0.2.2
   - 添加 HGNC 基因全名. FRYL: FRY like transcription coactivator
 
