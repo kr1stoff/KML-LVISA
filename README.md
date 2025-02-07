@@ -23,7 +23,7 @@
 
 - [250206] 0.3.1
   - 针对性能验证 ZQX4 单条非特异 read 噪音过滤
-  - (艾吉泰康建议) 3LTR 引物比对位置过滤. "awk '$11>30'"
+  - (AGTK建议) 3LTR 引物比对位置过滤. "awk '$11>30'"
   - UMI support reads 3 -> 1
   - 3LTR 引物比对位置过滤. awk '$11>30', 引物长度为 25，允许 5bp 偏移
 
@@ -34,5 +34,5 @@
   - 添加 HGNC 基因全名. FRYL: FRY like transcription coactivator
 
 - [241226] 0.2.0
-  - UMI 计算方法重写, 加入艾吉泰康 384 UMI 文件
+  - UMI 计算方法重写, 加入 AGTK 384 UMI 文件
   - 根据比对方向确定插入位点精确位置
