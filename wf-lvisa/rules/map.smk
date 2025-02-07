@@ -35,15 +35,13 @@ rule filter_bam:
         ".log/map/{sample}.filter_bam.log",
     conda:
         config["conda"]["basic"]
+    # ! 过滤
+    # 1.mapq < 20
+    # 2.min length < 55
+    # 3.flag 4 8 256 512 2048
+    # 4.TLEN > 1000
+    # 5.alignment length < 55, (query length - softclip length)
     params:
-        # ! 过滤
-        # 1.mapq < 30
-        # 2.min length < 55
-        # 3.flag 4 8 256 512 2048
-        # 4.TLEN > 1000
-        # 5.alignment length < 55, (query length - softclip length)
-        # "-hbS -q 30 -m 55 -F 2828 -e 'tlen < 1000 && qlen-sclen > 55'",
-        # FIXME 250122 提高敏感性修改阈值
         "-hbS -q 20 -m 55 -F 2828 -e 'tlen < 1000 && qlen-sclen > 55'",
     threads: config["threads"]["high"]
     shell:

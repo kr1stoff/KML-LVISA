@@ -11,9 +11,8 @@ rule umi_bam:
     log:
         ".log/umi/{sample}.umi_bam.log",
     params:
-        # ! [241231] 1.每个UMI最小支持reads数目为3；2.分类UMI最多允许1个碱基差异
-        # "-s 3 -d 1",
-        # FIXME 250122 提高敏感性，每个UMI最小支持reads数目为1
+        # [241231] 1.每个UMI最小支持reads数目为3；2.分类UMI最多允许1个碱基差异
+        # ! [250206] 艾吉泰康建议不要设置 UMI support reads 阈值, 默认 1
         "-s 1 -d 1",
     threads: config["threads"]["low"]
     conda:
@@ -29,12 +28,48 @@ rule umi_bam_to_bed:
     input:
         rules.umi_bam.output.bam,
     output:
-        strand="umi/{sample}.strand.bed",
-        qname="umi/{sample}.qname.bed",
+        temp("umi/{sample}.raw.bed"),
     log:
         ".log/umi/{sample}.umi_bam_to_bed.log",
     benchmark:
         ".log/umi/{sample}.umi_bam_to_bed.bm"
+    conda:
+        config["conda"]["basic"]
+    shell:
+        "bedtools bamtobed -i {input} > {output}"
+
+
+rule filter_umi_raw_bed:
+    input:
+        rules.umi_bam_to_bed.output,
+    output:
+        fltr="umi/{sample}.filter.bed",
+        waste="umi/{sample}.waste.bed",
+    log:
+        ".log/umi/{sample}.filter_umi_raw_bed.log",
+    benchmark:
+        ".log/umi/{sample}.filter_umi_raw_bed.bm"
+    conda:
+        config["conda"]["python"]
+    params:
+        read_threas=1,
+    shell:
+        # * [250206] 针对性能验证 ZQX4 单条非特异 read 噪音解决办法
+        """
+        python {config[my_scripts]}/filter_umi_raw_bed.py {input} {output.fltr} {output.waste} {params.read_threas} 2>> {log}
+        """
+
+
+rule umi_strand_qname_bed:
+    input:
+        rules.filter_umi_raw_bed.output.fltr,
+    output:
+        strand="umi/{sample}.strand.bed",
+        qname="umi/{sample}.qname.bed",
+    log:
+        ".log/umi/{sample}.umi_strand_qname_bed.log",
+    benchmark:
+        ".log/umi/{sample}.umi_strand_qname_bed.bm"
     conda:
         config["conda"]["basic"]
     params:
@@ -46,15 +81,15 @@ rule umi_bam_to_bed:
         qname="-s -c 4 -o collapse",
     shell:
         """
-        bedtools bamtobed -i {input} | bedtools merge {params.strand} > {output.strand}
-        bedtools bamtobed -i {input} | bedtools merge {params.qname} > {output.qname}
+        bedtools merge {params.strand} -i {input} > {output.strand}
+        bedtools merge {params.qname} -i {input} > {output.qname}
         """
 
 
 rule merge_umi_bed:
     input:
-        strand=rules.umi_bam_to_bed.output.strand,
-        qname=rules.umi_bam_to_bed.output.qname,
+        strand=rules.umi_strand_qname_bed.output.strand,
+        qname=rules.umi_strand_qname_bed.output.qname,
     output:
         "umi/{sample}.umi.bed",
     benchmark:

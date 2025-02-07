@@ -16,6 +16,11 @@ with open(umi_bed) as f:
         dict_stat[(chrom, start, end)] = {'strand': strand, 'umi_num': int(reads)}
 
 with open(all_cov) as f:
+    """
+    chr10   1338137 1338201 -       1       UMI280  6       64      64      1.0000000
+    chr10   42385153        42385251        +       1       UMI65   678     98      98      1.0000000
+    ...
+    """
     for line in f:
         lns = line.strip().split('\t')
         chrom, start, end = lns[:3]

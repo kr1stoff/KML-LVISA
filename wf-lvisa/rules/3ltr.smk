@@ -25,7 +25,8 @@ rule blastn_ltr:
     conda:
         config["conda"]["basic"]
     params:
-        "-task blastn-short -word_size 7 -max_hsps 100 -max_target_seqs 1000 "
+        # * word_size 对应引物长度设置，暂用 50% 引物长度也就是 8 bp
+        "-task blastn-short -word_size 8 -max_hsps 100 -max_target_seqs 1000 "
         "-outfmt '6 length nident pident sstrand sseqid sstart send slen qseqid qstart qend qlen qcovs evalue bitscore'",
     threads: config["threads"]["high"]
     shell:
@@ -42,6 +43,7 @@ rule get_header_from_blast:
     log:
         ".log/3ltr/{sample}.get_header_from_blast.log",
     shell:
+        # ! 过滤 blast 输出符合通过标准的 fastq
         "python {config[my_scripts]}/get_fastq_header_from_blast.py {input} {output} &> {log}"
 
 
