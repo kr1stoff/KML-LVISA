@@ -30,7 +30,7 @@
 - [250123] 0.3.0
   - 修复 NTC 无数据流程中断的 BUG
 
-- [250120] 0.2.2
+- [250120] 0.2.1
   - 添加 HGNC 基因全名. FRYL: FRY like transcription coactivator
 
 - [241226] 0.2.0
