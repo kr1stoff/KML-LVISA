@@ -39,8 +39,13 @@ output_png <- args[2] # "stats/SRR17348516.chromosome_density.png"
 
 # main
 data_comb <- read.table(combine_file, header = TRUE, sep = "\t")[, 1:4]
-if (nrow(data_comb) == 0) {
-    touch_empty_file(output_png)
-} else {
-    draw_cmplot(data_comb, output_png)
-}
+# ! NTC 位点数太少会报错，改成 try-catch
+tryCatch(
+    {
+        draw_cmplot(data_comb, output_png)
+    },
+    error = function(e) {
+        message("An error occurred: ", e$message)
+        touch_empty_file(output_png)
+    }
+)
