@@ -11,9 +11,9 @@ rule umi_bam:
     log:
         ".log/umi/{sample}.umi_bam.log",
     params:
-        # [241231] 1.每个UMI最小支持reads数目为3；2.分类UMI最多允许1个碱基差异
-        # ! [250206] 艾吉泰康建议不要设置 UMI support reads 阈值, 默认 1
-        "-s 1 -d 1",
+        # todo [241231] 1.每个UMI最小支持reads数目为3；2.分类UMI最多允许1个碱基差异
+        # [250206] 艾吉泰康建议不要设置 UMI support reads 阈值, 默认 1
+        "-d 1 -s 3",
     threads: config["threads"]["low"]
     conda:
         config["conda"]["basic"]
