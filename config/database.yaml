@@ -1,5 +1,5 @@
 hg19: /data/mengxf/Database/genome/hg19/hg19.fa
-snpeff: /data/mengxf/Database/snpEff
+snpeff: /data/mengxf/Database/snpEff/data
 oncokb: /data/mengxf/Database/genome/hg19/OncoKBcancerGeneList.tsv
 cpg10kb: /data/mengxf/Database/genome/hg19/hg19.cpg10kb.bed
 switchDbTss10kb: /data/mengxf/Database/genome/hg19/hg19.switchDbTss10kb.bed
