@@ -29,7 +29,7 @@ seqkit grep -f 3ltr/qseqid.txt fastp/SRR17348516.clean.R2.fq -o 3ltr/SRR17348516
 
 # 比对
 bwa mem -t 16 -M -Y -R '@RG\tID:SRR17348516\tSM:SRR17348516' \
-    /data/mengxf/Database/genome/hg19/hg19.fa \
+    /data/mengxf/Database/reference/hg19/hg19.fa \
     3ltr/SRR17348516.1.3ltr.fq \
     3ltr/SRR17348516.2.3ltr.fq |
     samtools view -@ 4 -hbS - |
@@ -42,7 +42,7 @@ samtools stat align/SRR17348516.filter.bam | grep ^SN | cut -f 2- >align/SRR1734
 # umi  gencore 貌似只能去重不能统计
 gencore -i align/SRR17348516.filter.bam \
     -o umi/SRR17348516.umi.bam \
-    -r /data/mengxf/Database/genome/hg19/hg19.fa \
+    -r /data/mengxf/Database/reference/hg19/hg19.fa \
     -h umi/SRR17348516.umi.html \
     -j umi/SRR17348516.umi.json
 samtools stat umi/SRR17348516.umi.bam | grep ^SN | cut -f 2- >umi/SRR17348516.umi.bam.stat
@@ -85,18 +85,18 @@ snpEff -dataDir /data/mengxf/Database/snpEff \
 # CpG 要去重, CpG(10kb) 之间有 overlap. 后面都做去重
 bedtools intersect -wb \
     -a anno/SRR17348516.is.bed \
-    -b /data/mengxf/Database/genome/hg19/hg19.cpg10kb.bed |
+    -b /data/mengxf/Database/reference/hg19/hg19.cpg10kb.bed |
     cut -f1,2,7 >anno/SRR17348516.is.cpg
 # TSS
 bedtools intersect -wb \
     -a anno/SRR17348516.is.bed \
-    -b /data/mengxf/Database/genome/hg19/hg19.switchDbTss10kb.bed |
+    -b /data/mengxf/Database/reference/hg19/hg19.switchDbTss10kb.bed |
     cut -f1,2,7 >anno/SRR17348516.is.tss
 # Repeat
 # repName, repClass, repFamily
 bedtools intersect -wb \
     -a anno/SRR17348516.is.bed \
-    -b /data/mengxf/Database/genome/hg19/hg19.rmsk.bed |
+    -b /data/mengxf/Database/reference/hg19/hg19.rmsk.bed |
     cut -f1,2,7 >anno/SRR17348516.is.rmsk
 # 合并注释结果
 /home/mengxf/miniforge3/envs/python3.8/bin/python /data/mengxf/Project/KML240924_lvis_pipeline/script/combine_annotation.py

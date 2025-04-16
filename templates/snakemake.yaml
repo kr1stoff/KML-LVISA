@@ -3,7 +3,7 @@ conda:
   python: python3.8
 database:
   3ltr: /data/mengxf/GitHub/KML-LVISA/assets/3LTR/3LTR.fa
-  hg19: /data/mengxf/Database/genome/hg19/hg19.fa
+  hg19: /data/mengxf/Database/reference/hg19/hg19.fa
 metadata: /data/mengxf/Project/KML240924_lvis_pipeline/result/241031/.temp/metadata.tsv
 my_scripts: /data/mengxf/GitHub/KML-LVISA/scripts
 samples:

@@ -4,7 +4,7 @@ import sys
 
 snpeff_parse = sys.argv[1]
 fullname_out = sys.argv[2]
-hgnc_db = sys.argv[3]  # /data/mengxf/Database/genome/hg19/HGNC_gene_with_protein_product.tsv
+hgnc_db = sys.argv[3]
 
 symbol_name_dict = {}
 
