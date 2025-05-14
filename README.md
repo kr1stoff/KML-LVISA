@@ -25,14 +25,13 @@
     ```
 
 3. 同步目录
+不同步大文件 FASTQ, BAM 等
 
-    - 不同步大文件 FASTQ, BAM 等
-
-        ```bash
-        rsync -auvP --delete --exclude '**.bam' --exclude '**.gz' --exclude '3ltr/' \
-          /data/mengxf/Project/KML250513_lvisa_update/ \
-          /data/share/samba/public/bioinformatics/KML250513_lvisa_update/
-        ```
+    ```bash
+    rsync -auvP --delete --exclude '**.bam' --exclude '**.gz' --exclude '3ltr/' \
+      /data/mengxf/Project/KML250513_lvisa_update/ \
+      /data/share/samba/public/bioinformatics/KML250513_lvisa_update/
+    ```
 
 ## 更新
 
