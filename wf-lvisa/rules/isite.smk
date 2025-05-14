@@ -27,6 +27,8 @@ rule isite_cover:
         ".log/isite/{sample}.isite_cover.bm"
     log:
         ".log/isite/{sample}.isite_cover.log",
+    conda:
+        config["conda"]["python"]
     shell:
         """
         # 过滤 support reads < 10

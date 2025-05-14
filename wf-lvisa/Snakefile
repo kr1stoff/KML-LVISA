@@ -24,6 +24,11 @@ rule all:
         expand("stats/{sample}.effect_pie.png", sample=config["samples"]),
         expand("stats/{sample}.repclass_pie.png", sample=config["samples"]),
         expand("stats/{sample}.chromosome_density.png", sample=config["samples"]),
+        "bigrprt/effect.txt",
+        "bigrprt/effect.png",
+        "bigrprt/repeat.txt",
+        "bigrprt/repeat.png",
+        "bigrprt/oncogene.tsv",
 
 
 include: "rules/fastqc.smk"
@@ -35,3 +40,5 @@ include: "rules/umi.smk"
 include: "rules/isite.smk"
 include: "rules/anno.smk"
 include: "rules/stats.smk"
+# 综合大报告的内容都在这个 smk 更新
+include: "rules/bigrprt.smk"

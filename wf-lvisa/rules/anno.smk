@@ -22,6 +22,8 @@ rule anno_effect:
         ".log/anno/{sample}.anno_effect.bm"
     log:
         ".log/anno/{sample}.anno_effect.log",
+    conda:
+        config["conda"]["python"]
     shell:
         "python {config[my_scripts]}/annotate_effect.py {input} {output} 2> {log}"
 
@@ -35,6 +37,8 @@ rule anno_oncokb:
         ".log/anno/{sample}.anno_oncokb.bm"
     log:
         ".log/anno/{sample}.anno_oncokb.log",
+    conda:
+        config["conda"]["python"]
     shell:
         "python {config[my_scripts]}/annotate_oncokb.py {input} {output} {config[database][oncokb]} 2> {log}"
 
@@ -48,6 +52,8 @@ rule anno_full_name:
         ".log/anno/{sample}.anno_full_name.bm"
     log:
         ".log/anno/{sample}.anno_full_name.log",
+    conda:
+        config["conda"]["python"]
     shell:
         "python {config[my_scripts]}/annotate_fullname.py {input} {output} {config[database][hgnc]} 2> {log}"
 
@@ -92,5 +98,7 @@ rule comb_anno:
         ".log/anno/{sample}.comb_anno.bm"
     log:
         ".log/anno/{sample}.comb_anno.log",
+    conda:
+        config["conda"]["python"]
     shell:
         "python {config[my_scripts]}/combine_annotation.py {input} {output} 2> {log}"

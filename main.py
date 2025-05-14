@@ -13,9 +13,9 @@ logging.basicConfig(level=logging.DEBUG,
 
 
 @click.command()
-@click.option('--sample_table', '-s', type=click.Path(exists=True), required=True, help='样本信息表.')
-@click.option('--work_dir', '-w', type=str, default='lvisa_result', help='结果生成目录. [default: lvisa_result]')
-@click.help_option('-h', '--help')
+@click.option('--sample-table', type=click.Path(exists=True), required=True, help='样本信息表.')
+@click.option('--work-dir', type=str, default='lvisa_result', help='结果生成目录. [default: lvisa_result]')
+@click.help_option(help="查看帮助信息.")
 def main(work_dir, sample_table):
     """慢病毒插入位点分析流程."""
     logging.info(f'开始分析!')

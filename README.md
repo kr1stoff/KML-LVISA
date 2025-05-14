@@ -5,9 +5,13 @@
 ## 命令行
 
 1. 主脚本
+  使用绝对路径
 
     ```bash
-    poetry -C /data/mengxf/GitHub/KML-LVISA run python /data/mengxf/GitHub/KML-LVISA/main.py -s templates/input.tsv -w 241105
+    mamba run -n python3.12 poetry -C /data/mengxf/GitHub/KML-LVISA run \
+      python /data/mengxf/GitHub/KML-LVISA/main.py \
+      --sample-table /data/mengxf/Project/KML250513_lvisa_update/input.tsv \
+      --work-dir /data/mengxf/Project/KML250513_lvisa_update/result/250514
     ```
 
 2. 单独跑 snakemake
@@ -18,6 +22,7 @@
     ```
 
 3. 同步目录
+
     - 不同步大文件 FASTQ, BAM 等
 
         ```bash
@@ -26,9 +31,16 @@
 
 ## 更新
 
+- [250513] 0.4.0
+  - 针对综合报告部分内容更新流程
+    - 总体整合位点在基因分布
+    - 总体整合位点在 repeat 区域分布
+    - 整合位点安全性分析，TSGs/Oncogene 位点数量和信息
+  - 多线程复制 FASTQ
+
 - [250206] 0.3.1
   - 针对性能验证样本 ZQX4 单条非特异 read 噪音过滤
-  - (AGTK建议) 3LTR 引物比对位置过滤. awk '$11>30', 引物长度为 25，允许 5bp 偏移
+  - (AGTK 建议) 3LTR 引物比对位置过滤. awk '$11>30', 引物长度为 25，允许 5bp 偏移
   - UMI support reads 3 -> 1
 
 - [250123] 0.3.0
