@@ -18,7 +18,10 @@
 
     ```bash
     # 安装了 snakemake 的环境
-    mamba run -n snakemake snakemake -c 32 --use-conda -s /data/mengxf/GitHub/KML-LVISA/wf-lvisa/Snakefile --configfile .temp/snakemake.yaml
+    mamba run -n snakemake \
+      snakemake -c 32 --use-conda \
+      -s /data/mengxf/GitHub/KML-LVISA/wf-lvisa/Snakefile \
+      --configfile .temp/snakemake.yaml
     ```
 
 3. 同步目录
