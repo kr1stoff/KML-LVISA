@@ -18,7 +18,7 @@
 
     ```bash
     # 安装了 snakemake 的环境
-    snakemake -c 32 --use-conda -s /data/mengxf/GitHub/KML-LVISA/wf-lvisa/Snakefile --configfile .temp/snakemake.yaml
+    mamba run -n snakemake snakemake -c 32 --use-conda -s /data/mengxf/GitHub/KML-LVISA/wf-lvisa/Snakefile --configfile .temp/snakemake.yaml
     ```
 
 3. 同步目录
@@ -26,7 +26,7 @@
     - 不同步大文件 FASTQ, BAM 等
 
         ```bash
-        rsync -auvP --delete --include 'anno/***' --include 'stats/***' --exclude '*fastq.gz' --include 'qc/***' --exclude '*' /data/mengxf/Project/KML250214_lvis_YanZhengRUN3/results/250214/ /data/share/samba/public/bioinformatics/250212_NB501947_0938_AHH2WMAFX7/250214/
+        rsync -auvP --delete --exclude '**.bam' --exclude '**.gz' --exclude '3ltr/' /data/mengxf/Project/KML250513_lvisa_update/ /data/share/samba/public/bioinformatics/KML250513_lvisa_update/
         ```
 
 ## 更新
