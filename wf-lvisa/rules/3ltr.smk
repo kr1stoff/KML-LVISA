@@ -42,6 +42,8 @@ rule get_header_from_blast:
         ".log/3ltr/{sample}.get_header_from_blast.bm"
     log:
         ".log/3ltr/{sample}.get_header_from_blast.log",
+    conda:
+        config["conda"]["python"]
     shell:
         # ! 过滤 blast 输出符合通过标准的 fastq
         "python {config[my_scripts]}/get_fastq_header_from_blast.py {input} {output} &> {log}"

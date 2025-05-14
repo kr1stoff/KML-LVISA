@@ -38,6 +38,8 @@ rule top10_is:
         ".log/stats/{sample}.top10_is.bm"
     log:
         ".log/stats/{sample}.top10_is.log",
+    conda:
+        config["conda"]["python"]
     shell:
         "python {config[my_scripts]}/top10_is.py {input} {output.top10tsv} {output.top10png} 2> {log}"
 
@@ -51,6 +53,8 @@ rule chrom_dist:
         ".log/stats/{sample}.chrom_dist.bm"
     log:
         ".log/stats/{sample}.chrom_dist.log",
+    conda:
+        config["conda"]["python"]
     shell:
         "python {config[my_scripts]}/chromosome_distribute_barplot.py {config[database][hg19comp]} {input} {output} 2> {log}"
 
@@ -64,6 +68,8 @@ rule effect_plot:
         ".log/stats/{sample}.effect_plot.bm"
     log:
         ".log/stats/{sample}.effect_plot.log",
+    conda:
+        config["conda"]["python"]
     shell:
         "python {config[my_scripts]}/effect_pie.py {input} {output} 2> {log}"
 
@@ -77,5 +83,7 @@ rule repclass_plot:
         ".log/stats/{sample}.repclass_plot.bm"
     log:
         ".log/stats/{sample}.repclass_plot.log",
+    conda:
+        config["conda"]["python"]
     shell:
         "python {config[my_scripts]}/reclass_pie.py {input} {output} 2> {log}"
