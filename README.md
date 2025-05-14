@@ -25,7 +25,7 @@
     ```
 
 3. 同步目录
-不同步大文件 FASTQ, BAM 等
+  不同步大文件 FASTQ, BAM 等
 
     ```bash
     rsync -auvP --delete --exclude '**.bam' --exclude '**.gz' --exclude '3ltr/' \
