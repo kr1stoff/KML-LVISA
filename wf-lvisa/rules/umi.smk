@@ -16,7 +16,7 @@ rule umi_bam:
         "-d 1 -s 3",
     threads: config["threads"]["low"]
     conda:
-        config["conda"]["basic"]
+        config["conda"]["basic2"]
     shell:
         """
         gencore {params} -i {input} -o {output.bam} -r {config[database][hg19]} -h {output.html} -j {output.json} 2> {log}
@@ -34,7 +34,7 @@ rule umi_bam_to_bed:
     benchmark:
         ".log/umi/{sample}.umi_bam_to_bed.bm"
     conda:
-        config["conda"]["basic"]
+        config["conda"]["basic2"]
     shell:
         "bedtools bamtobed -i {input} > {output}"
 
@@ -71,7 +71,7 @@ rule umi_strand_qname_bed:
     benchmark:
         ".log/umi/{sample}.umi_strand_qname_bed.bm"
     conda:
-        config["conda"]["basic"]
+        config["conda"]["basic2"]
     params:
         # * [250110] bedtools merge 参数
         # -s 正反向链不合并

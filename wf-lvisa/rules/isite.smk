@@ -9,7 +9,7 @@ rule map_all_cover:
     log:
         ".log/isite/{sample}.map_all_cover.log",
     conda:
-        config["conda"]["basic"]
+        config["conda"]["basic2"]
     shell:
         """
         # 总 bam 深度

@@ -12,7 +12,7 @@ rule fastp_pe:
     log:
         ".log/fastp/{sample}.fastp_pe.log",
     conda:
-        config["conda"]["basic"]
+        config["conda"]["basic2"]
     params:
         # ! 艾吉泰康
         # 1. UMI 组合 384 个, 长度 8 bp

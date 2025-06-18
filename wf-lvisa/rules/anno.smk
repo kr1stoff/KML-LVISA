@@ -70,7 +70,7 @@ rule bedtools_anno_cpg_tss_repeat:
     log:
         ".log/anno/{sample}.bedtools_anno_cpg_tss_repeat.log",
     conda:
-        config["conda"]["basic"]
+        config["conda"]["basic2"]
     shell:
         """
         # CpG 要去重, CpG(10kb) 之间有 overlap. 后面都做去重
