@@ -53,6 +53,8 @@ def get_threads_dict() -> dict:
     logging.info('获取线程数字典')
     # * high: 当前总线程 / 2; low: high / 4
     max_threads = os.cpu_count()
+    if max_threads is None:
+        max_threads = 8
     high_threads = math.floor(max_threads / 2)
     low_threads = math.floor(high_threads / 4)
     dict_thr = {'high': high_threads, 'low': low_threads, 'max': max_threads}

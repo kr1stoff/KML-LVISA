@@ -47,10 +47,10 @@ def samptab2dataframe(samptab: Path) -> pd.DataFrame:
     :return df: sample table 转的 DataFrame
     """
     logging.info('输入 sample table 转成 DataFrame 格式')
-    samptab = str(samptab)
-    if samptab.endswith('.xlsx'):
+    samptabstr = str(samptab)
+    if samptabstr.endswith('.xlsx'):
         df = pd.read_excel(samptab, header=None)
-    elif samptab.endswith('.tsv'):
+    elif samptabstr.endswith('.tsv'):
         df = pd.read_table(samptab, sep='\t', header=None)
     else:
         raise ValueError(f'sample table 扩展名必须是 .xlsx or .tsv : {samptab}')
