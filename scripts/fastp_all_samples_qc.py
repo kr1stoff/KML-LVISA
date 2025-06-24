@@ -3,12 +3,11 @@ from pathlib import Path
 import json
 import pandas as pd
 import numpy as np
-import sys
 
 
 def fastp_all_samples_qc(files_fastp_json, outfile=None):
-    title = ["Sample", "RawReads", "RawBases", "CleanReads", "CleanBases", "Q20",
-             "Q30", "Q20Rate", "Q30Rate", "AverageLength", "GC"]
+    title = ["Sample", "RawReads", "RawBases", "CleanReads", "CleanBases", "RawQ20",
+             "RawQ30", "CleanQ20", "CleanQ30", "CleanAverageLength", "GC"]
     df = pd.DataFrame(columns=title)
     for js_path in files_fastp_json:
         js_data = json.loads(open(js_path, "r").read())
@@ -21,15 +20,14 @@ def fastp_all_samples_qc(files_fastp_json, outfile=None):
             js_data["summary"]["before_filtering"]["total_bases"],
             js_data["summary"]["after_filtering"]["total_reads"],
             js_data["summary"]["after_filtering"]["total_bases"],
-            js_data["summary"]["after_filtering"]["q20_bases"],
-            js_data["summary"]["after_filtering"]["q30_bases"],
+            js_data["summary"]["before_filtering"]["q20_rate"],
+            js_data["summary"]["before_filtering"]["q30_rate"],
             js_data["summary"]["after_filtering"]["q20_rate"],
             js_data["summary"]["after_filtering"]["q30_rate"],
             int(mean_lengths.mean()),
             js_data["summary"]["after_filtering"]["gc_content"],
         ]
         df.loc[len(df)] = out
-
     df.to_csv(outfile, index=False, sep="\t")
 
 
