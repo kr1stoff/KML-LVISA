@@ -52,11 +52,11 @@ rule filter_umi_raw_bed:
     conda:
         config["conda"]["python"]
     params:
-        read_threas=1,
+        read_thres=1,
     shell:
         # * [250206] 针对性能验证 ZQX4 单条非特异 read 噪音解决办法
         """
-        python {config[my_scripts]}/filter_umi_raw_bed.py {input} {output.fltr} {output.waste} {params.read_threas} 2>> {log}
+        python {config[my_scripts]}/filter_umi_raw_bed.py {input} {output.fltr} {output.waste} {params.read_thres} 2>> {log}
         """
 
 

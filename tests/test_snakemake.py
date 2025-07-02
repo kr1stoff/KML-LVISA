@@ -1,16 +1,15 @@
 from kml_lvisa import create_snakemake_configfile
 from kml_lvisa import get_sample_names_by_samptab
 from kml_lvisa import run_snakemake
+from pathlib import Path
 
 
-work_dir = '/data/mengxf/Project/KML241220_lvis_YuShiYan5/results/25011001'
-sample_table = '/data/mengxf/Project/KML241220_lvis_YuShiYan5/input/input.tsv'
+work_dir = "/data/mengxf/Project/KML250702-lvis-jiance-run1-1/result/250514"
+sample_table = "/data/mengxf/Project/KML250702-lvis-jiance-run1-1/input.tsv"
+sample_table = Path(sample_table).resolve()
 
 
-def test_create():
-    sample_names = get_sample_names_by_samptab(sample_table)
-    create_snakemake_configfile(sample_names, work_dir)
+sample_names = get_sample_names_by_samptab(sample_table)
+create_snakemake_configfile(sample_names, work_dir)
 
-
-# def test_run():
-#     run_snakemake(work_dir)
+# run_snakemake(work_dir)

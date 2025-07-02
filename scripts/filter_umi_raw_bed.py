@@ -13,14 +13,14 @@ from collections import defaultdict
 # raw_bed = 'ZQX4.raw.bed'
 # filtered_raw_bed = 'ZQX4.filtered.raw.bed'
 # waste_raw_bed = 'ZQX4.waste.raw.bed'
-# read_threas = 1
+# read_thres = 1
 raw_bed = sys.argv[1]
 filtered_raw_bed = sys.argv[2]
 waste_raw_bed = sys.argv[3]
-read_threas = int(sys.argv[4])
+read_thres = int(sys.argv[4])
 
 # ! 核心阈值
-read_threas_pe = read_threas * 2
+read_thres_pe = read_thres * 2
 
 # 粗略的整合位点位置计数字典
 raw_isite_count_dict = defaultdict(int)
@@ -36,7 +36,7 @@ with open(raw_bed, newline='') as f:
 
 # * 过滤read数低于阈值的整合位点
 remained_raw_isites = {isite for isite, count in raw_isite_count_dict.items()
-                       if count > read_threas_pe}
+                       if count > read_thres_pe}
 
 # 重新扫描文件并分类写入, csv 库速度更快
 with open(raw_bed, newline='') as f, open(filtered_raw_bed, 'w', newline='') as g, open(waste_raw_bed, 'w', newline='') as h:
