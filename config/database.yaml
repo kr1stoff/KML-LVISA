@@ -1,9 +1,9 @@
 hg19: /data/mengxf/Database/reference/hg19/hg19.fa
-snpeff: /data/mengxf/Database/snpEff/data
-oncokb: /data/mengxf/Database/reference/hg19/OncoKBcancerGeneList.tsv
-cpg10kb: /data/mengxf/Database/reference/hg19/hg19.cpg10kb.bed
-switchDbTss10kb: /data/mengxf/Database/reference/hg19/hg19.switchDbTss10kb.bed
-rmsk: /data/mengxf/Database/reference/hg19/hg19.rmsk.bed
 hg19comp: /data/mengxf/Database/reference/hg19/hg19.fa.comp
-cytoband: /data/mengxf/Database/reference/hg19/hg19.cytoBand.tsv
+snpeff: /data/mengxf/Database/snpEff/data
+oncokb: /data/mengxf/Database/reference/hg19/lvisa/OncoKBcancerGeneList.tsv
+cpg10kb: /data/mengxf/Database/reference/hg19/lvisa/hg19.cpg10kb.bed
+switchDbTss10kb: /data/mengxf/Database/reference/hg19/lvisa/hg19.switchDbTss10kb.bed
+rmsk: /data/mengxf/Database/reference/hg19/lvisa/hg19.rmsk.bed
+cytoband: /data/mengxf/Database/reference/hg19/lvisa/hg19.cytoBand.tsv
 hgnc: /data/mengxf/Database/reference/hg19/HGNC/non_alt_loci_set.txt
