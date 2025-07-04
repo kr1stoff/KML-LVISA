@@ -5,7 +5,7 @@ import sys
 
 
 def main(df, out_png):
-    repclass_count = df.groupby('Rep Class')['Rep Class'].count()
+    repclass_count = df.groupby('RepClass')['RepClass'].count()
     # 合并 - unnknown other 三种注释重复类型
     # 处理 BUG - KeyError: 'Unknown'
     if 'Other' not in repclass_count:
@@ -34,7 +34,7 @@ combine_tsv = sys.argv[1]   # 'anno/SRR17348516.is.combine.tsv'
 out_png = sys.argv[2]   # 'stats/SRR17348516.repclass_pie.png'
 
 # * main
-df = pd.read_table(combine_tsv, sep='\t', usecols=['Rep Class'])
+df = pd.read_table(combine_tsv, sep='\t', usecols=['RepClass'])
 if df.empty:
     os.system(f"touch {out_png}")
 else:

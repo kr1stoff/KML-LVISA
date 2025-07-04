@@ -36,6 +36,7 @@ rule qc_stat:
         expand("qc/fastp/{sample}.json", sample=config["samples"]),
     output:
         "qc/fastp/fastp.stats.tsv",
+        "qc/fastp/fastp.stats.xlsx",
     benchmark:
         ".log/fastp/qc_stat.bm"
     log:

@@ -25,17 +25,13 @@ fh = FastqHeader()
 with open(infile, 'r') as f, open(outfile, 'w') as g:
     for line in f:
         lns = line.strip().split('\t')
-
         # ! 都是正向
         if lns[fh.sstrand] == 'minus':
             continue
-
         # ! 3LTR mismatch <= 1bp
         if (int(lns[fh.slen]) - int(lns[fh.nident])) > 1:
             continue
-
         # ! 3LTR 引物比对位置过滤. end 位置在 30bp 以内
         if int(lns[fh.qend]) > 30:
             continue
-
         g.write(lns[fh.qseqid] + '\n')

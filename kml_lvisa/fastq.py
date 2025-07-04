@@ -50,10 +50,10 @@ def samptab2dataframe(samptab: Path) -> pd.DataFrame:
     samptabstr = str(samptab)
     if samptabstr.endswith('.xlsx'):
         df = pd.read_excel(samptab, header=None)
-    elif samptabstr.endswith('.tsv'):
+    elif samptabstr.endswith('.tsv') or samptabstr.endswith('.txt'):
         df = pd.read_table(samptab, sep='\t', header=None)
     else:
-        raise ValueError(f'sample table 扩展名必须是 .xlsx or .tsv : {samptab}')
+        raise ValueError(f'sample table 扩展名必须是 .xlsx or .tsv or .txt : {samptab}')
     # 检查 sample table
     check_samptab(df)
     return df

@@ -8,7 +8,7 @@
 
     ```bash
     poetry run -C /data/mengxf/GitHub/KML-LVISA \
-        python /data/mengxf/GitHub/KML-LVISA/scripts/prepare_input_from_bcl2fastq_out.py \
+        python /data/mengxf/GitHub/KML-LVISA/utils/prepare_input_from_bcl2fastq_out.py \
         --input-dir /data/mengxf/Project/KML250620-lvis-jiance-run1/FASTQ \
         --output-file /data/mengxf/Project/KML250620-lvis-jiance-run1/input.tsv
     ```
@@ -31,7 +31,8 @@
       snakemake -c 32 --use-conda \
       -s /data/mengxf/GitHub/KML-LVISA/wf-lvisa/Snakefile \
       --configfile .temp/snakemake.yaml \
-      --scheduler greedy
+      --scheduler greedy \
+      --ignore-incomplete
     ```
 
 3. 同步目录
@@ -44,14 +45,23 @@
     ```
 
 ## 更新
-
-- [250630] 0.4.2
-  - 更新综合报告部分内容, 保留 *0.4.0* 更新内容. 汇总各样本数值到一个表格, 每行一个样本
+<!-- TODO 1.combin 表格添加批次(批次内频率),阴控(有无),阳控(有无); 3.慢病毒插入位点追踪reads数变化 -->
+- [250630] 0.5.0
+  - [x] 新增输出 fastp.stats.xlsx, 便于查看
+  - [x] 单样本 .is.combine.tsv 文件更新注释信息
+    - cpg 新增 1kb, 2.5kb, 5kb, 10kb 距离分布
+    - TSS 新增 1kb, 2.5kb, 5kb, 10kb 距离分布
+    - 每 1MB 基因组区域 GC 值
+  - [ ] 单样本 .is.combine.tsv 文件更新阴控阳控批次信息
+    - 批次内频率
+    - 阴控有无
+    - 阳控有无
+  - [ ]更新综合报告部分内容, 保留 *0.4.0* 更新内容. 汇总各样本数值到一个表格, 每行一个样本
     - effect
     - repeat
-    - cpg, 新增 1kb, 2.5kb, 5kb, 10kb 距离分布
-    - TSS, 新增 1kb, 2.5kb, 5kb, 10kb 距离分布
-    - 插入位点在基因组不同 GC 含量区域的分布情况, 先看 UCSC 是否有数据库
+    - CpG
+    - TSS
+    - 插入位点在基因组不同 GC 含量区域的分布情况, 类似热图
 
 - [250623] 0.4.1
   - 新增 prepare_input_from_bcl2fastq_out.py 脚本

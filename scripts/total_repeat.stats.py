@@ -13,7 +13,7 @@ rep_stat_outfig = sys.argv[2]
 
 # * MAIN
 reps = [rep for at in annotabs for rep in pd.read_csv(
-    at, sep="\t", usecols=["Rep Class"])["Rep Class"].tolist()]
+    at, sep="\t", usecols=["RepClass"])["RepClass"].tolist()]
 ser = pd.Series(Counter(reps))
 ser.rename({"-": "UNKNOWN"}, inplace=True)
 ser.sort_values(ascending=False, inplace=True)

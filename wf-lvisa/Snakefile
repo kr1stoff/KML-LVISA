@@ -9,7 +9,7 @@ shell.prefix("set +eu; ")
 rule all:
     input:
         "qc/multiqc",
-        "qc/fastp/fastp.stats.tsv",
+        "qc/fastp/fastp.stats.xlsx",
         expand("map/{sample}.bam.stat", sample=config["samples"]),
         expand("map/{sample}.filter.bam.stat", sample=config["samples"]),
         expand("umi/{sample}.umi.json", sample=config["samples"]),
