@@ -75,8 +75,9 @@ def get_anno(chrom: str, start: str, key: str, idx: int = 0, default: str = '-')
 
 
 # 输出
+# [250711] 孟博: 新增 Depth/UMI 比值列
 with open(combine_out, 'w') as g:
-    headers = ['Chrom', 'Start', 'UMIs', 'Depth', 'Effect', 'Gene', 'FullName', 'Oncogene/TSG',
+    headers = ['Chrom', 'Start', 'UMIs', 'Depth', 'Depth/UMI', 'Effect', 'Gene', 'FullName', 'Oncogene/TSG',
                'CpG1KB', 'CpG2.5KB', 'CpG5KB', 'CpG10KB', 'TSS1KB', 'TSS2.5KB', 'TSS5KB', 'TSS10KB',
                'RepName', 'RepClass', 'RepFamily', 'GC1MB']
     g.write('\t'.join(headers) + '\n')
@@ -97,6 +98,6 @@ with open(combine_out, 'w') as g:
         rep_name = get_anno(chrom, start, 'rmsk', 0)
         rep_class = get_anno(chrom, start, 'rmsk', 1)
         rep_family = get_anno(chrom, start, 'rmsk', 2)
-        g.write('\t'.join([chrom, start, str(umi_num), str(all_num), effect, gene, fullname,
+        g.write('\t'.join([chrom, start, str(umi_num), str(all_num), f'{all_num/umi_num:.4f}', effect, gene, fullname,
                 onco, cpg1kb, cpg2d5kb, cpg5kb, cpg10kb, tss1kb, tss2d5kb, tss5kb, tss10kb,
                 rep_name, rep_class, rep_family, gc1mb]) + '\n')

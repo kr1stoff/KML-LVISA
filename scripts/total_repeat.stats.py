@@ -18,6 +18,10 @@ ser = pd.Series(Counter(reps))
 ser.rename({"-": "UNKNOWN"}, inplace=True)
 ser.sort_values(ascending=False, inplace=True)
 
+# 不一定有 Simple_repeat
+if "Simple_repeat" not in ser.index:
+    ser["Simple_repeat"] = 0
+
 # 统计
 with open(rep_stat_outfile, "w") as f:
     f.write(f'SINE: {format((ser["SINE"]) / ser.sum(), ".2%")}\n')

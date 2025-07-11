@@ -4,7 +4,17 @@
 
 ## 命令行
 
-0. 准备流程输入文件
+1. 拆分数据
+
+    ```bash
+    bcl2fastq --no-lane-splitting --barcode-mismatches 1 --processing-threads 32 \
+        --runfolder-dir /data/rawdata/illumina/NEXTseq500/250707_NB501947_0941_AHKKYYBGXW \
+        --input-dir /data/rawdata/illumina/NEXTseq500/250707_NB501947_0941_AHKKYYBGXW/Data/Intensities/BaseCalls \
+        --sample-sheet samplesheet.csv \
+        --output-dir FASTQ
+    ```
+
+2. 准备流程输入文件
 
     ```bash
     poetry run -C /data/mengxf/GitHub/KML-LVISA \
@@ -13,7 +23,7 @@
         --output-file /data/mengxf/Project/KML250620-lvis-jiance-run1/input.tsv
     ```
 
-1. 主脚本
+3. 主脚本
   使用绝对路径
 
     ```bash
@@ -23,7 +33,7 @@
       --work-dir /data/mengxf/Project/KML250513_lvisa_update/result/250514
     ```
 
-2. 单独跑 snakemake
+4. (可选)单独跑 snakemake
 
     ```bash
     # 安装了 snakemake 的环境
@@ -35,8 +45,9 @@
       --ignore-incomplete
     ```
 
-3. 同步目录
-  不同步大文件 FASTQ, BAM 等
+5. 同步目录
+
+    不同步大文件 FASTQ, BAM 等
 
     ```bash
     rsync -auvP --exclude '**.bam' --exclude '**.gz' --exclude '3ltr/' \
@@ -44,19 +55,34 @@
       /data/share/samba/public/bioinfo/KML250513_lvisa_update/
     ```
 
+    同步 SAV 文件
+
+    ```bash
+    rsync -auvP --delete \
+    --include 'Images/***' --include 'InterOp/***' --include 'Thumbnail_Images/***' \
+    --include 'RunInfo.xml' --include 'RunParameters.xml' \
+    --exclude '*' \
+    /data/rawdata/illumina/NEXTseq500/250707_NB501947_0941_AHKKYYBGXW/ \
+    /data/share/samba/public/bioinfo/KML250709-lvis-jiance-run1-2/250707_NB501947_0941_AHKKYYBGXW/
+    ```
+
 ## 更新
-<!-- TODO 1.combin 表格添加批次(批次内频率),阴控(有无),阳控(有无); 3.慢病毒插入位点追踪reads数变化 -->
+
 - [250630] 0.5.0
-  - [x] 新增输出 fastp.stats.xlsx, 便于查看
-  - [x] 单样本 .is.combine.tsv 文件更新注释信息
+  - 新增输出 fastp.stats.xlsx, 便于查看
+  - 单样本 .is.combine.tsv 文件更新注释信息
     - cpg 新增 1kb, 2.5kb, 5kb, 10kb 距离分布
     - TSS 新增 1kb, 2.5kb, 5kb, 10kb 距离分布
     - 每 1MB 基因组区域 GC 值
+    - 新增 Depth / UMI 比值列
   - [ ] 单样本 .is.combine.tsv 文件更新阴控阳控批次信息
-    - 批次内频率
+    - 批次内频率, 解读时使用 50% 频率筛选
     - 阴控有无
     - 阳控有无
-  - [ ]更新综合报告部分内容, 保留 *0.4.0* 更新内容. 汇总各样本数值到一个表格, 每行一个样本
+  - BAM 过滤参数 TLEN 调整 (1000 -> 600), 要求双端 read 距离更近
+  - UMI support reads 1 -> 3, 结果太多提高阈值
+  - LTR参考文件 16bp 改回 25bp
+  - [ ] 更新综合报告部分内容, 保留 *0.4.0* 更新内容. 汇总各样本数值到一个表格, 每行一个样本
     - effect
     - repeat
     - CpG
