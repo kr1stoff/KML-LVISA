@@ -29,6 +29,7 @@ rule all:
         "bigrprt/repeat.txt",
         "bigrprt/repeat.png",
         "bigrprt/oncogene.tsv",
+        expand("anno-qc/{sample}.anno.qc.tsv", sample=config["samples"])
 
 
 include: "rules/fastqc.smk"
@@ -42,3 +43,5 @@ include: "rules/anno.smk"
 include: "rules/stats.smk"
 # 综合大报告的内容都在这个 smk 更新
 include: "rules/bigrprt.smk"
+# 阴控阳控批次质控
+include: "rules/anno_qc.smk"
