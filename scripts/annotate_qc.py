@@ -10,4 +10,5 @@ output_file = sys.argv[3]
 
 df_control = pd.read_table(control_file, sep='\t')
 df = pd.read_table(input_file, sep='\t')
-df.merge(df_control, on=['Chrom', 'Start'], how='left').to_csv(output_file, index=False, sep='\t')
+df.merge(df_control, on=['Chrom', 'Start'], how='left').fillna(
+    '-').to_csv(output_file, index=False, sep='\t')

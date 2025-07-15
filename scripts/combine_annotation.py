@@ -82,6 +82,8 @@ with open(combine_out, 'w') as g:
                'RepName', 'RepClass', 'RepFamily', 'GC1MB']
     g.write('\t'.join(headers) + '\n')
     for (chrom, start), (umi_num, all_num) in sorted_is_cov:
+        # ! all_num/umi_num, umi_num 可能为 0 导致除零错误, 因为在前面 gencore 输出的结果 read 心系中 umi 并不在预设 umi 列表中
+        all_divide_umi = f'{all_num/umi_num:.4f}' if umi_num != 0 else '0'
         effect = get_anno(chrom, start, 'effect')
         gene = get_anno(chrom, start, 'effect', 1)
         onco = get_anno(chrom, start, 'oncokb')
@@ -98,6 +100,6 @@ with open(combine_out, 'w') as g:
         rep_name = get_anno(chrom, start, 'rmsk', 0)
         rep_class = get_anno(chrom, start, 'rmsk', 1)
         rep_family = get_anno(chrom, start, 'rmsk', 2)
-        g.write('\t'.join([chrom, start, str(umi_num), str(all_num), f'{all_num/umi_num:.4f}', effect, gene, fullname,
+        g.write('\t'.join([chrom, start, str(umi_num), str(all_num), all_divide_umi, effect, gene, fullname,
                 onco, cpg1kb, cpg2d5kb, cpg5kb, cpg10kb, tss1kb, tss2d5kb, tss5kb, tss10kb,
                 rep_name, rep_class, rep_family, gc1mb]) + '\n')

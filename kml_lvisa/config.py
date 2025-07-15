@@ -27,8 +27,8 @@ def get_database_dict() -> dict:
     dict_db['3ltr'] = str(Path(__file__).resolve().parents[1].joinpath('assets/3LTR/3LTR.fa'))
     # UMI 参考文件
     dict_db['umi'] = str(Path(__file__).resolve().parents[1].joinpath('assets/UMI/ajtk_umi.json'))
-    # 阳控参考
-    dict_db['pc'] = str(Path(__file__).resolve().parents[1].joinpath('assets/PC/CBPL0002.txt'))
+    # [250715 mxfa] 阳控参考. 按照阴控逻辑列所有位点，无需预设参考
+    # dict_db['pc'] = str(Path(__file__).resolve().parents[1].joinpath('assets/PC/CBPL0002.txt'))
     return dict_db
 
 

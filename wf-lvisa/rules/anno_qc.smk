@@ -3,8 +3,6 @@ rule generate_anno_control:
         expand("anno/{sample}.is.combine.tsv", sample=config["samples"]),
     output:
         "anno-qc/controls.tsv",
-    params:
-        pc_site_file=config["database"]["pc"],
     benchmark:
         ".log/anno-qc/generate_anno_control.bm"
     log:
@@ -12,7 +10,7 @@ rule generate_anno_control:
     conda:
         config["conda"]["python"]
     shell:
-        "python {config[my_scripts]}/generate_anno_control.py {output} {params.pc_site_file} {input} 2> {log}"
+        "python {config[my_scripts]}/generate_anno_control.py {output} {input} 2> {log}"
 
 
 rule anno_qc:
@@ -20,7 +18,7 @@ rule anno_qc:
         anno=rules.comb_anno.output,
         control=rules.generate_anno_control.output,
     output:
-        "anno-qc/{sample}.anno.qc.tsv",
+        "anno-qc/{sample}.tsv",
     benchmark:
         ".log/anno/{sample}.anno_qc.bm"
     log:
@@ -31,3 +29,18 @@ rule anno_qc:
         config["conda"]["python"]
     shell:
         "python {config[my_scripts]}/annotate_qc.py {input.control} {input.anno} {output} 2> {log}"
+
+
+rule concat_all_anno:
+    input:
+        expand("anno-qc/{sample}.tsv", sample=config["samples"])
+    output:
+        "anno-qc/all.anno.qc.xlsx",
+    benchmark:
+        ".log/anno/concat_all_anno.bm"
+    log:
+        ".log/anno/concat_all_anno.log",
+    conda:
+        config["conda"]["basic"]
+    shell:
+        "csvtk -t csv2xlsx {input} -o {output} 2> {log}"

@@ -29,7 +29,7 @@ rule all:
         "bigrprt/repeat.txt",
         "bigrprt/repeat.png",
         "bigrprt/oncogene.tsv",
-        expand("anno-qc/{sample}.anno.qc.tsv", sample=config["samples"])
+        "anno-qc/all.anno.qc.xlsx",
 
 
 include: "rules/fastqc.smk"
