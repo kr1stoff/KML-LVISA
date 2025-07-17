@@ -5,7 +5,7 @@ import pandas as pd
 import numpy as np
 
 
-def fastp_all_samples_qc(files_fastp_json, outfile=None):
+def fastp_all_samples_qc(files_fastp_json, out_tsv, out_excel):
     title = ["Sample", "RawReads", "RawBases", "CleanReads", "CleanBases", "RawQ20",
              "RawQ30", "CleanQ20", "CleanQ30", "CleanAverageLength", "GC"]
     df = pd.DataFrame(columns=title)
@@ -28,8 +28,9 @@ def fastp_all_samples_qc(files_fastp_json, outfile=None):
             js_data["summary"]["after_filtering"]["gc_content"],
         ]
         df.loc[len(df)] = out
-    df.to_csv(outfile, index=False, sep="\t")
+    df.to_csv(out_tsv, index=False, sep="\t")
+    df.to_excel(out_excel, index=False)
 
 
 if __name__ == "__main__":
-    fastp_all_samples_qc(sys.argv[2:], sys.argv[1])
+    fastp_all_samples_qc(sys.argv[3:], sys.argv[1], sys.argv[2])

@@ -2,40 +2,47 @@
 
 import sys
 
-is_cov_file = sys.argv[1]   # 'is/SRR17348516.is.coverage'
-effect_file = sys.argv[2]   # 'anno/SRR17348516.is.effect'
-oncokb_file = sys.argv[3]   # 'anno/SRR17348516.is.oncokb'
-cpg_file = sys.argv[4]  # 'anno/SRR17348516.is.cpg'
-tss_file = sys.argv[5]  # 'anno/SRR17348516.is.tss'
-rmsk_file = sys.argv[6]  # 'anno/SRR17348516.is.rmsk'
-fullname_file = sys.argv[7]  # 'anno/SRR17348516.is.fullname'
 
-combine_out = sys.argv[-1]  # 'anno/SRR17348516.is.combine.tsv'
+# 输入文件参数
+is_cov_file, effect_file, oncokb_file, \
+    cpg1kb_file, cpg2d5kb_file, cpg5kb_file, cpg10kb_file, \
+    tss1kb_file, tss2d5kb_file, tss5kb_file, tss10kb_file, \
+    rmsk_file, gc1mb_file, fullname_file, combine_out = sys.argv[1:16]
 
 
 def get_pos_anno_dict(anno_file):
     """
-    获取注释信息. #chromosome, start, annotation
+    获取注释信息.
     :param anno_file: 注释文件
-    :return: 注释字典
+    :return: 注释字典 {(chrom, start): anno_info}
     """
     curr_anno_dict = {}
     with open(anno_file) as f:
         for line in f:
             chrom, start, anno_info = line.strip().split('\t')[:3]
-            # 重复的位置只要第一个
+            # * 重复的位置只要第一个
             if (chrom, start) not in curr_anno_dict:
                 curr_anno_dict[(chrom, start)] = anno_info
     return curr_anno_dict
 
 
 # 前面都统一了注释文件的格式，所以可以直接用
-effect_dict = get_pos_anno_dict(effect_file)
-oncokb_dict = get_pos_anno_dict(oncokb_file)
-cpg_dict = get_pos_anno_dict(cpg_file)
-tss_dict = get_pos_anno_dict(tss_file)
-rmsk_dict = get_pos_anno_dict(rmsk_file)
-fullname_dict = get_pos_anno_dict(fullname_file)
+anno_dicts = {
+    'effect': get_pos_anno_dict(effect_file),
+    'oncokb': get_pos_anno_dict(oncokb_file),
+    'cpg1kb': get_pos_anno_dict(cpg1kb_file),
+    'cpg2d5kb': get_pos_anno_dict(cpg2d5kb_file),
+    'cpg5kb': get_pos_anno_dict(cpg5kb_file),
+    'cpg10kb': get_pos_anno_dict(cpg10kb_file),
+    'tss1kb': get_pos_anno_dict(tss1kb_file),
+    'tss2d5kb': get_pos_anno_dict(tss2d5kb_file),
+    'tss5kb': get_pos_anno_dict(tss5kb_file),
+    'tss10kb': get_pos_anno_dict(tss10kb_file),
+    'rmsk': get_pos_anno_dict(rmsk_file),
+    'fullname': get_pos_anno_dict(fullname_file),
+    'gc1mb': get_pos_anno_dict(gc1mb_file),
+}
+
 
 # 排序一下 Depth
 is_cov_dict = {}
@@ -44,50 +51,55 @@ with open(is_cov_file) as f:
     for line in f:
         chrom, start, _, umi_num, all_num = line.strip().split('\t')
         is_cov_dict[(chrom, start)] = (int(umi_num), int(all_num))
-# 总深度排序 x[1][0]; UMI 排序是 x[1][1]
+# * 总深度排序 x[1][0]; UMI 排序是 x[1][1]
 sorted_is_cov = sorted(is_cov_dict.items(), key=lambda x: x[1][1], reverse=True)
 
+
+def get_anno(chrom: str, start: str, key: str, idx: int = 0, default: str = '-'):
+    """
+    获取注释信息. e.g. Intron|FRMD4A
+    :param chrom: 染色体
+    :param start: 起始位置
+    :param key: 注释类型，如 'effect', 'oncokb', 'cpg1kb', 'tss1kb', 'rmsk', 'fullname'
+    :param idx: 注释信息的索引，默认为 0
+    :param default: 默认值，如果没有找到注释信息，则返回该值
+    :return: 注释信息
+    """
+    val = anno_dicts[key].get((chrom, start))
+    if val is None:
+        return default
+    try:
+        return val.split('|')[idx]
+    except IndexError:
+        return default
+
+
 # 输出
+# [250711] 孟博: 新增 Depth/UMI 比值列
 with open(combine_out, 'w') as g:
-    headers = ['Chrom', 'Start', 'UMIs', 'Depth', 'Effect', 'Gene', 'FullName', 'Oncogene/TSG',
-               'CpG Name', 'CpG Pos', 'TSS Name', 'TSS Pos', 'Rep Name', 'Rep Class', 'Rep Family']
+    headers = ['Chrom', 'Start', 'UMIs', 'Depth', 'Depth/UMI', 'Effect', 'Gene', 'FullName', 'Oncogene/TSG',
+               'CpG1KB', 'CpG2.5KB', 'CpG5KB', 'CpG10KB', 'TSS1KB', 'TSS2.5KB', 'TSS5KB', 'TSS10KB',
+               'RepName', 'RepClass', 'RepFamily', 'GC1MB']
     g.write('\t'.join(headers) + '\n')
-
     for (chrom, start), (umi_num, all_num) in sorted_is_cov:
-        # effect
-        if (chrom, start) in effect_dict:
-            effect, gene = effect_dict[(chrom, start)].split('|')
-        else:
-            effect, gene = '-', '-'
-        # oncokb
-        if (chrom, start) in oncokb_dict:
-            onco, _ = oncokb_dict[(chrom, start)].split('|')
-        else:
-            onco = '-'
-        # fullname
-        if (chrom, start) in fullname_dict:
-            try:
-                fullname, _ = fullname_dict[(chrom, start)].split('|')
-            except ValueError:
-                print(fullname_dict[(chrom, start)])
-        else:
-            fullname = '-'
-        # cpg
-        if (chrom, start) in cpg_dict:
-            cpg_name, cpg_pos = cpg_dict[(chrom, start)].split('|')
-        else:
-            cpg_name, cpg_pos = '-', '-'
-        # tss
-        if (chrom, start) in tss_dict:
-            tss_name, tss_pos = tss_dict[(chrom, start)].split('|')
-        else:
-            tss_name, tss_pos = '-', '-'
-        # rmsk
-        # repName, repClass, repFamily
-        if (chrom, start) in rmsk_dict:
-            rep_name, rep_class, rep_family = rmsk_dict[(chrom, start)].split('|')
-        else:
-            rep_name, rep_class, rep_family = '-', '-', '-'
-
-        g.write('\t'.join([chrom, start, str(umi_num), str(all_num), effect, gene, fullname, onco, cpg_name,
-                cpg_pos, tss_name, tss_pos, rep_name, rep_class, rep_family]) + '\n')
+        # ! all_num/umi_num, umi_num 可能为 0 导致除零错误, 因为在前面 gencore 输出的结果 read 心系中 umi 并不在预设 umi 列表中
+        all_divide_umi = f'{all_num/umi_num:.4f}' if umi_num != 0 else '0'
+        effect = get_anno(chrom, start, 'effect')
+        gene = get_anno(chrom, start, 'effect', 1)
+        onco = get_anno(chrom, start, 'oncokb')
+        fullname = get_anno(chrom, start, 'fullname')
+        cpg1kb = anno_dicts['cpg1kb'].get((chrom, start), '-')
+        cpg2d5kb = anno_dicts['cpg2d5kb'].get((chrom, start), '-')
+        cpg5kb = anno_dicts['cpg5kb'].get((chrom, start), '-')
+        cpg10kb = anno_dicts['cpg10kb'].get((chrom, start), '-')
+        tss1kb = anno_dicts['tss1kb'].get((chrom, start), '-')
+        tss2d5kb = anno_dicts['tss2d5kb'].get((chrom, start), '-')
+        tss5kb = anno_dicts['tss5kb'].get((chrom, start), '-')
+        tss10kb = anno_dicts['tss10kb'].get((chrom, start), '-')
+        gc1mb = anno_dicts['gc1mb'].get((chrom, start), '-')
+        rep_name = get_anno(chrom, start, 'rmsk', 0)
+        rep_class = get_anno(chrom, start, 'rmsk', 1)
+        rep_family = get_anno(chrom, start, 'rmsk', 2)
+        g.write('\t'.join([chrom, start, str(umi_num), str(all_num), all_divide_umi, effect, gene, fullname,
+                onco, cpg1kb, cpg2d5kb, cpg5kb, cpg10kb, tss1kb, tss2d5kb, tss5kb, tss10kb,
+                rep_name, rep_class, rep_family, gc1mb]) + '\n')

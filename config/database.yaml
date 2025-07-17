@@ -2,8 +2,15 @@ hg19: /data/mengxf/Database/reference/hg19/hg19.fa
 hg19comp: /data/mengxf/Database/reference/hg19/hg19.fa.comp
 snpeff: /data/mengxf/Database/snpEff/data
 oncokb: /data/mengxf/Database/reference/hg19/lvisa/OncoKBcancerGeneList.tsv
+cpg1kb: /data/mengxf/Database/reference/hg19/lvisa/hg19.cpg1kb.bed
+cpg2d5kb: /data/mengxf/Database/reference/hg19/lvisa/hg19.cpg2.5kb.bed
+cpg5kb: /data/mengxf/Database/reference/hg19/lvisa/hg19.cpg5kb.bed
 cpg10kb: /data/mengxf/Database/reference/hg19/lvisa/hg19.cpg10kb.bed
-switchDbTss10kb: /data/mengxf/Database/reference/hg19/lvisa/hg19.tss10kb.bed
+tss1kb: /data/mengxf/Database/reference/hg19/lvisa/hg19.tss1kb.bed
+tss2d5kb: /data/mengxf/Database/reference/hg19/lvisa/hg19.tss2.5kb.bed
+tss5kb: /data/mengxf/Database/reference/hg19/lvisa/hg19.tss5kb.bed
+tss10kb: /data/mengxf/Database/reference/hg19/lvisa/hg19.tss10kb.bed
+gc1mb: /data/mengxf/Database/reference/hg19/lvisa/hg19.gc1mb.bed
 rmsk: /data/mengxf/Database/reference/hg19/lvisa/hg19.rmsk.bed
 cytoband: /data/mengxf/Database/reference/hg19/lvisa/hg19.cytoBand.tsv
 hgnc: /data/mengxf/Database/reference/hg19/HGNC/non_alt_loci_set.txt

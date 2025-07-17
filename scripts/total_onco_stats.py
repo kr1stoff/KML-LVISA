@@ -17,7 +17,6 @@ onco_stat_outfile = sys.argv[1]
 with open(onco_stat_outfile, "w") as f:
     f.write("样本实验号\tTSGs 位点数量\tTSGs 位点信息\tOncogene 位点数量\tOncogene 位点信息\n")
     for at in annotabs:
-        # TODO 等待 LYQ 确认用位置还是基因名
         df = pd.read_csv(at, sep="\t", usecols=["Chrom", "Start", "Gene", "Effect", "Oncogene/TSG"])
         # 在外显子上注释到 Oncogene, 有重复时去重
         oncodf = df[(df["Effect"] == "Exon") & (df["Oncogene/TSG"] == "oncogene")]

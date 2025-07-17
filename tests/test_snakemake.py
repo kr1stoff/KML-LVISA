@@ -4,8 +4,8 @@ from kml_lvisa import run_snakemake
 from pathlib import Path
 
 
-work_dir = "/data/mengxf/Project/KML250702-lvis-jiance-run1-1/result/250514"
-sample_table = "/data/mengxf/Project/KML250702-lvis-jiance-run1-1/input.tsv"
+work_dir = "/data/mengxf/Project/KML250703-lvis-pipeline-update/result/250711"
+sample_table = "/data/mengxf/GitHub/KML-LVISA/templates/input.txt"
 sample_table = Path(sample_table).resolve()
 
 

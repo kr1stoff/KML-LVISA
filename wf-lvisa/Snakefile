@@ -9,7 +9,7 @@ shell.prefix("set +eu; ")
 rule all:
     input:
         "qc/multiqc",
-        "qc/fastp/fastp.stats.tsv",
+        "qc/fastp/fastp.stats.xlsx",
         expand("map/{sample}.bam.stat", sample=config["samples"]),
         expand("map/{sample}.filter.bam.stat", sample=config["samples"]),
         expand("umi/{sample}.umi.json", sample=config["samples"]),
@@ -26,9 +26,14 @@ rule all:
         expand("stats/{sample}.chromosome_density.png", sample=config["samples"]),
         "bigrprt/effect.txt",
         "bigrprt/effect.png",
+        "bigrprt/effect_summary.tsv",
         "bigrprt/repeat.txt",
         "bigrprt/repeat.png",
+        "bigrprt/repeat_summary.tsv",
         "bigrprt/oncogene.tsv",
+        "bigrprt/cpg_summary.tsv",
+        "bigrprt/tss_summary.tsv",
+        "anno-qc/all.anno.qc.xlsx",
 
 
 include: "rules/fastqc.smk"
@@ -42,3 +47,5 @@ include: "rules/anno.smk"
 include: "rules/stats.smk"
 # 综合大报告的内容都在这个 smk 更新
 include: "rules/bigrprt.smk"
+# 阴控阳控批次质控
+include: "rules/anno_qc.smk"

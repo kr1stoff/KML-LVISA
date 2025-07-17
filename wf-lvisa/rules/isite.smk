@@ -31,6 +31,6 @@ rule isite_cover:
         config["conda"]["python"]
     shell:
         """
-        # 过滤 support reads < 10
+        # 过滤 support reads < 10, 过滤 UMI == 0
         python {config[my_scripts]}/filter_and_stat_is_by_coverage.py {input.bed} {input.all_cov} {output} 2> {log}
         """

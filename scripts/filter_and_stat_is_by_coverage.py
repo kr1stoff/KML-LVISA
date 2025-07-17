@@ -12,8 +12,8 @@ dict_stat = {}
 
 with open(umi_bed) as f:
     for line in f:
-        chrom, start, end, strand, reads = line.strip().split('\t')[:5]
-        dict_stat[(chrom, start, end)] = {'strand': strand, 'umi_num': int(reads)}
+        chrom, start, end, strand, read_count = line.strip().split('\t')[:5]
+        dict_stat[(chrom, start, end)] = {'strand': strand, 'umi_num': int(read_count)}
 
 with open(all_cov) as f:
     """
@@ -42,8 +42,8 @@ with open(out_cov, 'w') as f:
         else:
             ostart, oend = end, str(int(end) + 1)
 
-        # * 过滤 support reads < 10
-        if int(all_num) < 10:
+        # * 过滤 support reads < 10, 过滤 UMI == 0
+        if (int(all_num) < 10) or (int(umi_num) == 0):
             continue
 
         list_out = [chrom, ostart, oend] + [str(umi_num), str(all_num)]

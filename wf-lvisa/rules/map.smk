@@ -38,11 +38,16 @@ rule filter_bam:
     # ! 过滤
     # 1.mapq < 20
     # 2.min length < 55
-    # 3.flag 4 8 256 512 2048
-    # 4.TLEN > 1000
+    # 3.flag 2828:
+    #   4(read unmapped)
+    #   8(mate unmapped)
+    #   256(not primary alignment)
+    #   512(read fails platform/vendor quality checks)
+    #   2048(supplementary alignment).
+    # 4.[250711] TLEN > 600 (原参数 1000)
     # 5.alignment length < 55, (query length - softclip length)
     params:
-        "-hbS -q 20 -m 55 -F 2828 -e 'tlen < 1000 && qlen-sclen > 55'",
+        "-hbS -q 20 -m 55 -F 2828 -e 'tlen < 600 && qlen-sclen > 55'",
     threads: config["threads"]["high"]
     shell:
         """
