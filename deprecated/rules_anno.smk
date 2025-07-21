@@ -1,18 +1,16 @@
-rule transcript_exon_domain:
+rule snpeff:
     input:
-        rules.table_annovar.output,
+        rules.isite_cover.output,
     output:
-        "anno/{sample}.is.tx_exon_domain",
-    params:
-        config['database']['refseq_longest_tx']
+        "anno/{sample}.is.bed.snpEff",
     benchmark:
-        ".log/anno/{sample}.transcript_exon_domain.bm"
+        ".log/anno/{sample}.snpeff.bm"
     log:
-        ".log/anno/{sample}.transcript_exon_domain.log",
+        ".log/anno/{sample}.snpeff.log",
     conda:
-        config["conda"]["python"]
-    script:
-        "../scripts/annovar_tx_exon_domain.py"
+        config["conda"]["basic"]
+    shell:
+        "snpEff -dataDir {config[database][snpeff]} -i bed -chr chr -geneId -canon -noStats hg19 {input} > {output} 2>> {log}"
 
 
 rule anno_effect:

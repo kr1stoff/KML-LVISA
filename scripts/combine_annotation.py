@@ -82,7 +82,7 @@ with open(combine_out, 'w') as g:
                'RepName', 'RepClass', 'RepFamily', 'GC1MB']
     g.write('\t'.join(headers) + '\n')
     for (chrom, start), (umi_num, all_num) in sorted_is_cov:
-        # ! all_num/umi_num, umi_num 可能为 0 导致除零错误, 因为在前面 gencore 输出的结果 read 心系中 umi 并不在预设 umi 列表中
+        # ! all_num/umi_num, umi_num 可能为 0 导致除零错误, 因为在前面 gencore 输出的结果 read 信息中 umi 并不在预设 umi 列表中
         all_divide_umi = f'{all_num/umi_num:.4f}' if umi_num != 0 else '0'
         effect = get_anno(chrom, start, 'effect')
         gene = get_anno(chrom, start, 'effect', 1)

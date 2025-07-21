@@ -33,7 +33,7 @@ rule anno_qc:
 
 rule concat_all_anno:
     input:
-        expand("anno-qc/{sample}.tsv", sample=config["samples"])
+        expand("anno-qc/{sample}.tsv", sample=config["samples"]),
     output:
         "anno-qc/all.anno.qc.xlsx",
     benchmark:
