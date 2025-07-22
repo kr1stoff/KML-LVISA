@@ -38,7 +38,7 @@ combine_file <- args[1] # "anno/SRR17348516.is.combine.tsv"
 output_png <- args[2] # "stats/SRR17348516.chromosome_density.png"
 
 # main
-data_comb <- read.table(combine_file, header = TRUE, sep = "\t")[, 1:4]
+data_comb <- read.table(combine_file, header = TRUE, sep = "\t", quote = "")[, 1:4]
 # ! NTC 位点数太少会报错，改成 try-catch
 tryCatch(
     {

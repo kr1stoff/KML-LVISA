@@ -4,9 +4,9 @@ rule prepare_annovar_input1:
     output:
         "annovar/{sample}.bed.fa",
     benchmark:
-        ".log/anno/{sample}.prepare_annovar_input1.bm"
+        ".log/annovar/{sample}.prepare_annovar_input1.bm"
     log:
-        ".log/anno/{sample}.prepare_annovar_input1.log",
+        ".log/annovar/{sample}.prepare_annovar_input1.log",
     conda:
         config["conda"]["basic2"]
     shell:
@@ -19,9 +19,9 @@ rule prepare_annovar_input2:
     output:
         "annovar/{sample}.vcf",
     benchmark:
-        ".log/anno/{sample}.prepare_annovar_input2.bm"
+        ".log/annovar/{sample}.prepare_annovar_input2.bm"
     log:
-        ".log/anno/{sample}.prepare_annovar_input2.log",
+        ".log/annovar/{sample}.prepare_annovar_input2.log",
     conda:
         config["conda"]["python"]
     script:
@@ -34,9 +34,9 @@ rule convert2annovar:
     output:
         "annovar/{sample}.avinput",
     benchmark:
-        ".log/anno/{sample}.convert2annovar.bm"
+        ".log/annovar/{sample}.convert2annovar.bm"
     log:
-        ".log/anno/{sample}.convert2annovar.log",
+        ".log/annovar/{sample}.convert2annovar.log",
     shell:
         "{config[software][convert2annovar]} -format vcf {input} > {output} 2> {log}"
 
@@ -47,9 +47,9 @@ rule table_annovar:
     output:
         "annovar/{sample}.hg19_multianno.txt",
     benchmark:
-        ".log/anno/{sample}.table_annovar.bm"
+        ".log/annovar/{sample}.table_annovar.bm"
     log:
-        ".log/anno/{sample}.table_annovar.log",
+        ".log/annovar/{sample}.table_annovar.log",
     shell:
         """
         # 获取前缀
@@ -61,5 +61,6 @@ rule table_annovar:
         -out $out_prefix \
         -protocol refGeneWithVer,dbnsfp47a_interpro \
         -operation g,f \
-        -remove -polish -nastring -
+        -remove -polish -nastring - \
+        2> {log}
         """

@@ -51,8 +51,8 @@
 
     ```bash
     rsync -auvP --exclude '**.bam' --exclude '**.gz' --exclude '3ltr/' \
-      /data/mengxf/Project/KML250513_lvisa_update/ \
-      /data/share/samba/public/bioinfo/KML250513_lvisa_update/
+      /data/mengxf/Project/KML250709-lvis-jiance-run1-2/result/250714/ \
+      /data/share/samba/public/bioinfo/KML250709-lvis-jiance-run1-2/250722/
     ```
 
     同步 SAV 文件

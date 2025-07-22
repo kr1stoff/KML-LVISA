@@ -18,4 +18,6 @@ else:
     df = pd.read_table(input_file, sep='\t', usecols=[
         'Chr', 'Start', 'Func.refGeneWithVer', 'Gene.refGeneWithVer'])
     df['effect_and_gene'] = df['Func.refGeneWithVer'] + '|' + df['Gene.refGeneWithVer']
+    # * 坐标 VCF(1-based) 转回 BED(0-based)
+    df['Start'] = df['Start'] - 1
     df[['Chr', 'Start', 'effect_and_gene']].to_csv(output_file, sep='\t', index=False, header=False)

@@ -9,4 +9,5 @@ with open(snakemake.input[0]) as f, open(snakemake.output[0], 'w') as g:
         chrom, start, end = re.findall(r'>(chr.*?):(\d+)-(\d+)', line)[0]
         refbase = next(f).strip().upper()
         altbase = sample('ATGC'.replace(refbase, ''), 1)[0]
-        print(chrom, start, end, refbase, altbase, '-', '-', '-', file=g, sep='\t')
+        # ! BED: 0-based; VCF: 1-based
+        print(chrom, str(int(start)+1), end, refbase, altbase, '-', '-', '-', file=g, sep='\t')

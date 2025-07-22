@@ -1,18 +1,33 @@
-rule transcript_exon_domain:
+rule anno_transcript_exon:
     input:
         rules.table_annovar.output,
     output:
-        "anno/{sample}.is.tx_exon_domain",
+        "anno/{sample}.is.tx_exon",
     params:
-        config['database']['refseq_longest_tx']
+        config["database"]["refseq_longest_tx"],
     benchmark:
-        ".log/anno/{sample}.transcript_exon_domain.bm"
+        ".log/anno/{sample}.transcript_exon.bm"
     log:
-        ".log/anno/{sample}.transcript_exon_domain.log",
+        ".log/anno/{sample}.transcript_exon.log",
     conda:
         config["conda"]["python"]
     script:
-        "../scripts/annovar_tx_exon_domain.py"
+        "../scripts/annovar_tx_exon.py"
+
+
+rule anno_interpro_domain:
+    input:
+        rules.table_annovar.output,
+    output:
+        "anno/{sample}.is.interpro_domain",
+    benchmark:
+        ".log/anno/{sample}.transcript_exon.bm"
+    log:
+        ".log/anno/{sample}.transcript_exon.log",
+    conda:
+        config["conda"]["python"]
+    script:
+        "../scripts/annovar_interpro_domain.py"
 
 
 rule anno_effect:
@@ -116,6 +131,8 @@ rule comb_anno:
         rules.bedtools_anno_cpg_tss_repeat.output.repeat,
         rules.bedtools_anno_cpg_tss_repeat.output.gc1mb,
         rules.anno_full_name.output,
+        rules.anno_transcript_exon.output,
+        rules.anno_interpro_domain.output,
     output:
         "anno/{sample}.is.combine.tsv",
     benchmark:
