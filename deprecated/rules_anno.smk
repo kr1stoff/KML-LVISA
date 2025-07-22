@@ -1,33 +1,16 @@
-rule anno_transcript_exon:
+rule snpeff:
     input:
-        rules.table_annovar.output,
+        rules.isite_cover.output,
     output:
-        "anno/{sample}.is.tx_exon",
-    params:
-        config["database"]["refseq_longest_tx"],
+        "anno/{sample}.is.bed.snpEff",
     benchmark:
-        ".log/anno/{sample}.transcript_exon.bm"
+        ".log/anno/{sample}.snpeff.bm"
     log:
-        ".log/anno/{sample}.transcript_exon.log",
+        ".log/anno/{sample}.snpeff.log",
     conda:
-        config["conda"]["python"]
-    script:
-        "../scripts/annovar_tx_exon.py"
-
-
-rule anno_interpro_domain:
-    input:
-        rules.table_annovar.output,
-    output:
-        "anno/{sample}.is.interpro_domain",
-    benchmark:
-        ".log/anno/{sample}.transcript_exon.bm"
-    log:
-        ".log/anno/{sample}.transcript_exon.log",
-    conda:
-        config["conda"]["python"]
-    script:
-        "../scripts/annovar_interpro_domain.py"
+        config["conda"]["basic"]
+    shell:
+        "snpEff -dataDir {config[database][snpeff]} -i bed -chr chr -geneId -canon -noStats hg19 {input} > {output} 2>> {log}"
 
 
 rule anno_effect:
@@ -131,8 +114,6 @@ rule comb_anno:
         rules.bedtools_anno_cpg_tss_repeat.output.repeat,
         rules.bedtools_anno_cpg_tss_repeat.output.gc1mb,
         rules.anno_full_name.output,
-        rules.anno_transcript_exon.output,
-        rules.anno_interpro_domain.output,
     output:
         "anno/{sample}.is.combine.tsv",
     benchmark:

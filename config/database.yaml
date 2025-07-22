@@ -14,3 +14,5 @@ gc1mb: /data/mengxf/Database/reference/hg19/lvisa/hg19.gc1mb.bed
 rmsk: /data/mengxf/Database/reference/hg19/lvisa/hg19.rmsk.bed
 cytoband: /data/mengxf/Database/reference/hg19/lvisa/hg19.cytoBand.tsv
 hgnc: /data/mengxf/Database/reference/hg19/HGNC/non_alt_loci_set.txt
+annovar: /data/mengxf/Software/annovar/humandb
+refseq_longest_tx: /data/mengxf/Database/reference/hg19/lvisa/hg19.refseq_longest_tx.tsv

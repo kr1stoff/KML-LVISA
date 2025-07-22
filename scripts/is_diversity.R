@@ -52,7 +52,7 @@ combine_file <- args[1] # "anno/SRR17348516.is.combine.tsv"
 output_file <- args[2] # "stats/SRR17348516.chromosome.svg"
 
 # main
-data <- read.table(combine_file, sep = "\t", header = T)
+data <- read.table(combine_file, sep = "\t", header = T, quote = "")
 if (nrow(data) == 0) {
     touch_empty_file(output_file)
 } else {

@@ -7,7 +7,9 @@ import sys
 is_cov_file, effect_file, oncokb_file, \
     cpg1kb_file, cpg2d5kb_file, cpg5kb_file, cpg10kb_file, \
     tss1kb_file, tss2d5kb_file, tss5kb_file, tss10kb_file, \
-    rmsk_file, gc1mb_file, fullname_file, combine_out = sys.argv[1:16]
+    rmsk_file, gc1mb_file, fullname_file, \
+    tx_exon_file, domain_file, \
+    combine_out = sys.argv[1:]
 
 
 def get_pos_anno_dict(anno_file):
@@ -41,6 +43,8 @@ anno_dicts = {
     'rmsk': get_pos_anno_dict(rmsk_file),
     'fullname': get_pos_anno_dict(fullname_file),
     'gc1mb': get_pos_anno_dict(gc1mb_file),
+    'tx_exon': get_pos_anno_dict(tx_exon_file),
+    'domain': get_pos_anno_dict(domain_file),
 }
 
 
@@ -76,13 +80,15 @@ def get_anno(chrom: str, start: str, key: str, idx: int = 0, default: str = '-')
 
 # 输出
 # [250711] 孟博: 新增 Depth/UMI 比值列
+# [250721] 毛博: 新增转录本, 外显子号和基因功能结构域注释
 with open(combine_out, 'w') as g:
     headers = ['Chrom', 'Start', 'UMIs', 'Depth', 'Depth/UMI', 'Effect', 'Gene', 'FullName', 'Oncogene/TSG',
+               'Transcript', 'ExonNum', 'Domain',
                'CpG1KB', 'CpG2.5KB', 'CpG5KB', 'CpG10KB', 'TSS1KB', 'TSS2.5KB', 'TSS5KB', 'TSS10KB',
                'RepName', 'RepClass', 'RepFamily', 'GC1MB']
     g.write('\t'.join(headers) + '\n')
     for (chrom, start), (umi_num, all_num) in sorted_is_cov:
-        # ! all_num/umi_num, umi_num 可能为 0 导致除零错误, 因为在前面 gencore 输出的结果 read 心系中 umi 并不在预设 umi 列表中
+        # ! all_num/umi_num, umi_num 可能为 0 导致除零错误, 因为在前面 gencore 输出的结果 read 信息中 umi 并不在预设 umi 列表中
         all_divide_umi = f'{all_num/umi_num:.4f}' if umi_num != 0 else '0'
         effect = get_anno(chrom, start, 'effect')
         gene = get_anno(chrom, start, 'effect', 1)
@@ -97,9 +103,15 @@ with open(combine_out, 'w') as g:
         tss5kb = anno_dicts['tss5kb'].get((chrom, start), '-')
         tss10kb = anno_dicts['tss10kb'].get((chrom, start), '-')
         gc1mb = anno_dicts['gc1mb'].get((chrom, start), '-')
-        rep_name = get_anno(chrom, start, 'rmsk', 0)
+        rep_name = get_anno(chrom, start, 'rmsk')
         rep_class = get_anno(chrom, start, 'rmsk', 1)
         rep_family = get_anno(chrom, start, 'rmsk', 2)
-        g.write('\t'.join([chrom, start, str(umi_num), str(all_num), all_divide_umi, effect, gene, fullname,
-                onco, cpg1kb, cpg2d5kb, cpg5kb, cpg10kb, tss1kb, tss2d5kb, tss5kb, tss10kb,
-                rep_name, rep_class, rep_family, gc1mb]) + '\n')
+        transcript = get_anno(chrom, start, 'tx_exon')
+        exon_num = get_anno(chrom, start, 'tx_exon', 1)
+        domain = get_anno(chrom, start, 'domain')
+        g.write('\t'.join([
+            chrom, start, str(umi_num), str(all_num), all_divide_umi, effect, gene, fullname, onco,
+            transcript, exon_num, domain,
+            cpg1kb, cpg2d5kb, cpg5kb, cpg10kb, tss1kb, tss2d5kb, tss5kb, tss10kb,
+            rep_name, rep_class, rep_family, gc1mb
+        ]) + '\n')

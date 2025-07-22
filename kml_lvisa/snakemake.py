@@ -27,7 +27,8 @@ def create_snakemake_configfile(sample_names, workdir):
         'threads': get_threads_dict(),
         'conda': get_conda_env_dict(),
         'my_scripts': get_my_scripts_path(),
-        'database': get_database_dict()
+        'database': get_database_dict(),
+        'software': get_software_dict(),
     }
 
     with open(f'{workdir}/.temp/snakemake.yaml', 'w') as f:

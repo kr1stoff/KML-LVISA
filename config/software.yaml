@@ -1,2 +1,4 @@
 # env: snakemake
 activate: /home/mengxf/miniforge3/bin/activate
+convert2annovar: /data/mengxf/Software/annovar/convert2annovar.pl
+table_annovar: /data/mengxf/Software/annovar/table_annovar.pl

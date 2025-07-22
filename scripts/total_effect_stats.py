@@ -23,8 +23,8 @@ ser = pd.Series(Counter(effs))
 # 输出统计文字
 with open(effect_stat_outfile, "w") as f:
     f.write(
-        f"Intron + Intergenic: {format((ser['Intron'] + ser['Intergenic']) / ser.sum(), '.2%')}\n")
-    f.write(f"Exon: {format(ser['Exon'] / ser.sum(), '.2%')}\n")
+        f"intronic + intergenic: {format((ser['intronic'] + ser['intergenic']) / ser.sum(), '.2%')}\n")
+    f.write(f"exonic: {format(ser['exonic'] / ser.sum(), '.2%')}\n")
 
 # 输出统计图
 ax = plt.pie(ser, labels=ser.index.tolist(), labeldistance=1.15,
