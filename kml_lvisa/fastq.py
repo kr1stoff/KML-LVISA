@@ -28,6 +28,31 @@ def prepare_fastq_by_samptab(workdir, samptab: Path) -> None:
         pool.map(copy_fastq, pargs)
 
 
+def copy_fastq(para_args: tuple) -> None:
+    """
+    多线程复制或压缩 fastq 到 .rawdata 目, 按照指定格式命名
+    :param para_args:   (workdir, name, fq1, fq2)
+    :subparam workdir:     分析解雇目录
+    :subparam name:        样本名
+    :subparam fq1:         fastq1
+    :subparam fq2:         fastq2
+    """
+    workdir, name, fq1, fq2 = para_args
+    logging.info('复制或压缩 fastq 到 .rawdata 目, 按照指定格式命名')
+    if fq1.endswith('.gz'):
+        cml = f"""
+        cp {fq1} {workdir}/.rawdata/{name}_1.fastq.gz
+        cp {fq2} {workdir}/.rawdata/{name}_2.fastq.gz
+        """
+    else:
+        cml = f"""
+        gzip -c {fq1} > {workdir}/.rawdata/{name}_1.fastq.gz
+        gzip -c {fq2} > {workdir}/.rawdata/{name}_2.fastq.gz
+        """
+    logging.debug(cml)
+    run(cml, shell=True, executable='/bin/bash', capture_output=True)
+
+
 def get_sample_names_by_samptab(samptab: Path) -> list:
     """
     获取样本名列表
@@ -57,31 +82,6 @@ def samptab2dataframe(samptab: Path) -> pd.DataFrame:
     # 检查 sample table
     check_samptab(df)
     return df
-
-
-def copy_fastq(para_args: tuple) -> None:
-    """
-    多线程复制或压缩 fastq 到 .rawdata 目, 按照指定格式命名
-    :param para_args:   (workdir, name, fq1, fq2)
-    :subparam workdir:     分析解雇目录
-    :subparam name:        样本名
-    :subparam fq1:         fastq1
-    :subparam fq2:         fastq2
-    """
-    workdir, name, fq1, fq2 = para_args
-    logging.info('复制或压缩 fastq 到 .rawdata 目, 按照指定格式命名')
-    if fq1.endswith('.gz'):
-        cml = f"""
-        cp {fq1} {workdir}/.rawdata/{name}_1.fastq.gz
-        cp {fq2} {workdir}/.rawdata/{name}_2.fastq.gz
-        """
-    else:
-        cml = f"""
-        gzip -c {fq1} > {workdir}/.rawdata/{name}_1.fastq.gz
-        gzip -c {fq2} > {workdir}/.rawdata/{name}_2.fastq.gz
-        """
-    logging.debug(cml)
-    run(cml, shell=True, executable='/bin/bash', capture_output=True)
 
 
 def check_samptab(df) -> None:

@@ -50,7 +50,6 @@ def get_threads_dict() -> dict:
     high_threads = math.floor(max_threads / 2)
     low_threads = math.floor(high_threads / 4)
     dict_thr = {'high': high_threads, 'low': low_threads, 'max': max_threads}
-
     return dict_thr
 
 
