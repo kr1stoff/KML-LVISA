@@ -38,7 +38,6 @@ def copy_fastq(para_args: tuple) -> None:
     :subparam fq2:         fastq2
     """
     workdir, name, fq1, fq2 = para_args
-    logging.info('复制或压缩 fastq 到 .rawdata 目, 按照指定格式命名')
     if fq1.endswith('.gz'):
         cml = f"""
         cp {fq1} {workdir}/.rawdata/{name}_1.fastq.gz
@@ -71,7 +70,6 @@ def samptab2dataframe(samptab: Path) -> pd.DataFrame:
     :param samptab:
     :return df: sample table 转的 DataFrame
     """
-    logging.info('输入 sample table 转成 DataFrame 格式')
     samptabstr = str(samptab)
     if samptabstr.endswith('.xlsx'):
         df = pd.read_excel(samptab, header=None)
@@ -90,7 +88,6 @@ def check_samptab(df) -> None:
     :param df:
     :return:
     """
-    logging.info('检查 sample table 文件, 输入 sample table 转的 DataFrame')
     for row in df.iterrows():
         name, fastq1, fastq2 = row[1]
         # 检查名称

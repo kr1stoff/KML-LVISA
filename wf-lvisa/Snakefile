@@ -16,7 +16,7 @@ rule all:
         expand("umi/{sample}.umi.html", sample=config["samples"]),
         expand("umi/{sample}.umi.bam.stat", sample=config["samples"]),
         expand("umi/{sample}.umi.bed", sample=config["samples"]),
-        expand("anno/{sample}.is.combine.tsv", sample=config["samples"]),
+        expand("isite/{sample}.is.coverage", sample=config["samples"]),
         expand("stats/{sample}.is.diversity.tsv", sample=config["samples"]),
         expand("stats/{sample}.top10_is.tsv", sample=config["samples"]),
         expand("stats/{sample}.top10_is.png", sample=config["samples"]),
@@ -45,8 +45,7 @@ include: "rules/umi.smk"
 include: "rules/isite.smk"
 include: "rules/annovar.smk"
 include: "rules/anno.smk"
+include: "rules/combine.smk"
 include: "rules/stats.smk"
-# 综合大报告的内容都在这个 smk 更新
 include: "rules/bigrprt.smk"
-# 阴控阳控批次质控
 include: "rules/anno_qc.smk"

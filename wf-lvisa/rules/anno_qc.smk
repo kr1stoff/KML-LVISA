@@ -1,6 +1,7 @@
+# 新增阳控/阴控/批次质控
 rule generate_anno_control:
     input:
-        expand("anno/{sample}.is.combine.tsv", sample=config["samples"]),
+        expand("combine/{sample}.tsv", sample=config["samples"]),
     output:
         "anno-qc/controls.tsv",
     benchmark:
@@ -15,7 +16,7 @@ rule generate_anno_control:
 
 rule anno_qc:
     input:
-        anno=rules.comb_anno.output,
+        anno=rules.combine.output,
         control=rules.generate_anno_control.output,
     output:
         "anno-qc/{sample}.tsv",

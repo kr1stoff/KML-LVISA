@@ -1,16 +1,11 @@
 from pathlib import Path
 import yaml
-import logging
 import os
 import math
 
 
 def get_conda_env_dict() -> dict:
-    """
-    获取 Conda 环境字典
-    :return:    环境字典
-    """
-    logging.info('获取环境字典')
+    """获取 Conda 环境字典"""
     yaml_conda_env = Path(__file__).resolve().parents[1].joinpath('config/conda_env.yaml')
     with open(yaml_conda_env) as f:
         dict_conda_env = yaml.safe_load(f)
@@ -18,7 +13,7 @@ def get_conda_env_dict() -> dict:
 
 
 def get_database_dict() -> dict:
-    logging.info('获取数据库字典')
+    """获取数据库字典"""
     yaml_db = Path(__file__).resolve().parents[1].joinpath('config/database.yaml')
     with open(yaml_db) as f:
         dict_db = yaml.safe_load(f)
@@ -33,7 +28,7 @@ def get_database_dict() -> dict:
 
 
 def get_software_dict() -> dict:
-    logging.info('获取软件字典')
+    """获取软件字典"""
     yaml_software = Path(__file__).resolve().parents[1].joinpath('config/software.yaml')
     with open(yaml_software) as f:
         dict_soft = yaml.safe_load(f)
@@ -42,7 +37,6 @@ def get_software_dict() -> dict:
 
 def get_threads_dict() -> dict:
     """获取最大线程数, 高线程数为 max cpu count / 2, 低线程数为 high / 4"""
-    logging.info('获取线程数字典')
     # high: 当前总线程 / 2; low: high / 4
     max_threads = os.cpu_count()
     if max_threads is None:
@@ -54,5 +48,5 @@ def get_threads_dict() -> dict:
 
 
 def get_my_scripts_path() -> str:
-    logging.info('获取 scripts 目录地址')
+    """获取 scripts 目录地址"""
     return str(Path(__file__).resolve().parents[1].joinpath('scripts'))

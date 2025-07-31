@@ -54,3 +54,34 @@ rule filter_bam:
         samtools view -@ {threads} {params} {input} -o {output.bam} 2> {log}
         samtools stat {output.bam} | grep ^SN | cut -f 2- > {output.stat} 2>> {log}
         """
+
+
+# * [250730 MXFA] 新增去重 reads 数统计
+# 仅统计去重 reads 使用, 不在 umi 流程中
+rule rmdup_bam:
+    input:
+        rules.filter_bam.output.bam,
+    output:
+        sort_name=temp("map/{sample}.sorted_by_name.bam"),
+        fixmate=temp("map/{sample}.fixmate.bam"),
+        sort_coodi=temp("map/{sample}.sorted_by_coodinate.bam"),
+        rmdup="map/{sample}.rmdup.bam",
+        stats="map/{sample}.rmdup_stats.txt",
+    benchmark:
+        ".log/map/{sample}.rmdup_bam.bm"
+    log:
+        ".log/map/{sample}.rmdup_bam.log",
+    conda:
+        config["conda"]["basic"]
+    params:
+        sortn="-n",
+        fixmate="-r -c -m",
+        markdup="-r -s",
+    threads: config["threads"]["low"]
+    shell:
+        """
+        samtools sort -@ 32 {params.sortn} {input} -o {output.sort_name} 2> {log}
+        samtools fixmate -@ 32 {params.fixmate} {output.sort_name} {output.fixmate} 2>> {log}
+        samtools sort -@ 32 {output.fixmate} -o {output.sort_coodi} 2>> {log}
+        samtools markdup -@ 32 {params.markdup} -f {output.stats} {output.sort_coodi} {output.rmdup} 2>> {log}
+        """

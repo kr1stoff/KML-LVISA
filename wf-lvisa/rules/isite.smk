@@ -11,16 +11,30 @@ rule map_all_cover:
     conda:
         config["conda"]["basic2"]
     shell:
-        """
-        # 总 bam 深度
-        bedtools coverage -a {input.bed} -b {input.bam} > {output} 2>> {log}
-        """
+        "bedtools coverage -a {input.bed} -b {input.bam} > {output} 2>> {log}"
+
+
+rule rmdup_cover:
+    input:
+        bed=rules.merge_umi_bed.output,
+        bam=rules.rmdup_bam.output.rmdup,
+    output:
+        "isite/{sample}.rmdup.coverage",
+    benchmark:
+        ".log/isite/{sample}.rmdup_cover.bm"
+    log:
+        ".log/isite/{sample}.rmdup_cover.log",
+    conda:
+        config["conda"]["basic2"]
+    shell:
+        "bedtools coverage -a {input.bed} -b {input.bam} > {output} 2> {log}"
 
 
 rule isite_cover:
     input:
         bed=rules.merge_umi_bed.output,
         all_cov=rules.map_all_cover.output,
+        rmdup_cov=rules.rmdup_cover.output,
     output:
         "isite/{sample}.is.coverage",
     benchmark:
@@ -29,8 +43,5 @@ rule isite_cover:
         ".log/isite/{sample}.isite_cover.log",
     conda:
         config["conda"]["python"]
-    shell:
-        """
-        # 过滤 support reads < 10, 过滤 UMI == 0
-        python {config[my_scripts]}/filter_and_stat_is_by_coverage.py {input.bed} {input.all_cov} {output} 2> {log}
-        """
+    script:
+        "../scripts/filter_and_stat_is_by_coverage.py"

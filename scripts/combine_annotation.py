@@ -53,8 +53,9 @@ is_cov_dict = {}
 with open(is_cov_file) as f:
     next(f)
     for line in f:
-        chrom, start, _, umi_num, all_num = line.strip().split('\t')
-        is_cov_dict[(chrom, start)] = (int(umi_num), int(all_num))
+        # [240731 MXFA] 新增深度占比和去重 reads 数
+        chrom, start, _, umi_num, all_num, all_freq, rmdup_num = line.strip().split('\t')
+        is_cov_dict[(chrom, start)] = (int(umi_num), int(all_num), float(all_freq), int(rmdup_num))
 # * 总深度排序 x[1][0]; UMI 排序是 x[1][1]
 sorted_is_cov = sorted(is_cov_dict.items(), key=lambda x: x[1][1], reverse=True)
 
@@ -82,12 +83,13 @@ def get_anno(chrom: str, start: str, key: str, idx: int = 0, default: str = '-')
 # [250711] 孟博: 新增 Depth/UMI 比值列
 # [250721] 毛博: 新增转录本, 外显子号和基因功能结构域注释
 with open(combine_out, 'w') as g:
-    headers = ['Chrom', 'Start', 'UMIs', 'Depth', 'Depth/UMI', 'Effect', 'Gene', 'FullName', 'Oncogene/TSG',
+    headers = ['Chrom', 'Start', 'UMIs', 'Depth', 'Depth/UMI', 'Freq', 'RmdupDepth',
+               'Effect', 'Gene', 'FullName', 'Oncogene/TSG',
                'Transcript', 'ExonNum', 'Domain',
                'CpG1KB', 'CpG2.5KB', 'CpG5KB', 'CpG10KB', 'TSS1KB', 'TSS2.5KB', 'TSS5KB', 'TSS10KB',
                'RepName', 'RepClass', 'RepFamily', 'GC1MB']
     g.write('\t'.join(headers) + '\n')
-    for (chrom, start), (umi_num, all_num) in sorted_is_cov:
+    for (chrom, start), (umi_num, all_num, all_freq, rmdup_num) in sorted_is_cov:
         # ! all_num/umi_num, umi_num 可能为 0 导致除零错误, 因为在前面 gencore 输出的结果 read 信息中 umi 并不在预设 umi 列表中
         all_divide_umi = f'{all_num/umi_num:.4f}' if umi_num != 0 else '0'
         effect = get_anno(chrom, start, 'effect')
@@ -110,7 +112,8 @@ with open(combine_out, 'w') as g:
         exon_num = get_anno(chrom, start, 'tx_exon', 1)
         domain = get_anno(chrom, start, 'domain')
         g.write('\t'.join([
-            chrom, start, str(umi_num), str(all_num), all_divide_umi, effect, gene, fullname, onco,
+            chrom, start, str(umi_num), str(all_num), all_divide_umi, str(all_freq), str(rmdup_num),
+            effect, gene, fullname, onco,
             transcript, exon_num, domain,
             cpg1kb, cpg2d5kb, cpg5kb, cpg10kb, tss1kb, tss2d5kb, tss5kb, tss10kb,
             rep_name, rep_class, rep_family, gc1mb

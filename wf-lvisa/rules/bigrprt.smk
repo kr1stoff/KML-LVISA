@@ -1,7 +1,7 @@
 # 综合大报告的内容都在这个 smk 更新
 rule effect_stat:
     input:
-        expand("anno/{sample}.is.combine.tsv", sample=config["samples"]),
+        expand("combine/{sample}.tsv", sample=config["samples"]),
     output:
         text="bigrprt/effect.txt",
         fig="bigrprt/effect.png",
@@ -18,7 +18,7 @@ rule effect_stat:
 
 rule repeat_stat:
     input:
-        expand("anno/{sample}.is.combine.tsv", sample=config["samples"]),
+        expand("combine/{sample}.tsv", sample=config["samples"]),
     output:
         text="bigrprt/repeat.txt",
         fig="bigrprt/repeat.png",
@@ -35,7 +35,7 @@ rule repeat_stat:
 
 rule oncogene_stat:
     input:
-        expand("anno/{sample}.is.combine.tsv", sample=config["samples"]),
+        expand("combine/{sample}.tsv", sample=config["samples"]),
     output:
         text="bigrprt/oncogene.tsv",
     log:
@@ -50,7 +50,7 @@ rule oncogene_stat:
 
 rule summary_cpg_tss:
     input:
-        expand("anno/{sample}.is.combine.tsv", sample=config["samples"]),
+        expand("combine/{sample}.tsv", sample=config["samples"]),
     output:
         cpg="bigrprt/cpg_summary.tsv",
         tss="bigrprt/tss_summary.tsv",

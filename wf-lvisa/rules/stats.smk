@@ -1,6 +1,6 @@
 rule diversity:
     input:
-        rules.comb_anno.output,
+        rules.combine.output,
     output:
         "stats/{sample}.is.diversity.tsv",
     benchmark:
@@ -15,7 +15,7 @@ rule diversity:
 
 rule density_plot:
     input:
-        rules.comb_anno.output,
+        rules.combine.output,
     output:
         "stats/{sample}.chromosome_density.png",
     benchmark:
@@ -30,7 +30,7 @@ rule density_plot:
 
 rule top10_is:
     input:
-        rules.comb_anno.output,
+        rules.combine.output,
     output:
         top10tsv="stats/{sample}.top10_is.tsv",
         top10png="stats/{sample}.top10_is.png",
@@ -46,7 +46,7 @@ rule top10_is:
 
 rule chrom_dist:
     input:
-        rules.comb_anno.output,
+        rules.combine.output,
     output:
         "stats/{sample}.chrom_dist.png",
     benchmark:
@@ -61,7 +61,7 @@ rule chrom_dist:
 
 rule effect_plot:
     input:
-        rules.comb_anno.output,
+        rules.combine.output,
     output:
         "stats/{sample}.effect_pie.png",
     benchmark:
@@ -76,7 +76,7 @@ rule effect_plot:
 
 rule repclass_plot:
     input:
-        rules.comb_anno.output,
+        rules.combine.output,
     output:
         "stats/{sample}.repclass_pie.png",
     benchmark:
