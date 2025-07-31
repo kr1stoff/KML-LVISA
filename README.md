@@ -51,19 +51,19 @@
 
     ```bash
     rsync -auvP --exclude '**.bam' --exclude '**.gz' --exclude '3ltr/' \
-      /data/mengxf/Project/KML250709-lvis-jiance-run1-2/result/250714/ \
-      /data/share/samba/public/bioinfo/KML250709-lvis-jiance-run1-2/250722/
+      /data/mengxf/Project/KML250709-lvis-jiance-run1-2/result/250731/ \
+      /data/share/samba/public/bioinfo/KML250709-lvis-jiance-run1-2/result/250731/
     ```
 
     同步 SAV 文件
 
     ```bash
     rsync -auvP --delete \
-    --include 'Images/***' --include 'InterOp/***' --include 'Thumbnail_Images/***' \
-    --include 'RunInfo.xml' --include 'RunParameters.xml' \
-    --exclude '*' \
-    /data/rawdata/illumina/NEXTseq500/250707_NB501947_0941_AHKKYYBGXW/ \
-    /data/share/samba/public/bioinfo/KML250709-lvis-jiance-run1-2/250707_NB501947_0941_AHKKYYBGXW/
+      --include 'Images/***' --include 'InterOp/***' --include 'Thumbnail_Images/***' \
+      --include 'RunInfo.xml' --include 'RunParameters.xml' \
+      --exclude '*' \
+      /data/rawdata/illumina/NEXTseq500/250707_NB501947_0941_AHKKYYBGXW/ \
+      /data/share/samba/public/bioinfo/KML250709-lvis-jiance-run1-2/250707_NB501947_0941_AHKKYYBGXW/
     ```
 
 ## 更新
