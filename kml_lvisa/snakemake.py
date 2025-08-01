@@ -48,7 +48,6 @@ def run_snakemake(workdir):
 # * --ignore-incomplete 如果有 NTC 样本可能中断
     cml = f"""
     source {activate} snakemake
-    # use-conda
     snakemake -c {cores} --use-conda -s {snakefile} --configfile {configfile} --ignore-incomplete --scheduler greedy
     conda deactivate
     """
