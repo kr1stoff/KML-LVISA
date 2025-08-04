@@ -27,8 +27,10 @@ total_depth = sum([int(line.strip().split('\t')[6]) for line in contents])
 for line in contents:
     lns = line.strip().split('\t')
     chrom, start, end = lns[:3]
+    all_freq_float = int(lns[6]) / total_depth
+    all_freq = str(round(all_freq_float, 4)) if all_freq_float > 0.0001 else '<0.0001'
     dict_stat[(chrom, start, end)].update(
-        {'all_num': int(lns[6]), 'all_freq': round(int(lns[6]) / total_depth, 4)})
+        {'all_num': int(lns[6]), 'all_freq': all_freq})
 
 # 过滤后的覆盖深度文件. 位置信息, 覆盖深度
 with open(rmdup_cov) as f:
@@ -53,5 +55,5 @@ with open(out_cov, 'w') as f:
         if (int(all_num) < 10) or (int(umi_num) == 0):
             continue
         list_out = [chrom, ostart, oend, str(umi_num), str(all_num),
-                    str(dict_stat[k]['all_freq']), str(dict_stat[k]['rmdup_num'])]
+                    dict_stat[k]['all_freq'], str(dict_stat[k]['rmdup_num'])]
         f.write('\t'.join(list_out) + '\n')

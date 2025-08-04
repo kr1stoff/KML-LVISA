@@ -55,7 +55,7 @@ with open(is_cov_file) as f:
     for line in f:
         # [240731 MXFA] 新增深度占比和去重 reads 数
         chrom, start, _, umi_num, all_num, all_freq, rmdup_num = line.strip().split('\t')
-        is_cov_dict[(chrom, start)] = (int(umi_num), int(all_num), float(all_freq), int(rmdup_num))
+        is_cov_dict[(chrom, start)] = (int(umi_num), int(all_num), all_freq, int(rmdup_num))
 # * 总深度排序 x[1][0]; UMI 排序是 x[1][1]
 sorted_is_cov = sorted(is_cov_dict.items(), key=lambda x: x[1][1], reverse=True)
 
@@ -112,7 +112,7 @@ with open(combine_out, 'w') as g:
         exon_num = get_anno(chrom, start, 'tx_exon', 1)
         domain = get_anno(chrom, start, 'domain')
         g.write('\t'.join([
-            chrom, start, str(umi_num), str(all_num), all_divide_umi, str(all_freq), str(rmdup_num),
+            chrom, start, str(umi_num), str(all_num), all_divide_umi, all_freq, str(rmdup_num),
             effect, gene, fullname, onco,
             transcript, exon_num, domain,
             cpg1kb, cpg2d5kb, cpg5kb, cpg10kb, tss1kb, tss2d5kb, tss5kb, tss10kb,
