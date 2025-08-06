@@ -33,6 +33,7 @@ rule all:
         "bigrprt/oncogene.tsv",
         "bigrprt/cpg_summary.tsv",
         "bigrprt/tss_summary.tsv",
+        "bigrprt/chromosome_summary.tsv",
         "anno-qc/all.anno.qc.xlsx",
 
 

@@ -1,5 +1,5 @@
 # 从 annovar 提取转录本号(参考或最长), 在转录本上的外显子号
-# 按照 CHROM  POS  Transcript|Exon 格式
+# 按照 CHROM  POS  Transcript|ExonNum 格式
 
 import sys
 import os
@@ -21,7 +21,7 @@ else:
     dict_tx = df_tx.to_dict()
 
     # * 坐标 VCF(1-based) 转回 BED(0-based)
-    # CHROM  POS  Transcript|Exon 格式
+    # CHROM  POS  Transcript|ExonNum 格式
     results = []
     df = pd.read_table(input_file, sep='\t', usecols=[
         'Chr', 'Start', 'Gene.refGeneWithVer', 'AAChange.refGeneWithVer'])

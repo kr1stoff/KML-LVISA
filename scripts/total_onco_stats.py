@@ -19,11 +19,11 @@ with open(onco_stat_outfile, "w") as f:
     for at in annotabs:
         df = pd.read_csv(at, sep="\t", usecols=["Chrom", "Start", "Gene", "Effect", "Oncogene/TSG"])
         # 在外显子上注释到 Oncogene, 有重复时去重
-        oncodf = df[(df["Effect"] == "Exon") & (df["Oncogene/TSG"] == "oncogene")]
+        oncodf = df[(df["Effect"] == "exonic") & (df["Oncogene/TSG"] == "oncogene")]
         onco_num = oncodf.shape[0]
         onco_genes = ",".join(set(oncodf["Gene"].tolist())) if onco_num else "-"
         # 在外显子上注释到 TSG
-        tsgdf = df[(df["Effect"] == "Exon") & (df["Oncogene/TSG"] == "tsg")]
+        tsgdf = df[(df["Effect"] == "exonic") & (df["Oncogene/TSG"] == "tsg")]
         tsg_num = tsgdf.shape[0]
         tsg_genes = ",".join(set(tsgdf["Gene"].tolist())) if tsg_num else "-"
         sample = Path(at).stem.split(".")[0]

@@ -47,6 +47,7 @@ rule top10_is:
 rule chrom_dist:
     input:
         rules.combine.output,
+        config["database"]["hg19comp"],
     output:
         "stats/{sample}.chrom_dist.png",
     benchmark:
@@ -55,8 +56,8 @@ rule chrom_dist:
         ".log/stats/{sample}.chrom_dist.log",
     conda:
         config["conda"]["python"]
-    shell:
-        "python {config[my_scripts]}/chromosome_distribute_barplot.py {config[database][hg19comp]} {input} {output} 2> {log}"
+    script:
+        "../scripts/chrom_dist_barplot.py"
 
 
 rule effect_plot:

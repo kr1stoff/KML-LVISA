@@ -30,7 +30,7 @@ rule repeat_stat:
     conda:
         config["conda"]["python"]
     shell:
-        "python {config[my_scripts]}/total_repeat.stats.py {output.text} {output.fig} {output.summary} {input} &> {log}"
+        "python {config[my_scripts]}/total_repeat_stats.py {output.text} {output.fig} {output.summary} {input} &> {log}"
 
 
 rule oncogene_stat:
@@ -62,3 +62,18 @@ rule summary_cpg_tss:
         config["conda"]["python"]
     shell:
         "python {config[my_scripts]}/summary_cpg_tss.py {output.cpg} {output.tss} {input} &> {log}"
+
+
+rule summary_chromosome:
+    input:
+        expand("combine/{sample}.tsv", sample=config["samples"]),
+    output:
+        "bigrprt/chromosome_summary.tsv",
+    log:
+        ".log/bigrprt/summary_chromosome.log",
+    benchmark:
+        ".log/bigrprt/summary_chromosome.bm"
+    conda:
+        config["conda"]["python"]
+    script:
+        "../scripts/summary_chromosome.py"
