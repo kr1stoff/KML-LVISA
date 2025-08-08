@@ -1,5 +1,6 @@
 hg19: /data/mengxf/Database/reference/hg19/hg19.fa
 hg19comp: /data/mengxf/Database/reference/hg19/hg19.fa.comp
+snpeff: /data/mengxf/Database/snpEff/data
 oncokb: /data/mengxf/Database/reference/hg19/lvisa/OncoKBcancerGeneList.tsv
 cpg1kb: /data/mengxf/Database/reference/hg19/lvisa/hg19.cpg1kb.bed
 cpg2d5kb: /data/mengxf/Database/reference/hg19/lvisa/hg19.cpg2.5kb.bed
