@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "kml-lvisa"
-version = "0.5.3"
+version = "0.5.4"
 description = ""
 authors = ["kristoff <706060951@qq.com>"]
 readme = "README.md"
