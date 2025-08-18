@@ -34,7 +34,7 @@ rule all:
         "bigrprt/cpg_summary.tsv",
         "bigrprt/tss_summary.tsv",
         "bigrprt/chromosome_summary.tsv",
-        "anno-qc/all.anno.qc.xlsx",
+        "anno-qc/all.anno.xlsx",
 
 
 include: "rules/fastqc.smk"
@@ -47,6 +47,6 @@ include: "rules/isite.smk"
 include: "rules/annovar.smk"
 include: "rules/anno.smk"
 include: "rules/combine.smk"
+include: "rules/anno_qc.smk"
 include: "rules/stats.smk"
 include: "rules/bigrprt.smk"
-include: "rules/anno_qc.smk"

@@ -41,4 +41,7 @@ for annotab in annotabs:
 df_grpby = df_all.groupby(['Sample', 'Effect']).size().reset_index(name='Counts')
 df_effect_summary = df_grpby.pivot(index='Sample', columns='Effect', values='Counts').fillna(
     0).astype(int).rename_axis(None, axis=1)
-df_effect_summary.to_csv(effect_summary_file, sep='\t')
+# df_effect_summary.to_csv(effect_summary_file, sep='\t')
+# 输出百分比
+percentage_df = df_effect_summary.apply(lambda x: x/x.sum(), axis=1)
+percentage_df.to_csv(effect_summary_file, sep='\t')

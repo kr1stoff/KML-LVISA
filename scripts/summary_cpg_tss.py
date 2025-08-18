@@ -24,10 +24,13 @@ result = (
         'CpG2.5KB': (x['CpG2.5KB'] != '-').sum(),
         'CpG5KB': (x['CpG5KB'] != '-').sum(),
         'CpG10KB': (x['CpG10KB'] != '-').sum(),
+        'Unsure': len(x),
     }), include_groups=False)
-    .reset_index()
 )
-result.to_csv(cpg_outfile, index=False, sep='\t')
+percentage_df = result.apply(lambda x: x/x.sum(), axis=1)
+percentage_df.drop(columns=['Unsure'], inplace=True)
+percentage_df.to_csv(cpg_outfile, sep='\t')
+
 
 # TSS
 df_all = pd.DataFrame(columns=['Sample', 'TSS1KB', 'TSS2.5KB', 'TSS5KB', 'TSS10KB'])
@@ -43,7 +46,10 @@ result = (
         'TSS2.5KB': (x['TSS2.5KB'] != '-').sum(),
         'TSS5KB': (x['TSS5KB'] != '-').sum(),
         'TSS10KB': (x['TSS10KB'] != '-').sum(),
+        'Unsure': len(x),
     }), include_groups=False)
-    .reset_index()
 )
-result.to_csv(tss_outfile, index=False, sep='\t')
+# result.to_csv(tss_outfile, index=False, sep='\t')
+percentage_df = result.apply(lambda x: x/x.sum(), axis=1)
+percentage_df.drop(columns=['Unsure'], inplace=True)
+percentage_df.to_csv(tss_outfile, sep='\t')

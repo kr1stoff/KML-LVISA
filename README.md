@@ -68,6 +68,15 @@
 
 ## 更新
 
+- [250815] 0.5.4
+  - 新增过滤整合位点脚本
+    - Batch <= 0.9
+    - UMIs >= 3
+    - 10 <= Depth/UMI <= 100 (384 全保留)
+    - 删除 RmdupDepth 列
+  - TSS 换参考, 使用 UCSC RefSeq FANTOM TSS
+  - CpG, TSS, effect, repeat 样本结果汇总表都用小数占比数值
+
 - [250806] 0.5.3
   - (LYQ) 新增染色体汇总文件
   - 修复 OncoKB 汇总部分 BUG, 由于注释软件从 snpEff 转至 annovar, 外显子从 Exon 变为 exonic, 引起错误

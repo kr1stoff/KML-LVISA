@@ -46,8 +46,12 @@ for annotab in annotabs:
     df = pd.read_csv(annotab, sep='\t', usecols=['RepClass'])
     df['Sample'] = Path(annotab).stem.split('.')[0]
     df_all = pd.concat([df_all, df])
-    df_all = df_all[df_all['RepClass'] != '-']
+    # df_all = df_all[df_all['RepClass'] != '-']
+    # 将 '-' 替换为 'Unsure'
+    df_all['RepClass'] = df_all['RepClass'].replace('-', 'Unsure')
 df_grpby = df_all.groupby(['Sample', 'RepClass']).size().reset_index(name='Counts')
 df_repclass_summary = df_grpby.pivot(index='Sample', columns='RepClass', values='Counts').fillna(
     0).astype(int).rename_axis(None, axis=1)
-df_repclass_summary.to_csv(repclass_summmary_outfile, sep='\t')
+# 输出百分比
+percentage_df = df_repclass_summary.apply(lambda x: x/x.sum(), axis=1)
+percentage_df.to_csv(repclass_summmary_outfile, sep='\t')
