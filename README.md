@@ -50,7 +50,7 @@
     不同步大文件 FASTQ, BAM 等
 
     ```bash
-    rsync -auvP --exclude '**.bam' --exclude '**.gz' --exclude '3ltr/' \
+    rsync -auvP --delete --exclude '**.bam' --exclude '**.gz' --exclude '3ltr/' \
       /data/mengxf/Project/KML250709-lvis-jiance-run1-2/result/250731/ \
       /data/share/samba/public/bioinfo/KML250709-lvis-jiance-run1-2/result/250731/
     ```
