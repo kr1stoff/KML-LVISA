@@ -9,7 +9,7 @@ from pathlib import Path
 @click.help_option("--help", help="显示帮助信息并退出")
 def main(input_dir: str, output_file: str):
     fqdict = {}
-    for fq in Path(input_dir).glob("*.fastq.gz"):
+    for fq in Path(input_dir).resolve().glob("*.fastq.gz"):
         if "Undetermined" in fq.name:
             continue
         sampleid = fq.name.split("_S")[0]
