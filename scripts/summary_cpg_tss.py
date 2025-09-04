@@ -29,6 +29,7 @@ result = (
 )
 percentage_df = result.apply(lambda x: x/x.sum(), axis=1)
 percentage_df.drop(columns=['Unsure'], inplace=True)
+percentage_df = percentage_df.map(lambda x: f'{x:.2%}')
 percentage_df.to_csv(cpg_outfile, sep='\t')
 
 
@@ -52,4 +53,5 @@ result = (
 # result.to_csv(tss_outfile, index=False, sep='\t')
 percentage_df = result.apply(lambda x: x/x.sum(), axis=1)
 percentage_df.drop(columns=['Unsure'], inplace=True)
+percentage_df = percentage_df.map(lambda x: f'{x:.2%}')
 percentage_df.to_csv(tss_outfile, sep='\t')

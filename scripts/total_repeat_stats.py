@@ -54,4 +54,5 @@ df_repclass_summary = df_grpby.pivot(index='Sample', columns='RepClass', values=
     0).astype(int).rename_axis(None, axis=1)
 # 输出百分比
 percentage_df = df_repclass_summary.apply(lambda x: x/x.sum(), axis=1)
+percentage_df = percentage_df.map(lambda x: f'{x:.2%}')
 percentage_df.to_csv(repclass_summmary_outfile, sep='\t')

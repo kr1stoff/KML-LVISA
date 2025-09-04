@@ -44,4 +44,5 @@ df_effect_summary = df_grpby.pivot(index='Sample', columns='Effect', values='Cou
 # df_effect_summary.to_csv(effect_summary_file, sep='\t')
 # 输出百分比
 percentage_df = df_effect_summary.apply(lambda x: x/x.sum(), axis=1)
+percentage_df = percentage_df.map(lambda x: f'{x:.2%}')
 percentage_df.to_csv(effect_summary_file, sep='\t')
