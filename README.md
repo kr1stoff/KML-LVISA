@@ -1,5 +1,11 @@
 # KML-LVISA
 
+![GitHub followers](https://img.shields.io/github/followers/kr1stoff)
+![GitHub Created At](https://img.shields.io/github/created-at/kr1stoff/KML-LVISA)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/w/kr1stoff/KML-LVISA)
+![GitHub Release](https://img.shields.io/github/v/release/kr1stoff/KML-LVISA)
+![GitHub License](https://img.shields.io/github/license/kr1stoff/KML-LVISA)
+
 慢病毒整合位点分析流程
 
 ## 命令行
