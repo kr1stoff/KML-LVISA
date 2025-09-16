@@ -19,7 +19,7 @@ def main(input_dir: str, output_file: str):
         elif "R2" in fq.name:
             fqdict[sampleid].update({"read2": str(fq)})
     with open(output_file, "w") as f:
-        for k, v in fqdict.items():
+        for k, v in sorted(fqdict.items()):
             f.write(f"{k}\t{v["read1"]}\t{v["read2"]}\n")
 
 
