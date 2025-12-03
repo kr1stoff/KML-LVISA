@@ -39,6 +39,7 @@ for infile in input_anno_files:
             sample_site_dict[(row['Chrom'], row['Start'])] += 1
 
 # 批次频率
+# Chrom Start Count Batch
 df_batch = pd.DataFrame([(k[0], k[1], v) for k, v in sample_site_dict.items()],
                         columns=['Chrom', 'Start', 'Count'])
 df_batch['Batch'] = round(df_batch['Count'] / sample_num, 4)
