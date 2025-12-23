@@ -6,20 +6,29 @@ import numpy as np
 
 
 def fastp_all_samples_qc(files_fastp_json, out_tsv, out_excel):
-    title = ["Sample", "RawReads", "RawBases", "CleanReads", "CleanBases", "RawQ20",
-             "RawQ30", "CleanQ20", "CleanQ30", "CleanAverageLength", "GC"]
+    title = ["Sample", "RawReads", "RawBases", "CleanReads", "CleansBases", "CleanReadsRate",
+             "CleanBaseRate", "RawQ20", "RawQ30", "CleanQ20", "CleanQ30", "CleanAverageLength", "GC"]
     df = pd.DataFrame(columns=title)
     for js_path in files_fastp_json:
         js_data = json.loads(open(js_path, "r").read())
         sample = Path(js_path).stem
         mean_lengths = np.array(
             [v for k, v in js_data["summary"]["after_filtering"].items() if k.endswith("mean_length")])
+        # [20251223] clean reads/bases 比例
+        before_total_reads = js_data["summary"]["before_filtering"]["total_reads"]
+        before_total_bases = js_data["summary"]["before_filtering"]["total_bases"]
+        after_total_reads = js_data["summary"]["after_filtering"]["total_reads"]
+        after_total_bases = js_data["summary"]["after_filtering"]["total_bases"]
+        clean_reads_rate = round(after_total_reads / before_total_reads, 4)
+        clean_bases_rate = round(after_total_bases / before_total_bases, 4)
         out = [
             sample,
-            js_data["summary"]["before_filtering"]["total_reads"],
-            js_data["summary"]["before_filtering"]["total_bases"],
-            js_data["summary"]["after_filtering"]["total_reads"],
-            js_data["summary"]["after_filtering"]["total_bases"],
+            before_total_reads,
+            before_total_bases,
+            after_total_reads,
+            after_total_bases,
+            clean_reads_rate,
+            clean_bases_rate,
             js_data["summary"]["before_filtering"]["q20_rate"],
             js_data["summary"]["before_filtering"]["q30_rate"],
             js_data["summary"]["after_filtering"]["q20_rate"],

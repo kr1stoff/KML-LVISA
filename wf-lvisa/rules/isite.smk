@@ -17,7 +17,7 @@ rule map_all_cover:
 rule rmdup_cover:
     input:
         bed=rules.merge_umi_bed.output,
-        bam=rules.rmdup_bam.output.rmdup,
+        bam=rules.rmdup_bam.output.view,
     output:
         "isite/{sample}.rmdup.coverage",
     benchmark:

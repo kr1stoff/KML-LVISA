@@ -16,9 +16,9 @@ rule map2hg19:
     threads: config["threads"]["high"]
     shell:
         """
-        bwa mem -t {threads} {params.bwa} {config[database][hg19]} {input} | \
-            samtools view -@ {threads} {params.view} - | \
-            samtools sort -@ {threads} -o {output.bam} - 2> {log}
+        bwa mem -t {threads} {params.bwa} {config[database][hg19]} {input} 2> {log} | \
+            samtools view -@ {threads} {params.view} - 2>> {log} | \
+            samtools sort -@ {threads} -o {output.bam} - 2>> {log}
         samtools stat {output.bam} | grep ^SN | cut -f 2- > {output.stat} 2>> {log}
         """
 
@@ -56,17 +56,18 @@ rule filter_bam:
         """
 
 
-# * [250730 MXFA] 新增去重 reads 数统计
-# 仅统计去重 reads 使用, 不在 umi 流程中
+# [20250730 MXFA] 新增去重 reads 数统计. 仅统计去重 reads 使用, 不在 umi 流程中
+# ! [20251223] 先过滤后去重, reads 不成对. 调整为先去重后过滤(该步骤与仅影响去重reads计数). 没有 ms(mate score) tag, samtools markdup 会报错
 rule rmdup_bam:
     input:
-        rules.filter_bam.output.bam,
+        rules.map2hg19.output.bam,
     output:
         sort_name=temp("map/{sample}.sorted_by_name.bam"),
         fixmate=temp("map/{sample}.fixmate.bam"),
         sort_coodi=temp("map/{sample}.sorted_by_coodinate.bam"),
         rmdup="map/{sample}.rmdup.bam",
         stats="map/{sample}.rmdup_stats.txt",
+        view="map/{sample}.rmdup.filter.bam",
     benchmark:
         ".log/map/{sample}.rmdup_bam.bm"
     log:
@@ -77,6 +78,7 @@ rule rmdup_bam:
         sortn="-n",
         fixmate="-r -c -m",
         markdup="-r -s",
+        view="-hbS -q 20 -m 55 -F 2828 -e 'tlen < 600 && qlen-sclen > 55'"
     threads: config["threads"]["low"]
     shell:
         """
@@ -84,4 +86,5 @@ rule rmdup_bam:
         samtools fixmate -@ 32 {params.fixmate} {output.sort_name} {output.fixmate} 2>> {log}
         samtools sort -@ 32 {output.fixmate} -o {output.sort_coodi} 2>> {log}
         samtools markdup -@ 32 {params.markdup} -f {output.stats} {output.sort_coodi} {output.rmdup} 2>> {log}
+        samtools view -@ {threads} {params.view} {output.rmdup} -o {output.view} 2>> {log}
         """
