@@ -57,7 +57,7 @@ rule filter_bam:
 
 
 # [20250730 MXFA] 新增去重 reads 数统计. 仅统计去重 reads 使用, 不在 umi 流程中
-# ! [20251223] 先过滤后去重, reads 不成对. 调整为先去重后过滤(该步骤与仅影响去重reads计数). 没有 ms(mate score) tag, samtools markdup 会报错
+# ! [20251223] 先过滤后去重, reads 不成对, 没有 ms(mate score) tag, samtools markdup 会报错. 调整为先去重后过滤(该步骤与仅影响去重reads计数)
 rule rmdup_bam:
     input:
         rules.map2hg19.output.bam,

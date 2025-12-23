@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "kml-lvisa"
-version = "0.5.4"
-description = ""
+version = "0.5.5"
+description = "KML-LVISA: Long Variant Identification and Analysis Pipeline for KML projects"
 authors = ["kristoff <706060951@qq.com>"]
 readme = "README.md"
 

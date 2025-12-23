@@ -74,6 +74,11 @@
 
 ## 更新
 
+- [20251223] 0.5.5
+  - 修复 BUG. 先过滤后去重, reads 不成对, 没有 ms(mate score) tag, samtools markdup 会报错. 调整为先去重后过滤(该步骤与仅影响去重reads计数).
+  - 新增 clean reads/bases 占比
+  - 优化 map2hg19 部分日志, 管道符每条命令都要 2>>{log}
+
 - [250815] 0.5.4
   - 新增过滤整合位点脚本
     - Batch <= 0.9
