@@ -17,7 +17,7 @@ rule blastn_ltr:
     input:
         rules.fq2fa.output,
     output:
-        "3ltr/{sample}.blast.out",
+        temp("3ltr/{sample}.blast.out"),
     benchmark:
         ".log/3ltr/{sample}.blastn_ltr.bm"
     log:
@@ -37,7 +37,7 @@ rule get_header_from_blast:
     input:
         rules.blastn_ltr.output,
     output:
-        "3ltr/{sample}.qseqid_read1.txt",
+        temp("3ltr/{sample}.qseqid_read1.txt"),
     benchmark:
         ".log/3ltr/{sample}.get_header_from_blast.bm"
     log:

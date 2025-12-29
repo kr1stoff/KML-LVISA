@@ -65,7 +65,7 @@ rule rmdup_bam:
         sort_name=temp("map/{sample}.sorted_by_name.bam"),
         fixmate=temp("map/{sample}.fixmate.bam"),
         sort_coodi=temp("map/{sample}.sorted_by_coodinate.bam"),
-        rmdup="map/{sample}.rmdup.bam",
+        rmdup=temp("map/{sample}.rmdup.bam"),
         stats="map/{sample}.rmdup_stats.txt",
         view="map/{sample}.rmdup.filter.bam",
     benchmark:
