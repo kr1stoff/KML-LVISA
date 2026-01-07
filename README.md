@@ -33,8 +33,7 @@
   使用绝对路径
 
     ```bash
-    poetry -C /data/mengxf/GitHub/KML-LVISA run \
-      python /data/mengxf/GitHub/KML-LVISA/main.py \
+    ~/miniforge3/envs/python3.12/bin/python /data/mengxf/GitHub/KML-LVISA/main.py \
       --sample-table /data/mengxf/Project/KML250513_lvisa_update/input.tsv \
       --work-dir /data/mengxf/Project/KML250513_lvisa_update/result/250514
     ```

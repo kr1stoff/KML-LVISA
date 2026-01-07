@@ -6,7 +6,7 @@ import numpy as np
 
 
 def fastp_all_samples_qc(files_fastp_json, out_tsv, out_excel):
-    title = ["Sample", "RawReads", "RawBases", "CleanReads", "CleansBases", "CleanReadsRate",
+    title = ["Sample", "RawReads", "RawBases", "CleanReads", "CleanBases", "CleanReadsRate",
              "CleanBaseRate", "RawQ20", "RawQ30", "CleanQ20", "CleanQ30", "CleanAverageLength", "GC"]
     df = pd.DataFrame(columns=title)
     for js_path in files_fastp_json:

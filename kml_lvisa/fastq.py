@@ -48,7 +48,7 @@ def copy_fastq(para_args: tuple) -> None:
         gzip -c {fq1} > {workdir}/.rawdata/{name}_1.fastq.gz
         gzip -c {fq2} > {workdir}/.rawdata/{name}_2.fastq.gz
         """
-    logging.debug(cml)
+    # logging.debug(cml)
     run(cml, shell=True, executable='/bin/bash', capture_output=True)
 
 
