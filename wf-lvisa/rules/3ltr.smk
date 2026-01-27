@@ -55,8 +55,8 @@ rule grep_fq_by_header:
         "qc/fastp/{sample}.1.fastq.gz",
         "qc/fastp/{sample}.2.fastq.gz",
     output:
-        "3ltr/{sample}.1.3ltr.fq.gz",
-        "3ltr/{sample}.2.3ltr.fq.gz",
+        temp("3ltr/{sample}.1.3ltr.fq.gz"),
+        temp("3ltr/{sample}.2.3ltr.fq.gz"),
     benchmark:
         ".log/3ltr/{sample}.grep_fq_by_header.bm"
     log:

@@ -2,7 +2,7 @@ rule map2hg19:
     input:
         rules.grep_fq_by_header.output,
     output:
-        bam="map/{sample}.bam",
+        bam=temp("map/{sample}.bam"),
         stat="map/{sample}.bam.stat",
     benchmark:
         ".log/map/{sample}.map2hg19.bm"
