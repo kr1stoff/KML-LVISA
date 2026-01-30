@@ -17,7 +17,6 @@ rule all:
         expand("umi/{sample}.umi.bam.stat", sample=config["samples"]),
         expand("umi/{sample}.umi.bed", sample=config["samples"]),
         expand("isite/{sample}.is.coverage", sample=config["samples"]),
-        expand("stats/{sample}.is.diversity.tsv", sample=config["samples"]),
         expand("stats/{sample}.top10_is.tsv", sample=config["samples"]),
         expand("stats/{sample}.top10_is.png", sample=config["samples"]),
         expand("stats/{sample}.chrom_dist.png", sample=config["samples"]),
@@ -34,6 +33,7 @@ rule all:
         "bigrprt/cpg_summary.tsv",
         "bigrprt/tss_summary.tsv",
         "bigrprt/chromosome_summary.tsv",
+        "bigrprt/diversity_summary.tsv",
         "anno-qc/all.anno.xlsx",
 
 

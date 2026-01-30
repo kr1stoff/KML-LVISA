@@ -77,3 +77,18 @@ rule summary_chromosome:
         config["conda"]["python"]
     script:
         "../scripts/summary_chromosome.py"
+
+
+rule summary_diversity:
+    input:
+        expand("stats/{sample}.is.diversity.tsv", sample=config["samples"]),
+    output:
+        "bigrprt/diversity_summary.tsv",
+    log:
+        ".log/bigrprt/summary_diversity.log",
+    benchmark:
+        ".log/bigrprt/summary_diversity.bm"
+    conda:
+        config["conda"]["python"]
+    script:
+        "../scripts/summary_diversity.py"

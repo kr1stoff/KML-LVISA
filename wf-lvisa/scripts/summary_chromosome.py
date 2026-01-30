@@ -10,6 +10,7 @@ annotabs = snakemake.input
 chrom_summmary_outfile = snakemake.output[0]
 
 annotabs = [x for x in annotabs if ('POS' not in x) and ('NTC' not in x)]
+
 df_all = pd.DataFrame(columns=['Sample', 'Chrom'])
 for annotab in annotabs:
     df = pd.read_csv(annotab, sep='\t', usecols=['Chrom'])
