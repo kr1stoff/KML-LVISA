@@ -73,6 +73,9 @@
 
 ## 更新
 
+- [20260130]  0.5.6
+- 新增 diversity 汇总文件
+
 - [20251223] 0.5.5
   - 修复 BUG. 先过滤后去重, reads 不成对, 没有 ms(mate score) tag, samtools markdup 会报错. 调整为先去重后过滤(该步骤与仅影响去重reads计数).
   - 新增 clean reads/bases 占比
