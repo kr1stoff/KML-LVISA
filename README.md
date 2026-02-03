@@ -73,8 +73,11 @@
 
 ## 更新
 
+- [20260203] 0.5.7
+  - fastp 调整参数, 修改 R2 UMI 接头序列 --adapter_sequence_r2 TCCGACTTTATCCA, 该参数不要设计的序列, 要 R2 真实的情况(反向互补); 删除 --cut_right --cut_window_size 4 --cut_mean_quality 20 --correction, 切右侧可能导致 UMI adpater 被切掉, 影响切除效果
+
 - [20260130] 0.5.6
-- 新增 diversity 汇总文件
+  - 新增 diversity 汇总文件
 
 - [20251223] 0.5.5
   - 修复 BUG. 先过滤后去重, reads 不成对, 没有 ms(mate score) tag, samtools markdup 会报错. 调整为先去重后过滤(该步骤与仅影响去重reads计数).

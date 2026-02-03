@@ -14,12 +14,11 @@ rule fastp_pe:
     conda:
         config["conda"]["basic2"]
     params:
-        # ! 艾吉泰康
+        # 艾吉泰康
         # 1. UMI 组合 384 个, 长度 8 bp
         # 2. 3LTR 长度 60 bp + 最小比对长度 20 bp
-        # 3. UMI前的一段接头 TGGATAAAGTCGGA
-        "-q 15 -u 40 -l 80 --adapter_sequence_r2 TGGATAAAGTCGGA --cut_right "
-        "--cut_window_size 4 --cut_mean_quality 20 --correction --umi --umi_loc=read2 --umi_len=8",
+        # ! 3. [20260203] UMI前的一段接头 TGGATAAAGTCGGA, 用反向互补序列 TCCGACTTTATCCA, 删掉 cut_right
+        "-q 15 -u 40 -l 80 --adapter_sequence_r2 TCCGACTTTATCCA --correction --umi --umi_loc=read2 --umi_len=8",
     threads: config["threads"]["low"]
     shell:
         """
