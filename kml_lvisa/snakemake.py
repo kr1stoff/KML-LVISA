@@ -33,26 +33,29 @@ def create_snakemake_configfile(sample_names, workdir):
         yaml.dump(dict_smk, f)
 
 
-def run_snakemake(workdir):
+def run_snakemake(workdir) -> str:
     """
     运行 snakemake 工作流
     :param workdir:
-    :return:
+    :return: snakemake 输出的 stderr
     """
     logging.info('运行 snakemake')
     activate = get_software_dict()['activate']
     cores = get_threads_dict()['max']
-    snakefile = Path(__file__).resolve().parents[1].joinpath('wf-lvisa/Snakefile')
+    snakefile = Path(__file__).resolve(
+    ).parents[1].joinpath('wf-lvisa/Snakefile')
     configfile = f'{workdir}/.temp/snakemake.yaml'
     logfile = f'{workdir}/.temp/snakemake.log'
-# * --ignore-incomplete 如果有 NTC 样本可能中断
+    # * --ignore-incomplete 如果有 NTC 样本可能中断
     cml = f"""
     source {activate} snakemake
     snakemake -c {cores} --use-conda -s {snakefile} --configfile {configfile} --ignore-incomplete --scheduler greedy
     conda deactivate
     """
     logging.debug(cml)
-    proc = run(cml, shell=True, executable='/bin/bash', capture_output=True, encoding='utf-8')
+    proc = run(cml, shell=True, executable='/bin/bash',
+               capture_output=True, encoding='utf-8')
     # 输出出来这段日志
     with open(logfile, 'w') as f:
         f.write(f'[STDOUT]\n{proc.stdout}\n[STDERR]\n{proc.stderr}')
+    return proc.stderr

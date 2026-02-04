@@ -1,5 +1,4 @@
-# ! [20260204] fastp 切不干净, 加一步 cutadapt
-# UMI前的一段接头R1用正向 TGGATAAAGTCGGA, R2 用反向互补 TCCGACTTTATCCA
+# fastp 切不干净, 加一步 cutadapt; UMI前的一段接头R1用正向 TGGATAAAGTCGGA, R2 用反向互补 TCCGACTTTATCCA
 rule cutadapt:
     input:
         rules.fastp_pe.output.o,
@@ -18,7 +17,5 @@ rule cutadapt:
     threads: config["threads"]["low"]
     shell:
         """
-        cutadapt {params} \
-            -o {output.o} -p {output.O} \
-            -i {input[0]} -I {input[1]} 2> {log}
+        cutadapt {params} -o {output[0]} -p {output[1]} {input[0]} {input[1]} &> {log}
         """

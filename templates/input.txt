@@ -1,4 +1,0 @@
-NTC	/data/mengxf/Project/KML250703-lvis-pipeline-update/rawdata/NTC_100k_1.fastq.gz	/data/mengxf/Project/KML250703-lvis-pipeline-update/rawdata/NTC_100k_2.fastq.gz
-POS	/data/mengxf/Project/KML250703-lvis-pipeline-update/rawdata/CBPL0002_100k_1.fastq.gz	/data/mengxf/Project/KML250703-lvis-pipeline-update/rawdata/CBPL0002_100k_2.fastq.gz
-T1	/data/mengxf/Project/KML250703-lvis-pipeline-update/rawdata/712502290338_100k_1.fastq.gz	/data/mengxf/Project/KML250703-lvis-pipeline-update/rawdata/712502290338_100k_2.fastq.gz
-T2	/data/mengxf/Project/KML250703-lvis-pipeline-update/rawdata/712502290350_100k_1.fastq.gz	/data/mengxf/Project/KML250703-lvis-pipeline-update/rawdata/712502290350_100k_2.fastq.gz

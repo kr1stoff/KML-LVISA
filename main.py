@@ -28,9 +28,13 @@ def main(work_dir, sample_table):
 
     # snakemake
     create_snakemake_configfile(sample_names, work_dir)
-    run_snakemake(work_dir)
+    smk_stderr = run_snakemake(work_dir)
 
-    logging.info(f'分析完成!')
+    if 'Complete log' in smk_stderr or 'Nothing to be done' in smk_stderr:
+        # run_snakemake 没报错不代表分析完成
+        logging.info(f'分析完成!')
+    else:
+        raise RuntimeError('Snakemake 运行出错!')
 
 
 if __name__ == '__main__':

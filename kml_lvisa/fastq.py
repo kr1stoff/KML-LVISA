@@ -40,8 +40,8 @@ def copy_fastq(para_args: tuple) -> None:
     workdir, name, fq1, fq2 = para_args
     if fq1.endswith('.gz'):
         cml = f"""
-        cp {fq1} {workdir}/.rawdata/{name}_1.fastq.gz
-        cp {fq2} {workdir}/.rawdata/{name}_2.fastq.gz
+        ln -sf {fq1} {workdir}/.rawdata/{name}_1.fastq.gz
+        ln -sf {fq2} {workdir}/.rawdata/{name}_2.fastq.gz
         """
     else:
         cml = f"""

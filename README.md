@@ -23,8 +23,7 @@
 2. 准备流程输入文件
 
     ```bash
-    poetry run -C /data/mengxf/GitHub/KML-LVISA \
-        python /data/mengxf/GitHub/KML-LVISA/utils/prepare_input_from_bcl2fastq_out.py \
+    ~/miniforge3/envs/python3.12/bin/python /data/mengxf/GitHub/KML-LVISA/utils/prepare_input_from_bcl2fastq_out.py \
         --input-dir /data/mengxf/Project/KML250620-lvis-jiance-run1/FASTQ \
         --output-file /data/mengxf/Project/KML250620-lvis-jiance-run1/input.tsv
     ```
