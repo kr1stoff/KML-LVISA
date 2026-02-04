@@ -39,6 +39,7 @@ rule all:
 
 include: "rules/fastqc.smk"
 include: "rules/fastp.smk"
+include: "rules/cutadapt.smk"
 include: "rules/multiqc.smk"
 include: "rules/3ltr.smk"
 include: "rules/map.smk"

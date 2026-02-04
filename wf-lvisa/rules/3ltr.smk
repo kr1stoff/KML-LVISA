@@ -1,6 +1,6 @@
 rule fq2fa:
     input:
-        "qc/fastp/{sample}.1.fastq.gz",
+        rules.cutadapt.output[0],
     output:
         temp("3ltr/{sample}.fa"),
     benchmark:
@@ -52,8 +52,8 @@ rule get_header_from_blast:
 rule grep_fq_by_header:
     input:
         rules.get_header_from_blast.output,
-        "qc/fastp/{sample}.1.fastq.gz",
-        "qc/fastp/{sample}.2.fastq.gz",
+        rules.cutadapt.output[0],
+        rules.cutadapt.output[1],
     output:
         temp("3ltr/{sample}.1.3ltr.fq.gz"),
         temp("3ltr/{sample}.2.3ltr.fq.gz"),

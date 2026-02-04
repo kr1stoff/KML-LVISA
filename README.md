@@ -73,6 +73,9 @@
 
 ## 更新
 
+- [20260204] 0.5.8
+  - fastp 切不干净, 加一步 cutadapt. UMI前的一段接头R1用正向 TGGATAAAGTCGGA, R2 用反向互补 TCCGACTTTATCCA
+
 - [20260203] 0.5.7
   - fastp 调整参数, 修改 R2 UMI 接头序列 --adapter_sequence_r2 TCCGACTTTATCCA, 该参数不要设计的序列, 要 R2 真实的情况(反向互补); 删除 --cut_right --cut_window_size 4 --cut_mean_quality 20 --correction, 切右侧可能导致 UMI adpater 被切掉, 影响切除效果
 
