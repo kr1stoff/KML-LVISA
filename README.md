@@ -73,10 +73,11 @@
 ## 更新
 
 - [20260204] 0.5.8
-  - fastp 切不干净, 加一步 cutadapt. UMI前的一段接头R1用正向 TGGATAAAGTCGGA, R2 用反向互补 TCCGACTTTATCCA
+  - fastp 切不干净, 加一步 cutadapt. UMI前的一段接头R1用正向序列 ^TGGATAAAGTCGGA 切3'端', R2 用反向互补序列 TCCGACTTTATCCA$ 切5'端'
+  - 新增 57bp LTR 序列判读, 文库上内引物到整合位点全部的 57bp LTR 序列, 实现更精准判读 read 是否包含 LTR, 是否为有效整合位点数据
 
 - [20260203] 0.5.7
-  - fastp 调整参数, 修改 R2 UMI 接头序列 --adapter_sequence_r2 TCCGACTTTATCCA, 该参数不要设计的序列, 要 R2 真实的情况(反向互补); 删除 --cut_right --cut_window_size 4 --cut_mean_quality 20 --correction, 切右侧可能导致 UMI adpater 被切掉, 影响切除效果
+  - fastp 调整参数, 删除 --adapter_sequence_r2 TCCGACTTTATCCA --cut_right --cut_window_size 4 --cut_mean_quality 20 --correction; 在 fastp 不做 umi_adapter 切除, 后续 cutadapt 来切; 新增参数 --trim_front2 14, 切 R2 UMI 拆分后的5'端14bp, 默认这部分是 umi_adapater
 
 - [20260130] 0.5.6
   - 新增 diversity 汇总文件
