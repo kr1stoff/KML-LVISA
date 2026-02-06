@@ -15,7 +15,11 @@ df_all = pd.DataFrame(
 
 for dfile in infiles_remove_pos_ntc:
     sample = Path(dfile).stem.split('.')[0]
-    df = pd.read_csv(dfile, sep='\t')
+    # 跳过空文件
+    try:
+        df = pd.read_csv(dfile, sep='\t')
+    except pd.errors.EmptyDataError:
+        continue
     df.insert(0, 'sample', sample)
     df_all = pd.concat([df_all, df])
 
