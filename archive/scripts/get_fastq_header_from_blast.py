@@ -1,9 +1,8 @@
 """
-[20260205] 调整到 57bp LTR 测试一下
 过滤 blast 输出符合通过标准的 fastq
    1. Read1 都是 plus (正向)
-   2. 3LTR 只允许 4 个 mismatch
-   3. 3LTR 引物比对位置过滤. end 位置在 60bp 以内, 引物长度为 57, 允许一些偏倚
+   2. 3LTR 只允许 1 个 mismatch
+   3. 3LTR 引物比对位置过滤. end 位置在 30bp 以内, 引物长度为 25, 允许 5bp 偏移
 """
 
 from dataclasses import dataclass
@@ -29,10 +28,10 @@ with open(infile, 'r') as f, open(outfile, 'w') as g:
         # ! 都是正向
         if lns[fh.sstrand] == 'minus':
             continue
-        # ! 3LTR mismatch <= 4
-        if (int(lns[fh.slen]) - int(lns[fh.nident])) > 4:
+        # ! 3LTR mismatch <= 1
+        if (int(lns[fh.slen]) - int(lns[fh.nident])) > 1:
             continue
-        # ! 3LTR 引物比对位置过滤. end 位置在 60bp 以内
-        if int(lns[fh.qend]) > 60:
+        # ! 3LTR 引物比对位置过滤. end 位置在 30bp 以内
+        if int(lns[fh.qend]) > 30:
             continue
         g.write(lns[fh.qseqid] + '\n')

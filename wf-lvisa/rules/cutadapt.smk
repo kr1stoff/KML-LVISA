@@ -1,4 +1,5 @@
-# fastp 切不干净, 加一步 cutadapt; UMI前的一段接头R1用正向 TGGATAAAGTCGGA, R2 用反向互补 TCCGACTTTATCCA
+# fastp 切不干净 umi_adapter, 加一步 cutadapt;
+# UMI 前的一段接头 R1 用正向 TGGATAAAGTCGGA, R2 用反向互补 TCCGACTTTATCCA
 rule cutadapt:
     input:
         rules.fastp_pe.output.o,
@@ -13,8 +14,9 @@ rule cutadapt:
     conda:
         config["conda"]["basic"]
     params:
-        "-G TCCGACTTTATCCA -g TGGATAAAGTCGGA",
-    threads: config["threads"]["low"]
+        # [20260204] cutadapt 参数
+        # -G: R2 移除 5' 端; -a: R1 移除 3' 端; ^ 表示在 read 最头部; $ 表示在 read 最尾部;
+        "-G ^TCCGACTTTATCCA -a TGGATAAAGTCGGA$",
     shell:
         """
         cutadapt {params} -o {output[0]} -p {output[1]} {input[0]} {input[1]} &> {log}

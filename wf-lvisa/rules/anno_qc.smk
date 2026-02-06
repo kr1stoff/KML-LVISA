@@ -30,7 +30,6 @@ rule anno_qc:
         "python {config[my_scripts]}/annotate_qc.py {input.control} {input.anno} {output} 2> {log}"
 
 
-
 rule anno_filter:
     input:
         rules.anno_qc.output,

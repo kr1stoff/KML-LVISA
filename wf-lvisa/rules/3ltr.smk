@@ -25,9 +25,8 @@ rule blastn_ltr:
     conda:
         config["conda"]["basic"]
     params:
-        # * word_size 对应引物长度设置，暂用 50% 引物长度也就是 8 bp
-        "-task blastn-short -word_size 8 -max_hsps 100 -max_target_seqs 1000 "
-        "-outfmt '6 length nident pident sstrand sseqid sstart send slen qseqid qstart qend qlen qcovs evalue bitscore'",
+        # -word_size: chatGPT 建议 7 即可, 这里更严格一点点
+        "-task blastn-short -word_size 8 -max_hsps 100 -max_target_seqs 1000 -outfmt '6 length nident pident sstrand sseqid sstart send slen qseqid qstart qend qlen qcovs evalue bitscore'",
     threads: config["threads"]["high"]
     shell:
         "blastn {params} -num_threads {threads} -query {input} -db {config[database][3ltr]} -out {output} &> {log}"
@@ -45,7 +44,7 @@ rule get_header_from_blast:
     conda:
         config["conda"]["python"]
     shell:
-        # ! 过滤 blast 输出符合通过标准的 fastq
+        # 过滤 blast 输出符合通过标准的 fastq
         "python {config[my_scripts]}/get_fastq_header_from_blast.py {input} {output} &> {log}"
 
 

@@ -78,7 +78,7 @@ rule rmdup_bam:
         sortn="-n",
         fixmate="-r -c -m",
         markdup="-r -s",
-        view="-hbS -q 20 -m 55 -F 2828 -e 'tlen < 600 && qlen-sclen > 55'"
+        view="-hbS -q 20 -m 55 -F 2828 -e 'tlen < 600 && qlen-sclen > 55'",
     threads: config["threads"]["low"]
     shell:
         """
