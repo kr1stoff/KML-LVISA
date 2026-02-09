@@ -48,14 +48,15 @@ rule get_header_from_blast:
         "python {config[my_scripts]}/get_fastq_header_from_blast.py {input} {output} &> {log}"
 
 
+# 3ltr 部分不要 temp() 删掉了, 省了空间浪费时间
 rule grep_fq_by_header:
     input:
         rules.get_header_from_blast.output,
         rules.cutadapt.output[0],
         rules.cutadapt.output[1],
     output:
-        temp("3ltr/{sample}.1.3ltr.fq.gz"),
-        temp("3ltr/{sample}.2.3ltr.fq.gz"),
+        "3ltr/{sample}.1.3ltr.fq.gz",
+        "3ltr/{sample}.2.3ltr.fq.gz",
     benchmark:
         ".log/3ltr/{sample}.grep_fq_by_header.bm"
     log:

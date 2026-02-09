@@ -20,7 +20,15 @@ ser = pd.Series(Counter(reps))
 ser.rename({"-": "UNKNOWN"}, inplace=True)
 ser.sort_values(ascending=False, inplace=True)
 
-# 不一定有 Simple_repeat
+# ! [20260206] 缺少的参数都设为 0
+if "SINE" not in ser.index:
+    ser["SINE"] = 0
+if "LINE" not in ser.index:
+    ser["LINE"] = 0
+if "LTR" not in ser.index:
+    ser["LTR"] = 0
+if "DNA" not in ser.index:
+    ser["DNA"] = 0
 if "Simple_repeat" not in ser.index:
     ser["Simple_repeat"] = 0
 

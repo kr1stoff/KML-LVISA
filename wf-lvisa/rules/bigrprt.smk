@@ -1,7 +1,7 @@
 # 综合大报告的内容都在这个 smk 更新
 rule effect_stat:
     input:
-        expand("anno-qc/{sample}.filter.tsv", sample=config["samples"]),
+        expand("combine/{sample}.tsv", sample=config["samples"]),
     output:
         text="bigrprt/effect.txt",
         fig="bigrprt/effect.png",
@@ -18,7 +18,7 @@ rule effect_stat:
 
 rule repeat_stat:
     input:
-        expand("anno-qc/{sample}.filter.tsv", sample=config["samples"]),
+        expand("combine/{sample}.tsv", sample=config["samples"]),
     output:
         text="bigrprt/repeat.txt",
         fig="bigrprt/repeat.png",
@@ -33,6 +33,7 @@ rule repeat_stat:
         "python {config[my_scripts]}/total_repeat_stats.py {output.text} {output.fig} {output.summary} {input} &> {log}"
 
 
+# * oncogene 部分保存解读参数过滤后的结果, 其他都用过滤前的数据
 rule oncogene_stat:
     input:
         expand("anno-qc/{sample}.filter.tsv", sample=config["samples"]),
@@ -50,7 +51,7 @@ rule oncogene_stat:
 
 rule summary_cpg_tss:
     input:
-        expand("anno-qc/{sample}.filter.tsv", sample=config["samples"]),
+        expand("combine/{sample}.tsv", sample=config["samples"]),
     output:
         cpg="bigrprt/cpg_summary.tsv",
         tss="bigrprt/tss_summary.tsv",
@@ -66,7 +67,7 @@ rule summary_cpg_tss:
 
 rule summary_chromosome:
     input:
-        expand("anno-qc/{sample}.filter.tsv", sample=config["samples"]),
+        expand("combine/{sample}.tsv", sample=config["samples"]),
     output:
         "bigrprt/chromosome_summary.tsv",
     log:

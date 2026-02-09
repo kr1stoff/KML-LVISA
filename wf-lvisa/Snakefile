@@ -9,7 +9,6 @@ shell.prefix("set +eu; ")
 rule all:
     input:
         "qc/multiqc",
-        "qc/fastp/fastp.stats.xlsx",
         expand("map/{sample}.bam.stat", sample=config["samples"]),
         expand("map/{sample}.filter.bam.stat", sample=config["samples"]),
         expand("umi/{sample}.umi.json", sample=config["samples"]),
@@ -34,7 +33,11 @@ rule all:
         "bigrprt/tss_summary.tsv",
         "bigrprt/chromosome_summary.tsv",
         "bigrprt/diversity_summary.tsv",
-        "anno-qc/all.anno.xlsx",
+        # upload
+        "upload/fastp.stats.xlsx",
+        "upload/all.anno.raw.xlsx",
+        "upload/all.anno.interpretation.xlsx",
+
 
 
 include: "rules/fastqc.smk"

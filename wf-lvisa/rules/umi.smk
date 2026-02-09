@@ -11,9 +11,11 @@ rule umi_bam:
     log:
         ".log/umi/{sample}.umi_bam.log",
     params:
-        # [250206] 艾吉泰康建议不要设置 UMI support reads 阈值, 默认 1
+        # [250206] 艾吉泰康建议不要设置 UMI support reads 阈值, 默认 1.
         # [250711] supporting_reads 调整 (1 -> 3)
-        "--umi_diff_threshold 1 --supporting_reads 3",
+        # [20260206] 验证样本1, 检测样本用3?
+        # TODO [20260206] 测试 supporting_reads 1 验证数据表现, 主要 liner1-1, 测完删除
+        "--umi_diff_threshold 1 --supporting_reads 1",
     threads: config["threads"]["low"]
     conda:
         config["conda"]["basic2"]

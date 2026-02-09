@@ -20,6 +20,14 @@ effs = [eff for at in annotabs
         for eff in pd.read_csv(at, sep="\t", usecols=["Effect"])["Effect"].tolist()]
 ser = pd.Series(Counter(effs))
 
+# ! [20260206] 缺少的参数都设为 0
+if 'exonic' not in ser.index:
+    ser['exonic'] = 0
+if 'intronic' not in ser.index:
+    ser['intronic'] = 0
+if 'intergenic' not in ser.index:
+    ser['intergenic'] = 0
+
 # 输出统计文字
 with open(effect_stat_outfile, "w") as f:
     f.write(
@@ -28,7 +36,7 @@ with open(effect_stat_outfile, "w") as f:
 
 # 输出统计图
 ax = plt.pie(ser, labels=ser.index.tolist(), labeldistance=1.15,
-             wedgeprops={"linewidth": 1, "edgecolor": "white"})
+            wedgeprops={"linewidth": 1, "edgecolor": "white"})
 plt.savefig(effect_stat_outfig, dpi=300)
 
 # 汇总 Effect, 每行一个样本
@@ -41,7 +49,6 @@ for annotab in annotabs:
 df_grpby = df_all.groupby(['Sample', 'Effect']).size().reset_index(name='Counts')
 df_effect_summary = df_grpby.pivot(index='Sample', columns='Effect', values='Counts').fillna(
     0).astype(int).rename_axis(None, axis=1)
-# df_effect_summary.to_csv(effect_summary_file, sep='\t')
 # 输出百分比
 percentage_df = df_effect_summary.apply(lambda x: x/x.sum(), axis=1)
 percentage_df = percentage_df.map(lambda x: f'{x:.2%}')

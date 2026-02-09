@@ -29,7 +29,23 @@ rule anno_qc:
     shell:
         "python {config[my_scripts]}/annotate_qc.py {input.control} {input.anno} {output} 2> {log}"
 
+# 经过解读参数过滤前的整合表
+rule concat_all_anno:
+    input:
+        expand("anno-qc/{sample}.qc.tsv", sample=config["samples"]),
+    output:
+        "upload/all.anno.raw.xlsx",
+    benchmark:
+        ".log/anno/concat_all_anno.bm"
+    log:
+        ".log/anno/concat_all_anno.log",
+    conda:
+        config["conda"]["basic"]
+    shell:
+        "csvtk csv2xlsx -t -f {input} -o {output} 2> {log}"
 
+
+# ! 解读参数过滤部分
 rule anno_filter:
     input:
         rules.anno_qc.output,
@@ -45,15 +61,16 @@ rule anno_filter:
         "../scripts/anno_filter.py"
 
 
-rule concat_all_anno:
+# 经过解读参数过滤后的整合表
+rule concat_all_anno_interpretation:
     input:
         expand("anno-qc/{sample}.filter.tsv", sample=config["samples"]),
     output:
-        "anno-qc/all.anno.xlsx",
+        "upload/all.anno.interpretation.xlsx",
     benchmark:
-        ".log/anno/concat_all_anno.bm"
+        ".log/anno/concat_all_anno_interpretation.bm"
     log:
-        ".log/anno/concat_all_anno.log",
+        ".log/anno/concat_all_anno_interpretation.log",
     conda:
         config["conda"]["basic"]
     shell:
