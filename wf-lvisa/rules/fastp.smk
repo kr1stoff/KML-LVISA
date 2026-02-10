@@ -16,10 +16,9 @@ rule fastp_pe:
     params:
         # 艾吉泰康
         # 1. UMI 组合 384 个, 长度 8 bp
-        # 2. 3LTR 长度 60 bp + 最小比对长度 20 bp
-        # ! 3. [20260203] 切掉R2 UMI 拆分后的3'端 14 bp umi_dapter 序列
-        # 如果测穿 R1 3'端是 adapter+UMI, R2 3'端是 LTR 序列, 在 cutadapt 处理
-        "-q 15 -u 40 -l 80 --trim_front2 14 --umi --umi_loc=read2 --umi_len=8",
+        # 2. [20260209 LYQ] length_required 参数从 80 调整至 94. 3LTR 长度 57 bp + 最小比对长度 20 bp
+        # 3. [20260203] 切掉R2 UMI 拆分后的3'端 14 bp umi_dapter 序列. 如果测穿 R1 3'端是 adapter+UMI, R2 3'端是 LTR 序列, 在 cutadapt 处理
+        "-q 15 -u 40 -l 94 --trim_front2 14 --umi --umi_loc=read2 --umi_len=8",
     threads: config["threads"]["low"]
     shell:
         """
