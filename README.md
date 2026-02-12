@@ -73,6 +73,8 @@
   - 优化综合报告部分, 无对应参数情况下报错的问题. 添加空值避免报错
   - 分析结果区分为解读前和解读参数过滤后两种数据
   - 优化输出路径, 需要给研发和解读看的数据放在 upload
+  - umi support reads 参数 3 -> 1, 艾吉泰康提示当前 assay 该参数不适用
+  - fastp length_required 参数从 80 调整至 94. 3LTR 长度 57 bp + 最小比对长度 20 bp
 
 - [20260204] 0.5.8
   - fastp 切不干净, 加一步 cutadapt. UMI前的一段接头R1用正向序列 ^TGGATAAAGTCGGA 切3'端', R2 用反向互补序列 TCCGACTTTATCCA$ 切5'端'
